@@ -3,6 +3,7 @@
 
 #include <string>
 #include <map>
+#include <cmath>
 
 
 class Character {
@@ -12,6 +13,10 @@ class Character {
     int atk;
     int def;
     std::pair<int, int> position;
+
+    protected:
+    // add implementation
+    int calculateDamage(int atk, int def);
 
     public:
     Character(std::string race, std::string rep, int health, int atk, int def, std::pair<int, int> position);
