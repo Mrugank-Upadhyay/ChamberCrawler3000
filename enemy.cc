@@ -24,3 +24,38 @@ std::pair<int, int> Enemy::move(int x, int y) {
 void Enemy::attack(std::shared_ptr<Player> player) {
     player->getStruckBy(*this);
 }
+
+void Enemy::getStruckBy(std::shared_ptr<Shade> shade) {
+    int damage = calculateDamage(shade->getAtk(), getDef());
+    int health = getHealth();
+    health -= damage;
+    setHealth(health);
+}
+
+void Enemy::getStruckBy(std::shared_ptr<Drow> drow) {
+    int damage = calculateDamage(drow->getAtk(), getDef());
+    int health = getHealth();
+    health -= damage;
+    setHealth(health);
+}
+
+void Enemy::getStruckBy(std::shared_ptr<Vampire> vampire) {
+    int damage = calculateDamage(vampire->getAtk(), getDef());
+    int health = getHealth();
+    health -= damage;
+    setHealth(health);
+}
+
+void Enemy::getStruckBy(std::shared_ptr<Troll> troll) {
+    int damage = calculateDamage(troll->getAtk(), getDef());
+    int health = getHealth();
+    health -= damage;
+    setHealth(health);
+}
+
+void Enemy::getStruckBy(std::shared_ptr<Goblin> goblin) {
+    int damage = calculateDamage(goblin->getAtk(), getDef());
+    int health = getHealth();
+    health -= damage;
+    setHealth(health);
+}
