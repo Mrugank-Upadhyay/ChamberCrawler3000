@@ -59,10 +59,3 @@ void Enemy::getStruckBy(std::shared_ptr<Goblin> goblin) {
     health -= damage;
     setHealth(health);
 }
-
-void Enemy::getStruckBy(std::shared_ptr<Goblin> goblin) {
-    int damage = calculateDamage(goblin->getAtk(), getDef());
-    int health = getHealth();
-    health -= damage;
-    setHealth(health);
-}
