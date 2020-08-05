@@ -1,3 +1,6 @@
+#ifndef _CHARACTER_
+#define _CHARACTER_
+
 #include <string>
 #include <map>
 
@@ -28,3 +31,5 @@ class Character {
 
     virtual void nextTurn() = 0;
 };
+
+#endif
