@@ -15,26 +15,26 @@ class Character {
     std::pair<int, int> position;
 
     protected:
-    // add implementation
-    int calculateDamage(int atk, int def);
+        // add implementation
+        int calculateDamage(int atk, int def);
 
     public:
-    Character(std::string race, std::string rep, int health, int atk, int def, std::pair<int, int> position);
+        Character(std::string race, std::string rep, int health, int atk, int def, std::pair<int, int> position);
 
-    // Do we need to set Race or Rep?
-    void setHealth(int value);
-    void setAtk(int value);
-    void setDef(int value);
-    void setPosition(std::pair<int, int> pos);
+        // Do we need to set Race or Rep?
+        void setHealth(int value);
+        void setAtk(int value);
+        void setDef(int value);
+        void setPosition(std::pair<int, int> pos);
 
-    std::string getRace();
-    std::string getRep();
-    int getHealth();
-    int getAtk();
-    int getDef();
-    std::pair<int, int> getPosition();
+        std::string getRace();
+        std::string getRep();
+        int getHealth();
+        int getAtk();
+        int getDef();
+        std::pair<int, int> getPosition();
 
-    virtual void nextTurn() = 0;
+        virtual void nextTurn() = 0;
 };
 
 #endif
