@@ -35,7 +35,6 @@ void Enemy::getStruckBy(std::shared_ptr<Shade> shade) {
     health -= damage;
     setHealth(health);
 
-
     // Will this need to notify cell when health == 0?
     // if so, how?
     transferGold(shade, std::make_shared<Enemy>(*this));

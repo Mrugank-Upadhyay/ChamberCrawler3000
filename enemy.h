@@ -20,11 +20,11 @@ class Enemy : public Character {
     bool giveGold;
     int gold;
 
-    // invokes player->addGold();
-    void transferGold(std::shared_ptr<Player> player, std::shared_ptr<Enemy> enemy);
+    // Add pointer back to cell
 
     protected:
         int randomGold();
+        void transferGold(std::shared_ptr<Player> player, std::shared_ptr<Enemy> enemy);
 
 
     public:
