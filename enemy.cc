@@ -38,9 +38,7 @@ void Enemy::getStruckBy(std::shared_ptr<Shade> shade) {
 
     // Will this need to notify cell when health == 0?
     // if so, how?
-    if (health == 0) {
-        transferGold(shade);
-    }
+    transferGold(shade, std::make_shared<Enemy>(*this));
 }
 
 void Enemy::getStruckBy(std::shared_ptr<Drow> drow) {
@@ -48,10 +46,7 @@ void Enemy::getStruckBy(std::shared_ptr<Drow> drow) {
     int health = getHealth();
     health -= damage;
     setHealth(health);
-
-    if (health == 0) {
-        transferGold(drow);
-    }
+    transferGold(drow, std::make_shared<Enemy>(*this));
 }
 
 void Enemy::getStruckBy(std::shared_ptr<Vampire> vampire) {
@@ -59,10 +54,7 @@ void Enemy::getStruckBy(std::shared_ptr<Vampire> vampire) {
     int health = getHealth();
     health -= damage;
     setHealth(health);
-
-    if (health == 0) {
-        transferGold(vampire);
-    }
+    transferGold(vampire, std::make_shared<Enemy>(*this));
 }
 
 void Enemy::getStruckBy(std::shared_ptr<Troll> troll) {
@@ -70,10 +62,7 @@ void Enemy::getStruckBy(std::shared_ptr<Troll> troll) {
     int health = getHealth();
     health -= damage;
     setHealth(health);
-
-    if (health == 0) {
-        transferGold(troll);
-    }
+    transferGold(troll, std::make_shared<Enemy>(*this));
 }
 
 void Enemy::getStruckBy(std::shared_ptr<Goblin> goblin) {
@@ -81,18 +70,16 @@ void Enemy::getStruckBy(std::shared_ptr<Goblin> goblin) {
     int health = getHealth();
     health -= damage;
     setHealth(health);
-
-    if (health == 0) {
-        transferGold(goblin);
-    }
+    transferGold(goblin, std::make_shared<Enemy>(*this));
 }
 
 int Enemy::randomGold() {
     return (rand() % 2);
 }
 
-void Enemy::transferGold(std::shared_ptr<Player> player) {
-    if (giveGold == true) {
-        player->addGold(getGold());
+void Enemy::transferGold(std::shared_ptr<Player> player, std::shared_ptr<Enemy> enemy) {
+    if ((giveGold == true) && (enemy->getHealth() == 0)) {
+        player->setGold(player->getGold() + enemy->gold);
+        enemy->gold = 0;
     }
 }
