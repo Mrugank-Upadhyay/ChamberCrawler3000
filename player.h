@@ -22,7 +22,9 @@ class Player: public Character {
     std::vector<std::shared_ptr<Item>> bag;
     bool bagActive;
   public:
-    Player(std::pair<int, int> position, int gold, int maxHP, int tmpATK, int tmpDEF, bool bagActive);
+    Player(std::string race, std::string rep, int hp, int atk, int def,
+    std::pair<int, int> position, int gold, int maxHP, int tmpATK, int tmpDEF,
+    bool bagActive);
 
     Cell * getCell() const;
     void setCell(Cell * cell);
@@ -44,6 +46,7 @@ class Player: public Character {
 
     std::vector<std::shared_ptr<Item>> getBag();
     void addToBag(std::shared_ptr<Item> item);
+    void removeFromBag(int item);
     bool isBagActive() const;
     void setBagActive(bool bagActive);
 
