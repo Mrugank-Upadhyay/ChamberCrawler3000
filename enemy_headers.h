@@ -1,7 +1,6 @@
 #ifndef _ENEMY_HEADERS_
 #define _ENEMY_HEADERS_
 
-#include "enemy.h"
 #include "enemy_races/human.h"
 #include "enemy_races/dwarf.h"
 #include "enemy_races/elf.h"

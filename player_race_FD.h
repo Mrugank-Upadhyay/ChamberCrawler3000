@@ -1,5 +1,5 @@
-#ifndef _PLAYER_RACE_LIST_
-#define _PLAYER_RACE_LIST_
+#ifndef _PLAYER_RACE_FD_
+#define _PLAYER_RACE_FD_
 
 class Player;
 class Shade;

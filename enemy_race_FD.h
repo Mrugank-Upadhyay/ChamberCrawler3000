@@ -1,5 +1,5 @@
-#ifndef _ENEMY_RACE_LIST_
-#define _ENEMY_RACE_LIST_
+#ifndef _ENEMY_RACE_FD_
+#define _ENEMY_RACE_FD_
 
 class Enemy;
 class Human;
