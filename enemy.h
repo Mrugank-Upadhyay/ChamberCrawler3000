@@ -14,6 +14,7 @@
 
 
 class Player;
+class Cell;
 
 class Enemy : public Character {
     bool isHostile;
@@ -21,6 +22,7 @@ class Enemy : public Character {
     int gold;
 
     // Add pointer back to cell
+    Cell * cell;
 
     protected:
         int randomGold();
@@ -32,8 +34,10 @@ class Enemy : public Character {
 
         void setHostile(bool hostile);
         void setGold(int value);
+        void setCell(Cell * cell);
         bool getHostile();
         int getGold();
+        Cell * getCell();
 
         virtual std::pair<int, int> move(int x, int y);
         virtual void attack(std::shared_ptr<Player> player);
