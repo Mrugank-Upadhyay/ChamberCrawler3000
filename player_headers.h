@@ -1,5 +1,5 @@
-#ifndef _PLAYERRACEHEADERS_
-#define _PLAYERRACEHEADERS_
+#ifndef _PLAYER_HEADERS_
+#define _PLAYER_HEADERS_
 
 #include "../player_races/shade.h"
 #include "../player_races/drow.h"
