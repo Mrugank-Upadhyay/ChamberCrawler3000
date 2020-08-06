@@ -11,10 +11,15 @@ class Item {
     std::string rep;
     std::pair<int, int> position;
   public:
+    Item(std::string type, std::string rep, std::pair<int, int> position);
+
     std::string & getType() const;
+
     std::string & getRep() const;
+    void setRep(std::string & rep);
+
     std::pair<int, int> getPosition() const;
-    void apply(Player p);
+    virtual void apply(Player p);
 };
 
 #endif
