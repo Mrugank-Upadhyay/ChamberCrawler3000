@@ -10,6 +10,7 @@ class Gold : public Item {
 
     public:
         Gold(std::pair<int, int> position, int amount);
+        int getAmount();
         void apply(Player p) override;
 };
 
