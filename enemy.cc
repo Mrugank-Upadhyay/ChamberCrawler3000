@@ -38,10 +38,10 @@ void Enemy::attack(std::shared_ptr<Player> player) {
 }
 
 void Enemy::getStruckBy(std::shared_ptr<Shade> shade) {
-    int damage = calculateDamage(shade->getAtk(), getDef());
-    int health = getHealth();
+    int damage = calculateDamage(shade->getATK(), getDEF());
+    int health = getHP();
     health -= damage;
-    setHealth(health);
+    setHP(health);
 
     // Will this need to notify cell when health == 0?
     // if so, how?
@@ -49,34 +49,34 @@ void Enemy::getStruckBy(std::shared_ptr<Shade> shade) {
 }
 
 void Enemy::getStruckBy(std::shared_ptr<Drow> drow) {
-    int damage = calculateDamage(drow->getAtk(), getDef());
-    int health = getHealth();
+    int damage = calculateDamage(drow->getATK(), getDEF());
+    int health = getHP();
     health -= damage;
-    setHealth(health);
+    setHP(health);
     transferGold(drow, std::make_shared<Enemy>(*this));
 }
 
 void Enemy::getStruckBy(std::shared_ptr<Vampire> vampire) {
-    int damage = calculateDamage(vampire->getAtk(), getDef());
-    int health = getHealth();
+    int damage = calculateDamage(vampire->getATK(), getDEF());
+    int health = getHP();
     health -= damage;
-    setHealth(health);
+    setHP(health);
     transferGold(vampire, std::make_shared<Enemy>(*this));
 }
 
 void Enemy::getStruckBy(std::shared_ptr<Troll> troll) {
-    int damage = calculateDamage(troll->getAtk(), getDef());
-    int health = getHealth();
+    int damage = calculateDamage(troll->getATK(), getDEF());
+    int health = getHP();
     health -= damage;
-    setHealth(health);
+    setHP(health);
     transferGold(troll, std::make_shared<Enemy>(*this));
 }
 
 void Enemy::getStruckBy(std::shared_ptr<Goblin> goblin) {
-    int damage = calculateDamage(goblin->getAtk(), getDef());
-    int health = getHealth();
+    int damage = calculateDamage(goblin->getATK(), getDEF());
+    int health = getHP();
     health -= damage;
-    setHealth(health);
+    setHP(health);
     transferGold(goblin, std::make_shared<Enemy>(*this));
 }
 
@@ -85,8 +85,8 @@ int Enemy::randomGold() {
 }
 
 void Enemy::transferGold(std::shared_ptr<Player> player, std::shared_ptr<Enemy> enemy) {
-    if ((giveGold == true) && (enemy->getHealth() == 0)) {
-        player->setGold(player->getGold() + enemy->gold);
+    if ((giveGold == true) && (enemy->getHP() == 0)) {
+        player->addGold(enemy->gold);
         enemy->gold = 0;
     }
 }

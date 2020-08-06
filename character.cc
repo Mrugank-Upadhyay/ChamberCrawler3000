@@ -1,17 +1,17 @@
 #include "character.h"
 
-Character::Character(std::string race, std::string rep, int health, int atk, int def, std::pair<int, int> position)
-    : race{race}, rep{rep}, health{health}, atk{atk}, def{def}, position{position} {}
+Character::Character(std::string race, std::string rep, int hp, int atk, int def, std::pair<int, int> position)
+    : race{race}, rep{rep}, hp{hp}, atk{atk}, def{def}, position{position} {}
 
-void Character::setHealth(int value) {
-    health = value;
+void Character::setHP(int value) {
+    hp = value;
 }
 
-void Character::setAtk(int value) {
+void Character::setATK(int value) {
     atk = value;
 }
 
-void Character::setDef(int value) {
+void Character::setDEF(int value) {
     def = value;
 }
 
@@ -27,15 +27,15 @@ std::string Character::getRep() {
     return rep;
 }
 
-int Character::getHealth() {
-    return health;
+int Character::getHP() {
+    return hp;
 }
 
-int Character::getAtk() {
+int Character::getATK() {
     return atk;
 }
 
-int Character::getDef() {
+int Character::getDEF() {
     return def;
 }
 

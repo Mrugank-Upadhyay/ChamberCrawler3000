@@ -50,6 +50,7 @@ class Enemy : public Character {
         virtual void getStruckBy(std::shared_ptr<Goblin> goblin);
 
         // Keep purely virtual? or make simply virtual and implement a blank
+        //TODO: possibly dd move in here
         virtual void nextTurn() = 0;
 
 };
