@@ -23,8 +23,8 @@ void Potion::apply(Player p) {
 std::string Potion::printInfo() {
     std::string message;
 
-    if (health != 0) {
-        message = std::to_string(health);
+    if (hp != 0) {
+        message = std::to_string(hp);
     }
 
     else if (atk != 0) {
