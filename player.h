@@ -6,7 +6,7 @@
 
 #include "character.h"
 #include "item_list.h"
-#include "enemy_race_list.h"
+#include "enemy_race_FD.h"
 
 class Cell;
 class Potion;

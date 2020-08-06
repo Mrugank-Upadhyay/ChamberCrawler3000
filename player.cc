@@ -44,7 +44,7 @@ bool Player::isBagActive() const {
 
 //TODO: Complete move function!
 std::pair<int, int> Player::move(int x, int y) {
-  auto previous = this->getPosition();
+  auto previous = getPosition();
   return previous;
 }
 
