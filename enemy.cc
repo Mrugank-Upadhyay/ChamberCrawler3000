@@ -12,12 +12,20 @@ void Enemy::setGold(int value) {
     gold = value;
 }
 
+void Enemy::setCell(Cell * cell) {
+    this->cell = cell;
+}
+
 bool Enemy::getHostile() {
     return isHostile;
 }
 
 int Enemy::getGold() {
     return gold;
+}
+
+Cell * Enemy::getCell() {
+    return cell;
 }
 
 std::pair<int, int> Enemy::move(int x, int y) {
