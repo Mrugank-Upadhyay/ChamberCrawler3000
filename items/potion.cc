@@ -4,6 +4,20 @@
 Potion::Potion(std::string type, std::string rep, std::pair<int, int> position)
     : Item{type, rep, position} {}
 
+int Potion::getHP() {
+    return hp;
+}
+
+int Potion::getATK() {
+    return atk;
+}
+
+int Potion::getDEF() {
+    return def;
+}
+
+
+
 void Potion::apply(Player p) {
     p->applyItem(std::make_shared<Potion>(*this));
 }

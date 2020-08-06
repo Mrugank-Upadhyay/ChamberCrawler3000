@@ -6,12 +6,15 @@
 class Player;
 
 class Potion : public Item {
-    int health;
+    int hp;
     int atk;
     int def;
 
     public:
         Potion(std::string type, std::string rep, std::pair<int, int> position);
+        int getHP();
+        int getATK();
+        int getDEF();
         virtual void apply(Player p) override;
         virtual std::string printInfo();
 };
