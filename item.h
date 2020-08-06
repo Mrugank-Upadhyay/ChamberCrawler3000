@@ -14,13 +14,13 @@ class Item {
   public:
     Item(std::string type, std::string rep, std::pair<int, int> position);
 
-    std::string & getType() const;
+    std::string & getType();
 
-    std::string & getRep() const;
+    std::string & getRep();
     void setRep(std::string & rep);
 
     std::pair<int, int> getPosition() const;
-    virtual void apply(Player p);
+    virtual void apply(Player p) = 0;
 };
 
 #endif

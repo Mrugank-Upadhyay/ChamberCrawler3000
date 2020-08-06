@@ -1,7 +1,7 @@
 #ifndef _POTION_
 #define _POTION_
 
-#include "item.h"
+#include "../item.h"
 
 class Player;
 
