@@ -1,7 +1,7 @@
 #ifndef _RHPOTION_
 #define _RHPOTION_
 
-#include "potion.h"
+#include "../potion.h"
 
 class RHPotion : public Potion {
     public:

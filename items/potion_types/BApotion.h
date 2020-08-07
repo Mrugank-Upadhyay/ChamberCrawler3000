@@ -1,4 +1,4 @@
-#include "potion.h"
+#include "../potion.h"
 
 class BAPotion : public Potion {
     public:

@@ -1,7 +1,7 @@
 #ifndef _BDPOTION_
 #define _BDPOTION_
 
-#include "potion.h"
+#include "../potion.h"
 
 class BDPotion : public Potion {
     public:

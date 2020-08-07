@@ -1,7 +1,7 @@
 #ifndef _WDPOTION_
 #define _WDPOTION_
 
-#include "potion.h"
+#include "../potion.h"
 
 class WDPotion : public Potion {
     public:
