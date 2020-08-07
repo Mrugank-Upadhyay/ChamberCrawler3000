@@ -5,7 +5,7 @@
 #include <memory>
 
 #include "character.h"
-#include "item_list.h"
+#include "item_FD.h"
 #include "enemy_race_FD.h"
 
 class Cell;
