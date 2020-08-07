@@ -41,7 +41,7 @@ void Enemy::getStruckBy(std::shared_ptr<Shade> shade) {
 
     // Will this need to notify cell when health == 0?
     // if so, how?
-    transferGold(shade, std::make_shared<Enemy>(*this));
+    transferGold(shade);
 }
 
 void Enemy::getStruckBy(std::shared_ptr<Drow> drow) {
@@ -49,7 +49,7 @@ void Enemy::getStruckBy(std::shared_ptr<Drow> drow) {
     int health = getHP();
     health -= damage;
     setHP(health);
-    transferGold(drow, std::make_shared<Enemy>(*this));
+    transferGold(drow);
 }
 
 void Enemy::getStruckBy(std::shared_ptr<Vampire> vampire) {
@@ -57,7 +57,7 @@ void Enemy::getStruckBy(std::shared_ptr<Vampire> vampire) {
     int health = getHP();
     health -= damage;
     setHP(health);
-    transferGold(vampire, std::make_shared<Enemy>(*this));
+    transferGold(vampire);
 }
 
 void Enemy::getStruckBy(std::shared_ptr<Troll> troll) {
@@ -65,7 +65,7 @@ void Enemy::getStruckBy(std::shared_ptr<Troll> troll) {
     int health = getHP();
     health -= damage;
     setHP(health);
-    transferGold(troll, std::make_shared<Enemy>(*this));
+    transferGold(troll);
 }
 
 void Enemy::getStruckBy(std::shared_ptr<Goblin> goblin) {
@@ -73,16 +73,16 @@ void Enemy::getStruckBy(std::shared_ptr<Goblin> goblin) {
     int health = getHP();
     health -= damage;
     setHP(health);
-    transferGold(goblin, std::make_shared<Enemy>(*this));
+    transferGold(goblin);
 }
 
 int Enemy::randomGold() {
     return (rand() % 2);
 }
 
-void Enemy::transferGold(std::shared_ptr<Player> player, std::shared_ptr<Enemy> enemy) {
-    if ((giveGold == true) && (enemy->getHP() == 0)) {
-        player->addGold(enemy->gold);
-        enemy->gold = 0;
+void Enemy::transferGold(std::shared_ptr<Player> player) {
+    if ((giveGold == true) && (getHP() == 0)) {
+        player->addGold(gold);
+        gold = 0;
     }
 }

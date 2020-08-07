@@ -22,7 +22,7 @@ class Enemy : public Character {
 
     protected:
         int randomGold();
-        void transferGold(std::shared_ptr<Player> player, std::shared_ptr<Enemy> enemy);
+        void transferGold(std::shared_ptr<Player> player);
 
 
     public:
