@@ -17,3 +17,5 @@ void Vampire::attack(std::shared_ptr<Enemy> enemy) {
         }
     }
 }
+
+void Vampire::nextTurn() {}

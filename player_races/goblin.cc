@@ -8,3 +8,5 @@ void Goblin::attack(std::shared_ptr<Enemy> enemy) {
   enemy->getStruckBy(std::make_shared<Goblin>(this));
   if(enemy->getHP() <= 0) addGold(5);
 }
+
+void Goblin::nextTurn() {}

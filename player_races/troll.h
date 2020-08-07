@@ -6,8 +6,8 @@
 class Troll: public Player {
   public:
     Troll(std::pair<int, int> position);
-    void nextTurn() override;
-    void attack(std::shared_ptr<Enemy> enemy) override;
+    virtual void attack(std::shared_ptr<Enemy> enemy) override;
+    virtual void nextTurn() override;
 };
 
 #endif

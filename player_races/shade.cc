@@ -7,3 +7,5 @@ Shade::Shade(std::pair<int, int> position)
 void Shade::attack(std::shared_ptr<Enemy> enemy) {
     enemy->getStruckBy(std::make_shared<Shade>(this));
 }
+
+void Shade::nextTurn() {}

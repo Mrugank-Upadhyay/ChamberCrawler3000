@@ -6,7 +6,8 @@
 class Shade : public Player {
     public:
         Shade(std::pair<int, int> position);
-        void attack(std::shared_ptr<Enemy> enemy) override;
+        virtual void attack(std::shared_ptr<Enemy> enemy) override;
+        virtual void nextTurn() override;
 };
 
 #endif
