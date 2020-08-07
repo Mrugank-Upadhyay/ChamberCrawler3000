@@ -3,5 +3,6 @@
 
 #include "item_potion_headers.h"
 #include "items/gold.h"
+#include "items/potion.h"
 
 #endif
