@@ -13,7 +13,7 @@ class Potion;
 class Gold;
 
 class Player: public Character {
-    Cell * cell;
+    std::shared_ptr<Cell>  cell;
     int gold;
     int maxHP;
     int tmpATK;
@@ -25,7 +25,7 @@ class Player: public Character {
     Player(std::string race, int hp, int atk, int def,
     std::pair<int, int> position, int gold, int maxHP);
 
-    Cell * getCell() const;
+    std::shared_ptr<Cell>  getCell() const;
     void setCell(Cell * cell);
 
     int getGold() const;
@@ -63,6 +63,8 @@ class Player: public Character {
     virtual void getStruckBy(std::shared_ptr<Dragon> enemy);
     virtual void getStruckBy(std::shared_ptr<Merchant> enemy);
     virtual void getStruckBy(std::shared_ptr<Halfling> enemy);
+
+    virtual void nextTurn() = 0;
 };
 
 #endif

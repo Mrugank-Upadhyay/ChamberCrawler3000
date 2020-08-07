@@ -8,7 +8,7 @@ Player::Player(std::string race, int hp, int atk, int def,
   : Character{race, "@", hp, atk, def, position}, cell{nullptr}, gold{gold},
     maxHP{maxHP}, tmpATK{atk}, tmpDEF{def}, bagActive{false} {}
 
-Cell * Player::getCell() const { return cell; }
+std::shared_ptr<Cell> Player::getCell() const { return cell; }
 void setCell(Cell * cell);
 
 int Player::getGold() const { return gold; }
