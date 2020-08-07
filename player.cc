@@ -1,3 +1,4 @@
+#include "cell.h"
 #include "player.h"
 #include "enemy_headers.h"
 #include "item_headers.h"
