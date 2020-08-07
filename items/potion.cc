@@ -1,4 +1,4 @@
-#include "player.h"
+#include "../player.h"
 #include "potion.h"
 
 Potion::Potion(std::string type, std::string rep, std::pair<int, int> position)

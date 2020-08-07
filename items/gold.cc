@@ -1,4 +1,4 @@
-#include "player.h"
+#include "../player.h"
 #include "gold.h"
 
 Gold::Gold(std::pair<int, int> position, int amount)
