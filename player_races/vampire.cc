@@ -6,7 +6,7 @@ Vampire::Vampire(std::pair<int, int> position)
 
 void Vampire::attack(std::shared_ptr<Enemy> enemy) {
     int hp = enemy->getHP();
-    enemy->getStruckBy(std::make_shared<Vampire>(*this));
+    enemy->getStruckBy(shared_from_this());
     if (hp != enemy->getHP()) {
         if (enemy->getRace() == "Dwarf") {
             setHP(getHP() - 5);

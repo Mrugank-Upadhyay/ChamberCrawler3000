@@ -3,7 +3,7 @@
 
 #include "../player.h"
 
-class Vampire : public Player {
+class Vampire : public Player, std::enable_shared_from_this<Vampire> {
     public:
         Vampire(std::pair<int, int> position);
         virtual void attack(std::shared_ptr<Enemy> enemy) override;

@@ -4,6 +4,10 @@
 Troll::Troll(std::pair<int, int> position)
   : Player("Troll", 120, 25, 15, position, 0, 120) {}
 
+void Troll::attack(std::shared_ptr<Enemy> enemy) {
+  enemy->getStruckBy(shared_from_this());
+}
+
 void Troll::nextTurn() {
   if(getHP() + 5 < getMaxHP()) setHP(getHP() + 5);
   else setHP(getMaxHP());

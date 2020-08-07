@@ -3,7 +3,7 @@
 
 #include "../player.h"
 
-class Drow: public Player {
+class Drow: public Player, std::enable_shared_from_this<Drow> {
   public:
     Drow(std::pair<int, int> position);
     virtual void applyItem(std::shared_ptr<Potion> potion) override;

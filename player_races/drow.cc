@@ -15,7 +15,7 @@ void Drow::applyItem(std::shared_ptr<Potion> potion) {
 }
 
 void Drow::attack(std::shared_ptr<Enemy> enemy) {
-  enemy->getStruckBy(std::make_shared<Drow>(this));
+  enemy->getStruckBy(shared_from_this());
 }
 
 void Drow::nextTurn() {}
