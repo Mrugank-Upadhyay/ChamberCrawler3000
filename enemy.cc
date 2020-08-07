@@ -33,10 +33,6 @@ std::pair<int, int> Enemy::move(int x, int y) {
     return getPosition();
 }
 
-void Enemy::attack(std::shared_ptr<Player> player) {
-    player->getStruckBy(*this);
-}
-
 void Enemy::getStruckBy(std::shared_ptr<Shade> shade) {
     int damage = calculateDamage(shade->getATK(), getDEF());
     int health = getHP();

@@ -40,7 +40,7 @@ class Enemy : public Character {
         Cell * getCell();
 
         virtual std::pair<int, int> move(int x, int y);
-        virtual void attack(std::shared_ptr<Player> player);
+        virtual void attack(std::shared_ptr<Player> player) = 0;
 
         // How is gold going to be transferred? Will we need to differentiate if its a human, merchant or Drag?
         virtual void getStruckBy(std::shared_ptr<Shade> shade);
