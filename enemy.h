@@ -4,11 +4,7 @@
 #include "character.h"
 
 // should we forward declare these? Or keep just #include in header?
-#include "shade.h"
-#include "drow.h"
-#include "vampire.h"
-#include "troll.h"
-#include "goblin.h"
+#include "player_headers.h"
 
 #include <memory>
 
