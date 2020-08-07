@@ -4,15 +4,16 @@
 #include <string>
 
 #include "subject.h"
-#include "observer.h"
-#include "character.h"
+#include "player.h"
+#include "enemy.h"
 #include "item.h"
 
 class Cell: public Subject, public Observer {
     std::string type;
     std::string rep;
     std::pair<int, int> position;
-    std::shared_ptr<Character> character;
+    std::shared_ptr<Player> player;
+    std::shared_ptr<Enemy> enemy;
     std::shared_ptr<Item> item;
   public:
     Cell(std::string type,std::string rep,std::pair<int, int> position);
@@ -21,8 +22,10 @@ class Cell: public Subject, public Observer {
     void setRep(std::string & rep);
     std::pair<int, int> getPosition();
     void setPosition(std::pair<int, int> position);
-    std::shared_ptr<Character> getCharacter();
-    void setCharacter(std::shared_ptr<Character> character);
+    std::shared_ptr<Player> getPlayer();
+    std::shared_ptr<Enemy> getEnemy();
+    void setCharacter(std::shared_ptr<Player> player);
+    void setCharacter(std::shared_ptr<Enemy> enemy);
     std::shared_ptr<Item> getItem();
     void setItem(std::shared_ptr<Item> item);
     std::vector<std::shared_ptr<Observer>> & getObservers();
