@@ -1,3 +1,4 @@
+#include "cell.h"
 #include "player.h"
 #include "enemy.h"
 
@@ -12,7 +13,7 @@ void Enemy::setGold(int value) {
     gold = value;
 }
 
-void Enemy::setCell(Cell * cell) {
+void Enemy::setCell(std::shared_ptr<Cell> cell) {
     this->cell = cell;
 }
 
@@ -24,7 +25,7 @@ int Enemy::getGold() {
     return gold;
 }
 
-Cell * Enemy::getCell() {
+std::shared_ptr<Cell> Enemy::getCell() {
     return cell;
 }
 
