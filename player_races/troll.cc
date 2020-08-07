@@ -8,5 +8,3 @@ void Troll::nextTurn() {
   if(getHP() + 5 < getMaxHP()) setHP(getHP() + 5);
   else setHP(getMaxHP());
 }
-
-void Troll::nextTurn() {}
