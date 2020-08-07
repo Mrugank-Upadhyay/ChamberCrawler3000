@@ -49,7 +49,7 @@ std::pair<int, int> Player::move(int x, int y) {
 
 void Player::applyItem(std::shared_ptr<Potion> potion) {
   int nextHP = getHP() + potion->getHP();
-  setHP(nextHP < maxHP || maxHP == -1 ? nextHP : maxHP);
+  setHP(nextHP < maxHP ? nextHP : maxHP);
   int nextATK = getTmpATK() + potion->getATK();
   setTmpATK(nextATK > 0 ? nextATK : 0);
   int nextDEF = getTmpDEF() + potion->getDEF();

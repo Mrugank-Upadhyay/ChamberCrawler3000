@@ -54,7 +54,7 @@ class Player: public Character {
     virtual void applyItem(std::shared_ptr<Potion> potion);
     virtual void applyItem(std::shared_ptr<Gold> gold);
 
-    virtual void attack(std::shared_ptr<Enemy> enemy);
+    virtual void attack(std::shared_ptr<Enemy> enemy) = 0;
 
     virtual void getStruckBy(std::shared_ptr<Human> enemy);
     virtual void getStruckBy(std::shared_ptr<Dwarf> enemy);
