@@ -13,3 +13,5 @@ std::pair<int, int> Dragon::move(int x, int y) {
 void Dragon::attack(std::shared_ptr<Player> player) {
     player->getStruckBy(std::make_shared<Dragon>(this));
 }
+
+void Dragon::nextTurn() {}

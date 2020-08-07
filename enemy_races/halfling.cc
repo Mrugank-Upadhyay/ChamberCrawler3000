@@ -82,3 +82,5 @@ void Halfling::getStruckBy(std::shared_ptr<Goblin> goblin) {
         transferGold(goblin, std::make_shared<Halfling>(*this));
     }
 }
+
+void Halfling::nextTurn() {}

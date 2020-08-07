@@ -10,3 +10,5 @@ void Elf::attack(std::shared_ptr<Player> player) {
         player->getStruckBy(std::make_shared<Elf>(this));
     }
 }
+
+void Elf::nextTurn() {}

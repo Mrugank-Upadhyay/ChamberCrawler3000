@@ -6,3 +6,5 @@ Human::Human(std::pair<int, int> position)
 void Human::attack(std::shared_ptr<Player> player) {
     player->getStruckBy(std::make_shared<Human>(this));
 }
+
+void Human::nextTurn() {}

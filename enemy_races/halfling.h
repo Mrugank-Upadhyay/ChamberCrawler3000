@@ -9,4 +9,5 @@ class Halfling : public Enemy {
         virtual void getStruckBy(std::shared_ptr<Vampire> vampire) override;
         virtual void getStruckBy(std::shared_ptr<Troll> troll) override;
         virtual void getStruckBy(std::shared_ptr<Goblin> goblin) override;
+        virtual void nextTurn() override;
 };

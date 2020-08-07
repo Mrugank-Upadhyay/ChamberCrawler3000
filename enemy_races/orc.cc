@@ -6,3 +6,5 @@ Orc::Orc(std::pair<int, int> position)
 void Orc::attack(std::shared_ptr<Player> player) {
     player->getStruckBy(std::make_shared<Orc>(this));
 }
+
+void Orc::nextTurn() {}

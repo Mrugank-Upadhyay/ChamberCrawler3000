@@ -6,8 +6,9 @@
 class Dragon : public Enemy {
     public:
         Dragon(std::pair<int, int> position);
-        std::pair<int, int> move(int x, int y);
+        virtual std::pair<int, int> move(int x, int y) override;
         virtual void attack(std::shared_ptr<Player> player) override;
+        virtual void nextTurn() override;
 };
 
 #endif

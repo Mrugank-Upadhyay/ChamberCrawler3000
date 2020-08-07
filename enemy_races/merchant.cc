@@ -7,3 +7,5 @@ Merchant::Merchant(std::pair<int, int> position)
 void Merchant::attack(std::shared_ptr<Player> player) {
     player->getStruckBy(std::make_shared<Merchant>(this));
 }
+
+void Merchant::nextTurn() {}
