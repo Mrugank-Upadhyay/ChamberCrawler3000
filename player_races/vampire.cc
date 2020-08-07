@@ -1,4 +1,5 @@
 #include "vampire.h"
+#include "../enemy.h"
 
 Vampire::Vampire(std::pair<int, int> position) 
     : Player{"Vampire", 50, 25, 25, position, 0, -1} {}
