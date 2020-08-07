@@ -1,3 +1,4 @@
+#include "player.h"
 #include "gold.h"
 
 Gold::Gold(std::pair<int, int> position, int amount)
@@ -7,6 +8,6 @@ int Gold::getAmount() {
     return amount;
 }
 
-void Gold::apply(Player p) {
-    p->applyItem(std::make_shared<Gold>(*this));
+void Gold::apply(std::shared_ptr<Player> player) {
+    player->applyItem(std::make_shared<Gold>(this));
 }

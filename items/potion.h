@@ -15,7 +15,7 @@ class Potion : public Item {
         int getHP();
         int getATK();
         int getDEF();
-        virtual void apply(Player p) override;
+        virtual void apply(std::shared_ptr<Player> player) override;
         virtual std::string printInfo();
 };
 

@@ -11,7 +11,7 @@ class Gold : public Item {
     public:
         Gold(std::pair<int, int> position, int amount);
         int getAmount();
-        void apply(Player p) override;
+        virtual void apply(std::shared_ptr<Player> player) override;
 };
 
 #endif
