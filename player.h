@@ -22,9 +22,8 @@ class Player: public Character {
     std::vector<std::shared_ptr<Item>> bag;
     bool bagActive;
   public:
-    Player(std::string race, std::string rep, int hp, int atk, int def,
-    std::pair<int, int> position, int gold, int maxHP, int tmpATK, int tmpDEF,
-    bool bagActive);
+    Player(std::string race, int hp, int atk, int def,
+    std::pair<int, int> position, int gold, int maxHP, bool bagActive);
 
     Cell * getCell() const;
     void setCell(Cell * cell);

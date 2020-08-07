@@ -3,11 +3,10 @@
 #include "item_headers.h"
 
 
-Player::Player(std::string race, std::string rep, int hp, int atk, int def, 
-    std::pair<int, int> position, int gold, int maxHP, int tmpATK,
-    int tmpDEF, bool bagActive)
-  : Character{race, rep, hp, atk, def, position}, cell{nullptr}, gold{gold},
-    maxHP{maxHP}, tmpATK{tmpATK}, tmpDEF{tmpDEF}, bagActive{bagActive} {}
+Player::Player(std::string race, int hp, int atk, int def, 
+    std::pair<int, int> position, int gold, int maxHP, bool bagActive)
+  : Character{race, "@", hp, atk, def, position}, cell{nullptr}, gold{gold},
+    maxHP{maxHP}, tmpATK{atk}, tmpDEF{def}, bagActive{bagActive} {}
 
 Cell * Player::getCell() const { return cell; }
 void setCell(Cell * cell);
@@ -50,7 +49,7 @@ std::pair<int, int> Player::move(int x, int y) {
 
 void Player::applyItem(std::shared_ptr<Potion> potion) {
   int nextHP = getHP() + potion->getHP();
-  setHP(nextHP);
+  setHP(nextHP < maxHP ? nextHP : maxHP);
   int nextATK = getTmpATK() + potion->getATK();
   setTmpATK(nextATK > 0 ? nextATK : 0);
   int nextDEF = getTmpDEF() + potion->getDEF();
