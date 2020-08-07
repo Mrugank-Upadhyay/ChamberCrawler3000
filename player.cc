@@ -4,9 +4,9 @@
 
 
 Player::Player(std::string race, int hp, int atk, int def, 
-    std::pair<int, int> position, int gold, int maxHP, bool bagActive)
+    std::pair<int, int> position, int gold, int maxHP)
   : Character{race, "@", hp, atk, def, position}, cell{nullptr}, gold{gold},
-    maxHP{maxHP}, tmpATK{atk}, tmpDEF{def}, bagActive{bagActive} {}
+    maxHP{maxHP}, tmpATK{atk}, tmpDEF{def}, bagActive{false} {}
 
 Cell * Player::getCell() const { return cell; }
 void setCell(Cell * cell);

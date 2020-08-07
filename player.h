@@ -23,7 +23,7 @@ class Player: public Character {
     bool bagActive;
   public:
     Player(std::string race, int hp, int atk, int def,
-    std::pair<int, int> position, int gold, int maxHP, bool bagActive);
+    std::pair<int, int> position, int gold, int maxHP);
 
     Cell * getCell() const;
     void setCell(Cell * cell);
