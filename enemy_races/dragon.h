@@ -3,7 +3,7 @@
 
 #include "../enemy.h"
 
-class Dragon : public Enemy {
+class Dragon : public Enemy, std::enable_shared_from_this<Dragon> {
     public:
         Dragon(std::pair<int, int> position);
         virtual std::pair<int, int> move(int x, int y) override;

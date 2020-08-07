@@ -5,7 +5,7 @@ Halfling::Halfling(std::pair<int, int> position)
 
 
 void Halfling::attack(std::shared_ptr<Player> player) {
-    player->getStruckBy(std::make_shared<Halfling>(this));
+    player->getStruckBy(shared_from_this());
 }
 
 void Halfling::getStruckBy(std::shared_ptr<Shade> shade) {
@@ -19,7 +19,7 @@ void Halfling::getStruckBy(std::shared_ptr<Shade> shade) {
         setHP(health);
         // Will this need to notify cell when health == 0?
         // if so, how?
-        transferGold(shade, std::make_shared<Halfling>(*this));
+        transferGold(shade);
     }
 }
 
@@ -34,7 +34,7 @@ void Halfling::getStruckBy(std::shared_ptr<Drow> drow) {
         setHP(health);
         // Will this need to notify cell when health == 0?
         // if so, how?
-        transferGold(drow, std::make_shared<Halfling>(*this));
+        transferGold(drow);
     }
 }
 
@@ -49,7 +49,7 @@ void Halfling::getStruckBy(std::shared_ptr<Vampire> vampire) {
         setHP(health);
         // Will this need to notify cell when health == 0?
         // if so, how?
-        transferGold(vampire, std::make_shared<Halfling>(*this));
+        transferGold(vampire);
     }
 }
 
@@ -64,7 +64,7 @@ void Halfling::getStruckBy(std::shared_ptr<Troll> troll) {
         setHP(health);
         // Will this need to notify cell when health == 0?
         // if so, how?
-        transferGold(troll, std::make_shared<Halfling>(*this));
+        transferGold(troll);
     }
 }
 
@@ -79,7 +79,7 @@ void Halfling::getStruckBy(std::shared_ptr<Goblin> goblin) {
         setHP(health);
         // Will this need to notify cell when health == 0?
         // if so, how?
-        transferGold(goblin, std::make_shared<Halfling>(*this));
+        transferGold(goblin);
     }
 }
 

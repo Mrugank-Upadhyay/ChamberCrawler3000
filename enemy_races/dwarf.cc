@@ -5,7 +5,7 @@ Dwarf::Dwarf(std::pair<int, int> position)
     : Enemy{"Dwarf", "W", 100, 20, 30, position, true, randomGold(), true} {}
 
 void Dwarf::attack(std::shared_ptr<Player> player) {
-    player->getStruckBy(std::make_shared<Dwarf>(this));
+    player->getStruckBy(shared_from_this());
 }
 
 void Dwarf::nextTurn() {}
