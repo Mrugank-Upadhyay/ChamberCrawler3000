@@ -10,7 +10,7 @@ Player::Player(std::string race, int hp, int atk, int def,
     maxHP{maxHP}, tmpATK{atk}, tmpDEF{def}, bagActive{false} {}
 
 std::shared_ptr<Cell> Player::getCell() const { return cell; }
-void setCell(Cell * cell);
+void Player::setCell(std::shared_ptr<Cell> cell) { this->cell = cell; }
 
 int Player::getGold() const { return gold; }
 void Player::addGold(int gold) { this->gold += gold; }
@@ -42,9 +42,16 @@ bool Player::isBagActive() const {
   return bagActive;
 }
 
-//TODO: Complete move function!
-std::pair<int, int> Player::move(int x, int y) {
+std::pair<int, int> Player::move(std::shared_ptr<Cell> dest) {
   auto previous = getPosition();
+
+  std::shared_ptr<Player> nil = nullptr;
+  cell->setCharacter(nil);
+  dest->setCharacter(shared_from_this());
+  setCell(dest);
+  setPosition(dest->getPosition());
+  dest->notifyObservers();
+
   return previous;
 }
 

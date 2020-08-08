@@ -12,8 +12,8 @@ class Cell;
 class Potion;
 class Gold;
 
-class Player: public Character {
-    std::shared_ptr<Cell>  cell;
+class Player: public Character, public std::enable_shared_from_this<Player> {
+    std::shared_ptr<Cell> cell;
     int gold;
     int maxHP;
     int tmpATK;
@@ -26,7 +26,7 @@ class Player: public Character {
     std::pair<int, int> position, int gold, int maxHP);
 
     std::shared_ptr<Cell>  getCell() const;
-    void setCell(Cell * cell);
+    void setCell(std::shared_ptr<Cell> cell);
 
     int getGold() const;
     void addGold(int gold);
@@ -49,7 +49,7 @@ class Player: public Character {
     bool isBagActive() const;
     void setBagActive(bool bagActive);
 
-    std::pair<int, int> move(int x, int y);
+    std::pair<int, int> move(std::shared_ptr<Cell> dest);
 
     virtual void applyItem(std::shared_ptr<Potion> potion);
     virtual void applyItem(std::shared_ptr<Gold> gold);
