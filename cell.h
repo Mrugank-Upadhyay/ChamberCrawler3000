@@ -22,8 +22,8 @@ class Cell: public Subject, public Observer {
     void setRep(std::string & rep);
     std::pair<int, int> getPosition();
     void setPosition(std::pair<int, int> position);
-    std::shared_ptr<Player> getPlayer();
-    std::shared_ptr<Enemy> getEnemy();
+    virtual std::shared_ptr<Player> getPlayer() override;
+    virtual std::shared_ptr<Enemy> getEnemy() override;
     void setCharacter(std::shared_ptr<Player> player);
     void setCharacter(std::shared_ptr<Enemy> enemy);
     std::shared_ptr<Item> getItem();

@@ -28,8 +28,7 @@ void Cell::setItem(std::shared_ptr<Item> item) { this->item = item; }
 std::vector<std::shared_ptr<Observer>> & Cell::getObservers() { return observers; }
 
 void Cell::notify(std::shared_ptr<Subject> whoNotified) {
-  std::shared_ptr<Cell> otherCell = std::make_shared<Cell>(whoNotified);
-  if(enemy != nullptr && otherCell->getPlayer() != nullptr) {
-    enemy->attack(otherCell->getPlayer());
+  if(enemy != nullptr && whoNotified->getPlayer() != nullptr) {
+    enemy->attack(whoNotified->getPlayer());
   }
 }
