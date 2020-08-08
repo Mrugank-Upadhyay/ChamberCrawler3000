@@ -17,7 +17,7 @@ int Potion::getDEF() {
 }
 
 void Potion::apply(std::shared_ptr<Player> player) {
-    player->applyItem(std::make_shared<Potion>(this));
+    player->applyItem(shared_from_this());
 }
 
 std::string Potion::printInfo() {
