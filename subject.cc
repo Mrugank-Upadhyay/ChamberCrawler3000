@@ -1,3 +1,5 @@
+#include "player.h"
+#include "enemy.h"
 #include "subject.h"
 
 Subject::Subject() {}
