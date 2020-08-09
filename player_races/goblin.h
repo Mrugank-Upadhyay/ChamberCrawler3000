@@ -8,7 +8,6 @@ class Goblin: public Player {
     Goblin(std::pair<int, int> position);
     virtual void attack(std::shared_ptr<Enemy> enemy) override;
     virtual void getStruckBy(Orc * enemy) override;
-    virtual void nextTurn() override;
 };
 
 #endif
