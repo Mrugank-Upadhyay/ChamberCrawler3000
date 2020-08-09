@@ -1,6 +1,6 @@
 #include "../enemy.h"
 
-class Halfling : public Enemy, std::enable_shared_from_this<Halfling> {
+class Halfling : public Enemy {
     public:
         Halfling(std::pair<int, int> position);
         virtual void attack(std::shared_ptr<Player> player) override;

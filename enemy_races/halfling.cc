@@ -5,7 +5,7 @@ Halfling::Halfling(std::pair<int, int> position)
 
 
 void Halfling::attack(std::shared_ptr<Player> player) {
-    player->getStruckBy(shared_from_this());
+    player->getStruckBy(this);
 }
 
 void Halfling::getStruckBy(Shade * shade) {
