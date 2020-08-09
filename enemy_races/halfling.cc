@@ -1,7 +1,9 @@
 #include "halfling.h"
 
 Halfling::Halfling(std::pair<int, int> position) 
-    : Enemy{"Halfling", "L", 100, 15, 20, position, true, randomGold(), true} {}
+    : Enemy{"Halfling", "L", 100, 15, 20, position, true, 0, true} {
+        setGold(randomGold());
+}
 
 
 void Halfling::attack(std::shared_ptr<Player> player) {

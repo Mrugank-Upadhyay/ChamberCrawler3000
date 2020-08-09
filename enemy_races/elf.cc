@@ -1,7 +1,9 @@
 #include "elf.h"
 
 Elf::Elf(std::pair<int, int> position)
-    : Enemy{"Elf", "E", 140, 30, 10, position, true, randomGold(), true} {}
+    : Enemy{"Elf", "E", 140, 30, 10, position, true, 0, true} {
+        setGold(randomGold());
+}
 
 void Elf::attack(std::shared_ptr<Player> player) {
     player->getStruckBy(this);
