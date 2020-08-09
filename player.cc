@@ -1,5 +1,8 @@
-#include "cell.h"
 #include "player.h"
+
+#include "cell.h"
+
+#include "enemy.h"
 #include "enemy_races/human.h"
 #include "enemy_races/dwarf.h"
 #include "enemy_races/elf.h"
@@ -7,6 +10,8 @@
 #include "enemy_races/merchant.h"
 #include "enemy_races/dragon.h"
 #include "enemy_races/halfling.h"
+
+#include "item.h"
 #include "items/gold.h"
 #include "items/potion.h"
 
