@@ -1,5 +1,10 @@
 #include "cell.h"
 #include "player.h"
+#include "./player_races/shade.h"
+#include "./player_races/drow.h"
+#include "./player_races/vampire.h"
+#include "./player_races/troll.h"
+#include "./player_races/goblin.h"
 #include "enemy.h"
 
 Enemy::Enemy(std::string race, std::string rep, int health, int atk, int def, std::pair<int, int> position, bool hostile, int gold, bool giveGold)

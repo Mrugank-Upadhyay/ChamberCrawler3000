@@ -2,14 +2,15 @@
 #define _ENEMY_
 
 #include "character.h"
-
-// should we forward declare these? Or keep just #include in header?
-#include "player_headers.h"
-
 #include <memory>
 
 
 class Player;
+class Shade;
+class Drow;
+class Vampire;
+class Troll;
+class Goblin;
 class Cell;
 
 class Enemy : public Character {
