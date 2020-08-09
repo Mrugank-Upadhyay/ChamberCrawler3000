@@ -8,7 +8,7 @@ void Halfling::attack(std::shared_ptr<Player> player) {
     player->getStruckBy(shared_from_this());
 }
 
-void Halfling::getStruckBy(std::shared_ptr<Shade> shade) {
+void Halfling::getStruckBy(Shade * shade) {
     int hit = rand() % 2;
 
     // Add in action messaged (like on page 8 of pdf)
@@ -23,7 +23,7 @@ void Halfling::getStruckBy(std::shared_ptr<Shade> shade) {
     }
 }
 
-void Halfling::getStruckBy(std::shared_ptr<Drow> drow) {
+void Halfling::getStruckBy(Drow * drow) {
     int hit = rand() % 2;
 
     // Add in action messaged (like on page 8 of pdf)
@@ -38,7 +38,7 @@ void Halfling::getStruckBy(std::shared_ptr<Drow> drow) {
     }
 }
 
-void Halfling::getStruckBy(std::shared_ptr<Vampire> vampire) {
+void Halfling::getStruckBy(Vampire * vampire) {
     int hit = rand() % 2;
 
     // Add in action messaged (like on page 8 of pdf)
@@ -53,7 +53,7 @@ void Halfling::getStruckBy(std::shared_ptr<Vampire> vampire) {
     }
 }
 
-void Halfling::getStruckBy(std::shared_ptr<Troll> troll) {
+void Halfling::getStruckBy(Troll * troll) {
     int hit = rand() % 2;
 
     // Add in action messaged (like on page 8 of pdf)
@@ -68,7 +68,7 @@ void Halfling::getStruckBy(std::shared_ptr<Troll> troll) {
     }
 }
 
-void Halfling::getStruckBy(std::shared_ptr<Goblin> goblin) {
+void Halfling::getStruckBy(Goblin * goblin) {
     int hit = rand() % 2;
 
     // Add in action messaged (like on page 8 of pdf)

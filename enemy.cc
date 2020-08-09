@@ -34,7 +34,7 @@ std::pair<int, int> Enemy::move(int x, int y) {
     return getPosition();
 }
 
-void Enemy::getStruckBy(std::shared_ptr<Shade> shade) {
+void Enemy::getStruckBy(Shade * shade) {
     int damage = calculateDamage(shade->getATK(), getDEF());
     int health = getHP();
     health -= damage;
@@ -45,7 +45,7 @@ void Enemy::getStruckBy(std::shared_ptr<Shade> shade) {
     transferGold(shade);
 }
 
-void Enemy::getStruckBy(std::shared_ptr<Drow> drow) {
+void Enemy::getStruckBy(Drow * drow) {
     int damage = calculateDamage(drow->getATK(), getDEF());
     int health = getHP();
     health -= damage;
@@ -53,7 +53,7 @@ void Enemy::getStruckBy(std::shared_ptr<Drow> drow) {
     transferGold(drow);
 }
 
-void Enemy::getStruckBy(std::shared_ptr<Vampire> vampire) {
+void Enemy::getStruckBy(Vampire * vampire) {
     int damage = calculateDamage(vampire->getATK(), getDEF());
     int health = getHP();
     health -= damage;
@@ -61,7 +61,7 @@ void Enemy::getStruckBy(std::shared_ptr<Vampire> vampire) {
     transferGold(vampire);
 }
 
-void Enemy::getStruckBy(std::shared_ptr<Troll> troll) {
+void Enemy::getStruckBy(Troll * troll) {
     int damage = calculateDamage(troll->getATK(), getDEF());
     int health = getHP();
     health -= damage;
@@ -69,7 +69,7 @@ void Enemy::getStruckBy(std::shared_ptr<Troll> troll) {
     transferGold(troll);
 }
 
-void Enemy::getStruckBy(std::shared_ptr<Goblin> goblin) {
+void Enemy::getStruckBy(Goblin * goblin) {
     int damage = calculateDamage(goblin->getATK(), getDEF());
     int health = getHP();
     health -= damage;
@@ -81,7 +81,7 @@ int Enemy::randomGold() {
     return (rand() % 2);
 }
 
-void Enemy::transferGold(std::shared_ptr<Player> player) {
+void Enemy::transferGold(Player * player) {
     if ((giveGold == true) && (getHP() == 0)) {
         player->addGold(gold);
         gold = 0;

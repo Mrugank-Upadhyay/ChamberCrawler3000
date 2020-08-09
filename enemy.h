@@ -22,7 +22,7 @@ class Enemy : public Character {
 
     protected:
         int randomGold();
-        void transferGold(std::shared_ptr<Player> player);
+        void transferGold(Player * player);
 
 
     public:
@@ -39,11 +39,11 @@ class Enemy : public Character {
         virtual void attack(std::shared_ptr<Player> player) = 0;
 
         // How is gold going to be transferred? Will we need to differentiate if its a human, merchant or Drag?
-        virtual void getStruckBy(std::shared_ptr<Shade> shade);
-        virtual void getStruckBy(std::shared_ptr<Drow> drow);
-        virtual void getStruckBy(std::shared_ptr<Vampire> vampire);
-        virtual void getStruckBy(std::shared_ptr<Troll> troll);
-        virtual void getStruckBy(std::shared_ptr<Goblin> goblin);
+        virtual void getStruckBy(Shade * shade);
+        virtual void getStruckBy(Drow * drow);
+        virtual void getStruckBy(Vampire * vampire);
+        virtual void getStruckBy(Troll * troll);
+        virtual void getStruckBy(Goblin * goblin);
 
         // Keep purely virtual? or make simply virtual and implement a blank
         //TODO: possibly dd move in here
