@@ -1,8 +1,14 @@
 #include "cell.h"
 #include "player.h"
-#include "enemy_headers.h"
-#include "item_headers.h"
-
+#include "enemy_races/human.h"
+#include "enemy_races/dwarf.h"
+#include "enemy_races/elf.h"
+#include "enemy_races/orc.h"
+#include "enemy_races/merchant.h"
+#include "enemy_races/dragon.h"
+#include "enemy_races/halfling.h"
+#include "items/gold.h"
+#include "items/potion.h"
 
 Player::Player(std::string race, int hp, int atk, int def, 
     std::pair<int, int> position, int gold, int maxHP)

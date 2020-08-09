@@ -5,10 +5,19 @@
 #include <memory>
 
 #include "character.h"
-#include "item_FD.h"
-#include "enemy_race_FD.h"
 
 class Cell;
+
+class Enemy;
+class Human;
+class Dwarf;
+class Elf;
+class Orc;
+class Merchant;
+class Dragon;
+class Halfling;
+
+class Item;
 class Potion;
 class Gold;
 
