@@ -20,7 +20,7 @@ class Item {
     void setRep(std::string & rep);
 
     std::pair<int, int> getPosition() const;
-    virtual void apply(std::shared_ptr<Player> player) = 0;
+    virtual void apply(Player * player) = 0;
 };
 
 #endif

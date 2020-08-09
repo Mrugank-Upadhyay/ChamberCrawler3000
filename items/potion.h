@@ -15,7 +15,7 @@ class Potion : public Item, std::enable_shared_from_this<Potion> {
         int getHP();
         int getATK();
         int getDEF();
-        virtual void apply(std::shared_ptr<Player> player) override;
+        virtual void apply(Player * player) override;
         virtual std::string printInfo();
 };
 
