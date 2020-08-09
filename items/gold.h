@@ -5,7 +5,7 @@
 
 class Player;
 
-class Gold : public Item, std::enable_shared_from_this<Gold> {
+class Gold : public Item {
     int amount;
 
     public:

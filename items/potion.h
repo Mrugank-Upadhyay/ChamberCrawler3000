@@ -5,7 +5,7 @@
 
 class Player;
 
-class Potion : public Item, std::enable_shared_from_this<Potion> {
+class Potion : public Item {
     int hp;
     int atk;
     int def;
