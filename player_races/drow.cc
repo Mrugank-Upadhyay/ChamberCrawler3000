@@ -5,7 +5,7 @@
 Drow::Drow(std::pair<int, int> position)
   : Player{"Drow", 150, 25, 15, position, 0, 150} {}
 
-void Drow::applyItem(std::shared_ptr<Potion> potion) {
+void Drow::applyItem(Potion * potion) {
   int nextHP = getHP() + potion->getHP() * 1.5;
   setHP(nextHP < getMaxHP() ? nextHP : getMaxHP());
   int nextATK = getTmpATK() + potion->getATK() * 1.5;
@@ -15,7 +15,7 @@ void Drow::applyItem(std::shared_ptr<Potion> potion) {
 }
 
 void Drow::attack(std::shared_ptr<Enemy> enemy) {
-  enemy->getStruckBy(shared_from_this());
+  enemy->getStruckBy(this);
 }
 
 void Drow::nextTurn() {}

@@ -12,7 +12,7 @@ class Cell;
 class Potion;
 class Gold;
 
-class Player: public Character, public std::enable_shared_from_this<Player> {
+class Player: public Character {
     std::shared_ptr<Cell> cell;
     int gold;
     int maxHP;
@@ -25,7 +25,7 @@ class Player: public Character, public std::enable_shared_from_this<Player> {
     Player(std::string race, int hp, int atk, int def,
     std::pair<int, int> position, int gold, int maxHP);
 
-    std::shared_ptr<Cell>  getCell() const;
+    std::shared_ptr<Cell> getCell() const;
     void setCell(std::shared_ptr<Cell> cell);
 
     int getGold() const;
@@ -49,20 +49,20 @@ class Player: public Character, public std::enable_shared_from_this<Player> {
     bool isBagActive() const;
     void setBagActive(bool bagActive);
 
-    std::pair<int, int> move(std::shared_ptr<Cell> dest);
+    std::pair<int, int> move(std::pair<int, int> position);
 
-    virtual void applyItem(std::shared_ptr<Potion> potion);
-    virtual void applyItem(std::shared_ptr<Gold> gold);
+    virtual void applyItem(Potion * potion);
+    virtual void applyItem(Gold * gold);
 
     virtual void attack(std::shared_ptr<Enemy> enemy) = 0;
 
-    virtual void getStruckBy(std::shared_ptr<Human> enemy);
-    virtual void getStruckBy(std::shared_ptr<Dwarf> enemy);
-    virtual void getStruckBy(std::shared_ptr<Elf> enemy);
-    virtual void getStruckBy(std::shared_ptr<Orc> enemy);
-    virtual void getStruckBy(std::shared_ptr<Dragon> enemy);
-    virtual void getStruckBy(std::shared_ptr<Merchant> enemy);
-    virtual void getStruckBy(std::shared_ptr<Halfling> enemy);
+    virtual void getStruckBy(Human * enemy);
+    virtual void getStruckBy(Dwarf * enemy);
+    virtual void getStruckBy(Elf * enemy);
+    virtual void getStruckBy(Orc * enemy);
+    virtual void getStruckBy(Dragon * enemy);
+    virtual void getStruckBy(Merchant * enemy);
+    virtual void getStruckBy(Halfling * enemy);
 
     virtual void nextTurn() = 0;
 };

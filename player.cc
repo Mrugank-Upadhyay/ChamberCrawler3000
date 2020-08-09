@@ -42,20 +42,13 @@ bool Player::isBagActive() const {
   return bagActive;
 }
 
-std::pair<int, int> Player::move(std::shared_ptr<Cell> dest) {
+std::pair<int, int> Player::move(std::pair<int, int> position) {
   auto previous = getPosition();
-
-  std::shared_ptr<Player> nil = nullptr;
-  cell->setCharacter(nil);
-  dest->setCharacter(shared_from_this());
-  setCell(dest);
-  setPosition(dest->getPosition());
-  dest->notifyObservers();
-
+  setPosition(position);
   return previous;
 }
 
-void Player::applyItem(std::shared_ptr<Potion> potion) {
+void Player::applyItem(Potion * potion) {
   int nextHP = getHP() + potion->getHP();
   setHP(nextHP < maxHP ? nextHP : maxHP);
   int nextATK = getTmpATK() + potion->getATK();
@@ -64,41 +57,41 @@ void Player::applyItem(std::shared_ptr<Potion> potion) {
   setTmpDEF(nextDEF > 0 ? nextDEF : 0);
 }
 
-void Player::applyItem(std::shared_ptr<Gold> gold) {
+void Player::applyItem(Gold * gold) {
   addGold(gold->getAmount());
 }
 
-void Player::getStruckBy(std::shared_ptr<Human> enemy) {
+void Player::getStruckBy(Human * enemy) {
   int damage = calculateDamage(enemy->getATK(), tmpDEF);
   setHP(getHP() - damage);
 }
 
-void Player::getStruckBy(std::shared_ptr<Dwarf> enemy) {
+void Player::getStruckBy(Dwarf * enemy) {
   int damage = calculateDamage(enemy->getATK(), tmpDEF);
   setHP(getHP() - damage);
 }
 
-void Player::getStruckBy(std::shared_ptr<Elf> enemy) {
+void Player::getStruckBy(Elf * enemy) {
   int damage = calculateDamage(enemy->getATK(), tmpDEF);
   setHP(getHP() - damage);
 }
 
-void Player::getStruckBy(std::shared_ptr<Orc> enemy) {
+void Player::getStruckBy(Orc * enemy) {
   int damage = calculateDamage(enemy->getATK(), tmpDEF);
   setHP(getHP() - damage);
 }
 
-void Player::getStruckBy(std::shared_ptr<Dragon> enemy) {
+void Player::getStruckBy(Dragon * enemy) {
   int damage = calculateDamage(enemy->getATK(), tmpDEF);
   setHP(getHP() - damage);
 }
 
-void Player::getStruckBy(std::shared_ptr<Merchant> enemy) {
+void Player::getStruckBy(Merchant * enemy) {
   int damage = calculateDamage(enemy->getATK(), tmpDEF);
   setHP(getHP() - damage);
 }
 
-void Player::getStruckBy(std::shared_ptr<Halfling> enemy) {
+void Player::getStruckBy(Halfling * enemy) {
   int damage = calculateDamage(enemy->getATK(), tmpDEF);
   setHP(getHP() - damage);
 }
