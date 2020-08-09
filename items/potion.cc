@@ -34,4 +34,6 @@ std::string Potion::printInfo() {
     else if (def != 0) {
         message = std::to_string(def);
     } 
+
+    return message;
 }
