@@ -42,9 +42,13 @@ bool Player::isBagActive() const {
   return bagActive;
 }
 
-std::pair<int, int> Player::move(std::pair<int, int> position) {
+std::pair<int, int> Player::move(std::shared_ptr<Cell> dest) {
   auto previous = getPosition();
-  setPosition(position);
+
+  //std::shared_ptr<Player> nil = nullptr;
+  //cell->setCharacter(nil);
+  //dest->setCharacter(this);
+
   return previous;
 }
 

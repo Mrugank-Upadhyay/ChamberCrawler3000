@@ -7,7 +7,7 @@ class Subject;
 
 class Observer {
   public:
-    virtual void notify(std::shared_ptr<Subject> whoNotified) = 0;
+    virtual void notify(Subject * whoNotified) = 0;
     virtual ~Observer();
 };
 

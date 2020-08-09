@@ -49,7 +49,7 @@ class Player: public Character {
     bool isBagActive() const;
     void setBagActive(bool bagActive);
 
-    std::pair<int, int> move(std::pair<int, int> position);
+    std::pair<int, int> move(std::shared_ptr<Cell> dest);
 
     virtual void applyItem(Potion * potion);
     virtual void applyItem(Gold * gold);

@@ -24,13 +24,13 @@ class Cell: public Subject, public Observer {
     void setPosition(std::pair<int, int> position);
     virtual std::shared_ptr<Player> getPlayer() override;
     virtual std::shared_ptr<Enemy> getEnemy() override;
-    void setCharacter(std::shared_ptr<Player> player);
-    void setCharacter(std::shared_ptr<Enemy> enemy);
+    void setCharacter(Player * player);
+    void setCharacter(Enemy * enemy);
     std::shared_ptr<Item> getItem();
     void setItem(std::shared_ptr<Item> item);
     std::vector<std::shared_ptr<Observer>> & getObservers();
 
-    void notify(std::shared_ptr<Subject> whoNotified);
+    void notify(Subject * whoNotified) override;
 };
 
 #endif
