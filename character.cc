@@ -44,8 +44,9 @@ std::pair<int, int> Character::getPosition() {
 }
 
 int Character::calculateDamage(int atk, int def) {
-    int damage = static_cast<int>(ceil(((100 / (100 + def)) * atk)));
-    return damage;
+    double d_atk = atk;
+    double d_def = def;
+    return int(ceil((100/(100+d_def))*d_atk));
 }
 
 std::string Character::info() {
