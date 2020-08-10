@@ -1,4 +1,26 @@
-#include "headerfiles.h"
+#include "./player_races/shade.h"
+#include "./player_races/drow.h"
+#include "./player_races/vampire.h"
+#include "./player_races/troll.h"
+#include "./player_races/goblin.h"
+
+#include "./enemy_races/human.h"
+#include "./enemy_races/dwarf.h"
+#include "./enemy_races/elf.h"
+#include "./enemy_races/orc.h"
+#include "./enemy_races/merchant.h"
+#include "./enemy_races/dragon.h"
+#include "./enemy_races/halfling.h"
+
+#include "./items/gold.h"
+#include "./items/potion.h"
+#include "./items/potion_types/RHpotion.h"
+#include "./items/potion_types/BApotion.h"
+#include "./items/potion_types/BDpotion.h"
+#include "./items/potion_types/PHpotion.h"
+#include "./items/potion_types/WApotion.h"
+#include "./items/potion_types/WDpotion.h"
+
 #include <iostream>
 using namespace std;
 
