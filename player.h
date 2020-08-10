@@ -73,7 +73,9 @@ class Player: public Character {
     virtual void getStruckBy(Merchant * enemy);
     virtual void getStruckBy(Halfling * enemy);
 
-    virtual void nextTurn() = 0;
+    virtual void nextTurn() override;
+
+    virtual std::string info() override;
 };
 
 #endif

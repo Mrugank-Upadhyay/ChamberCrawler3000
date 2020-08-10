@@ -20,20 +20,30 @@ void Potion::apply(Player * player) {
     player->applyItem(this);
 }
 
-std::string Potion::printInfo() {
-    std::string message;
+//std::string Potion::printInfo() {
+    //std::string message;
 
-    if (hp != 0) {
-        message = std::to_string(hp);
-    }
+    //if (hp != 0) {
+        //message = std::to_string(hp);
+    //}
 
-    else if (atk != 0) {
-        message = std::to_string(atk);
-    }
+    //else if (atk != 0) {
+        //message = std::to_string(atk);
+    //}
 
-    else if (def != 0) {
-        message = std::to_string(def);
-    } 
+    //else if (def != 0) {
+        //message = std::to_string(def);
+    //} 
 
-    return message;
+    //return message;
+//}
+
+std::string Potion::info() {
+  return getType() + " " +
+         "shown as " +
+         getRep() + " " +
+         "changes hp:atk:def by " + 
+         std::to_string(getHP()) + ":" +
+         std::to_string(getATK()) + ":" +
+         std::to_string(getDEF());
 }

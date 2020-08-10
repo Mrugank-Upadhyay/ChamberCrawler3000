@@ -48,8 +48,9 @@ class Enemy : public Character {
 
         // Keep purely virtual? or make simply virtual and implement a blank
         //TODO: possibly dd move in here
-        virtual void nextTurn() = 0;
+        virtual void nextTurn() override = 0;
 
+        virtual std::string info() override;
 };
 
 #endif

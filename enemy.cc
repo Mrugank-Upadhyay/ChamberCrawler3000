@@ -92,3 +92,15 @@ void Enemy::transferGold(Player * player) {
         gold = 0;
     }
 }
+
+std::string Enemy::info() {
+  std::string str = Character::info();
+  if(getHostile()) {
+    str += " who is hostile";
+  }
+  else {
+    str += " who is not hostile";
+  }
+  str += " and has " + std::to_string(getGold()) + " gold";
+  return str;
+}

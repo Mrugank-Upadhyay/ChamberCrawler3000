@@ -47,3 +47,15 @@ int Character::calculateDamage(int atk, int def) {
     int damage = static_cast<int>(ceil(((100 / (100 + def)) * atk)));
     return damage;
 }
+
+std::string Character::info() {
+  auto pos = getPosition();
+  return getRace() + " " +
+         "shown as " +
+         getRep() + " positioned at (" +
+         std::to_string(pos.first) + "," + std::to_string(pos.second) + ") " +
+         "with hp:atk:def of " +
+         std::to_string(getHP()) + ":" +
+         std::to_string(getATK()) + ":" +
+         std::to_string(getDEF());
+}

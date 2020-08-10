@@ -21,6 +21,8 @@ class Item {
 
     std::pair<int, int> getPosition() const;
     virtual void apply(Player * player) = 0;
+
+    virtual std::string info() = 0;
 };
 
 #endif

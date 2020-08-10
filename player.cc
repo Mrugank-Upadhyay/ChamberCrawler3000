@@ -111,3 +111,21 @@ void Player::getStruckBy(Halfling * enemy) {
   setHP(getHP() - damage);
 }
 
+void Player::nextTurn() {}
+
+std::string Player::info() {
+  auto str = Character::info() + " " +
+         "and has " +
+         std::to_string(getGold()) + " gold " +
+         "with current maxHP:tmpATK:tmpDEF of " +
+         std::to_string(getMaxHP()) + ":" +
+         std::to_string(getTmpATK()) + ":" +
+         std::to_string(getTmpDEF()) + " ";
+
+  str += "plus a bag with:";
+  for(auto item_ptr: getBag()) {
+    str += " " + item_ptr->info() + ",";
+  }
+  if(getBag().size() == 0) str += " nothing";
+  return str;
+}

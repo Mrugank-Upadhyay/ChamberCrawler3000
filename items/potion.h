@@ -16,7 +16,7 @@ class Potion : public Item {
         int getATK();
         int getDEF();
         virtual void apply(Player * player) override;
-        virtual std::string printInfo();
+        virtual std::string info() override;
 };
 
 #endif

@@ -12,6 +12,7 @@ class Gold : public Item {
         Gold(std::pair<int, int> position, int amount);
         int getAmount();
         virtual void apply(Player * player) override;
+        virtual std::string info() override;
 };
 
 #endif

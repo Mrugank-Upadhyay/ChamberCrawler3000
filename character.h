@@ -35,6 +35,8 @@ class Character {
         std::pair<int, int> getPosition();
 
         virtual void nextTurn() = 0;
+
+        virtual std::string info();
 };
 
 #endif
