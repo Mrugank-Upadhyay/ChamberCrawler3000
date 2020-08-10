@@ -1,4 +1,5 @@
 #include "merchant.h"
+#include "../player.h"
 
 // If attacked, make all future merchants hostile!
 Merchant::Merchant(std::pair<int, int> position)

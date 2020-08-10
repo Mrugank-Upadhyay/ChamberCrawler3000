@@ -1,4 +1,5 @@
 #include "elf.h"
+#include "../player.h"
 
 Elf::Elf(std::pair<int, int> position)
     : Enemy{"Elf", "E", 140, 30, 10, position, true, 0, true} {

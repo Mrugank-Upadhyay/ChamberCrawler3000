@@ -1,4 +1,5 @@
 #include "dwarf.h"
+#include "../player.h"
 
 Dwarf::Dwarf(std::pair<int, int> position)
 // can we even add randomGold in the MIL like this? As a function
