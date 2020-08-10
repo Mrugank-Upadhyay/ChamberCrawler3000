@@ -40,7 +40,7 @@ std::pair<int, int> Enemy::move(int x, int y) {
 }
 
 void Enemy::getStruckBy(Shade * shade) {
-    int damage = calculateDamage(shade->getATK(), getDEF());
+    int damage = calculateDamage(shade->getTmpATK(), getDEF());
     int health = getHP();
     health -= damage;
     setHP(health);
@@ -51,7 +51,7 @@ void Enemy::getStruckBy(Shade * shade) {
 }
 
 void Enemy::getStruckBy(Drow * drow) {
-    int damage = calculateDamage(drow->getATK(), getDEF());
+    int damage = calculateDamage(drow->getTmpATK(), getDEF());
     int health = getHP();
     health -= damage;
     setHP(health);
@@ -59,7 +59,7 @@ void Enemy::getStruckBy(Drow * drow) {
 }
 
 void Enemy::getStruckBy(Vampire * vampire) {
-    int damage = calculateDamage(vampire->getATK(), getDEF());
+    int damage = calculateDamage(vampire->getTmpATK(), getDEF());
     int health = getHP();
     health -= damage;
     setHP(health);
@@ -67,7 +67,7 @@ void Enemy::getStruckBy(Vampire * vampire) {
 }
 
 void Enemy::getStruckBy(Troll * troll) {
-    int damage = calculateDamage(troll->getATK(), getDEF());
+    int damage = calculateDamage(troll->getTmpATK(), getDEF());
     int health = getHP();
     health -= damage;
     setHP(health);
@@ -75,7 +75,7 @@ void Enemy::getStruckBy(Troll * troll) {
 }
 
 void Enemy::getStruckBy(Goblin * goblin) {
-    int damage = calculateDamage(goblin->getATK(), getDEF());
+    int damage = calculateDamage(goblin->getTmpATK(), getDEF());
     int health = getHP();
     health -= damage;
     setHP(health);
