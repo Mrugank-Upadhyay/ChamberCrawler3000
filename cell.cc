@@ -14,11 +14,11 @@ void Cell::setPosition(std::pair<int, int> position) { this->position = position
 std::shared_ptr<Player> Cell::getPlayer() { return player; }
 std::shared_ptr<Enemy> Cell::getEnemy() { return enemy; }
 void Cell::setCharacter(Player * player) { 
-  *this->player = *player;
+  *(this->player) = *player;
   this->enemy = nullptr;
 }
 void Cell::setCharacter(Enemy * enemy) {
-  *this->enemy = *enemy;
+  *(this->enemy) = *enemy;
   this->player = nullptr;
 }
 
@@ -31,4 +31,13 @@ void Cell::notify(Subject * whoNotified) {
   if(enemy != nullptr && whoNotified->getPlayer() != nullptr) {
     enemy->attack(whoNotified->getPlayer());
   }
+}
+
+std::string Cell::info() {
+  std::string info = "type: " + type + " rep: " + rep + " position: (" + std::to_string(position.first) + ", " + std::to_string(position.second) + ") ";
+  (player != nullptr) ? info.append(player->info() + " ") : info;
+  (enemy != nullptr) ? info.append(enemy->info() + " ") : info;
+  (item != nullptr) ? info.append(item->info() + " ") : info;
+
+  return info;
 }

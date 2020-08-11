@@ -30,6 +30,8 @@ class Cell: public Subject, public Observer {
     void setItem(std::shared_ptr<Item> item);
     std::vector<std::shared_ptr<Observer>> & getObservers();
 
+    std::string info();
+
     void notify(Subject * whoNotified) override;
 };
 
