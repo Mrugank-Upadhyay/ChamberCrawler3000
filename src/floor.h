@@ -18,6 +18,9 @@ class Floor {
     std::vector<std::shared_ptr<Gold>> goldPiles;
     std::shared_ptr<Cell> exit;
     void spawn(std::string type);
+    void generateEnemies();
+    void generateGold();
+    void generatePotions();
 
     public:
         Floor();
