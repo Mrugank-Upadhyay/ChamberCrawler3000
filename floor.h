@@ -1,3 +1,6 @@
+#ifndef _FLOOR_
+#define _FLOOR_
+
 #include <map>
 #include <vector>
 #include <memory>
@@ -14,9 +17,11 @@ class Floor {
     std::vector<std::shared_ptr<Potion>> potions;
     std::vector<std::shared_ptr<Gold>> goldPiles;
     std::shared_ptr<Cell> exit;
+    void spawn(std::string type);
 
     public:
-        Floor(); 
-
-
+        Floor();
+        void nextTurn(); 
 };
+
+#endif
