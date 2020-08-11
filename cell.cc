@@ -13,12 +13,12 @@ void Cell::setPosition(std::pair<int, int> position) { this->position = position
 
 std::shared_ptr<Player> Cell::getPlayer() { return player; }
 std::shared_ptr<Enemy> Cell::getEnemy() { return enemy; }
-void Cell::setCharacter(Player * player) { 
-  *(this->player) = *player;
+void Cell::setCharacter(std::shared_ptr<Player> player) { 
+  this->player = player;;
   this->enemy = nullptr;
 }
-void Cell::setCharacter(Enemy * enemy) {
-  *(this->enemy) = *enemy;
+void Cell::setCharacter(std::shared_ptr<Enemy> enemy) {
+  this->enemy = enemy;;
   this->player = nullptr;
 }
 
