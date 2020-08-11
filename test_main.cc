@@ -33,7 +33,6 @@ int main() {
     auto goldpile = std::make_shared<Gold>(std::make_pair<int,int>(1,1),6); // Gold
 
     auto cell = std::make_shared<Cell>("Door", "+", std::pair<int, int> (10, 3));
-    cell->setCharacter(troll.get());
 
     human->attack(troll);
     troll->attack(human);
