@@ -25,6 +25,7 @@ class Floor {
     public:
         Floor();
         void nextTurn(); 
+        std::map<std::pair<int, int>, std::shared_ptr<Cell>> & getGrid();
 };
 
 #endif

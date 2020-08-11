@@ -13,8 +13,6 @@ Floor::Floor() {
     generateEnemies();
     generateGold();
     generatePotions();
-
-    
 }
 
 void Floor::spawn(std::string type) {
