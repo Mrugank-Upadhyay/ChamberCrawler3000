@@ -9,14 +9,38 @@
 #include "./items/potion_types/WDpotion.h"
 #include "floor.h"
 
-Floor::Floor() {
-    generateEnemies();
-    generateGold();
-    generatePotions();
+Floor::Floor(std::string & floorString, int height, int width, bool generate) {
+    
+    generateCells(floorString, height, width);
+    attachNeighbours();
+    
+    if (generate) {
+        generateGold();
+        generateEnemies();
+        generatePotions();    
+    }
+    
+
+    
 }
 
-void Floor::spawn(std::string type) {
-    auto position = std::pair<int, int>(0, 0);
+std::pair<int, int> & Floor::randomFreeCell() {
+    int randomCell;
+    int length = floorCells.size();
+    std::pair<int, int> position;
+
+    while (1) {
+        randomCell = rand() % length;
+        if ((floorCells[randomCell]->getOccupied() == false) && (floorCells[randomCell]->getType() == "Floor")) {
+            position = floorCells[randomCell]->getPosition();
+            break;
+        }
+    }
+
+    return position;
+}
+
+void Floor::spawn(std::string type, std::pair<int, int> position) {
     if (type == "Human") {
         enemies.push_back(std::dynamic_pointer_cast<Enemy>(std::make_shared<Human>(position)));
     }
@@ -55,7 +79,21 @@ void Floor::spawn(std::string type) {
 
     else if (type == "Dragon Hoard") {
         goldPiles.push_back(std::make_shared<Gold>(position, 6));
-        enemies.push_back(std::dynamic_pointer_cast<Enemy>(std::make_shared<Dragon>(position)));
+
+        // generate random dx,dy as either -1, 0, or 1;
+        int dx = (rand() % 3) - 1;
+        int dy = (rand() % 3) - 1;
+        auto pos = std::pair<int, int>(position.first + dx, position.second + dy);
+        
+        // if they are the same, or if the new position is not a Floor tile, or if it's occupied
+        while (((dx == 0) && (dy == 0)) || (grid[pos]->getType() != "Floor") || (grid[pos]->getOccupied() == true)) {
+            int dir = rand() % 2;
+            (dir == 0) ? dx = ((rand() % 3) - 1) : dy = ((rand() % 3) - 1);
+            pos = std::pair<int, int>(position.first + dx, position.second + dy);
+        }
+
+        // make a dragon randomly in a 1 block radius of hoard
+        enemies.push_back(std::dynamic_pointer_cast<Enemy>(std::make_shared<Dragon>(pos)));
     }
 
     else if (type == "RH") {
@@ -87,37 +125,120 @@ void Floor::spawn(std::string type) {
 void Floor::generateEnemies() {
 
     for (int i = 0; i < 20; i++) {
-        int random = rand() % 18;
+        int randomEnemies = rand() % 18;
+        auto position = randomFreeCell();
 
-        if (random < 4) { spawn("Human"); }
-        else if (random < 7) { spawn("Dwarf"); }
-        else if (random < 12) { spawn("Halfling"); }
-        else if (random < 14) { spawn("Elf"); }
-        else if (random < 16) { spawn("Orc"); }
-        else { spawn("Merchant"); }
+        if (randomEnemies < 4) { spawn("Human", position); }
+        else if (randomEnemies < 7) { spawn("Dwarf", position); }
+        else if (randomEnemies < 12) { spawn("Halfling", position); }
+        else if (randomEnemies < 14) { spawn("Elf", position); }
+        else if (randomEnemies < 16) { spawn("Orc", position); }
+        else { spawn("Merchant", position); }
+
+        grid[position]->setCharacter(enemies.back());
     }
 }
 
 void Floor::generateGold() {
     for (int i = 0; i < 10; i++) {
-        int random = rand() % 8;
+        int randomGold = rand() % 8;
+        auto position = randomFreeCell();
 
-        if (random < 5) { spawn("Normal Hoard"); }
-        else if (random < 6) { spawn("Dragon Hoard"); }
-        else { spawn("Small Hoard"); }
+        if (randomGold < 5) { spawn("Normal Hoard", position); }
+        else if (randomGold < 6) { spawn("Dragon Hoard", position); }
+        else { spawn("Small Hoard", position); }
+
+        grid[position]->setItem(goldPiles.back());
     }
 }
 
 void Floor::generatePotions() {
     for (int i = 0; i < 10; i++) {
-        int random = rand() % 6;
+        int randomPotion = rand() % 6;
+        auto position = randomFreeCell();
 
-        if (random == 1) { spawn("RH"); }
-        else if (random == 2) { spawn("BA"); }
-        else if (random == 3) { spawn("BD"); }
-        else if (random == 4) { spawn("PH"); }
-        else if (random == 5) { spawn("WA"); }
-        else { spawn("WD"); }
-        
+        if (randomPotion == 1) { spawn("RH", position); }
+        else if (randomPotion == 2) { spawn("BA", position); }
+        else if (randomPotion == 3) { spawn("BD", position); }
+        else if (randomPotion == 4) { spawn("PH", position); }
+        else if (randomPotion == 5) { spawn("WA", position); }
+        else { spawn("WD", position); }
+
+        grid[position]->setItem(potions.back());
     }
 }
+
+void Floor::generateCells(std::string & floorString, int height, int width) {
+    for (int y = 0; y < height; y++) {
+        for (int x = 0; x < width; x++) {
+            auto position = std::pair<int, int>(x, y);
+
+            std::string cellRep = std::to_string(floorString[(y * width) + x]);
+            std::string cellType;
+
+            if (cellRep == "|" || cellRep == "-") { cellType = "Wall";}
+            else if (cellRep == "+") {cellType = "Door";}
+            else if (cellRep == "#") {cellType = "Passage";}
+            else if (cellRep == ".") {cellType = "Floor";}
+            else if (cellRep == " ") {cellType = "Abyss";}
+            
+            std::shared_ptr<Cell> cell = std::make_shared<Cell>(cellType, cellRep, position);
+            grid[position] = cell;
+            if ((cellType == "Floor") || (cellType == "+") || (cellType == "#")) {floorCells.push_back(cell);}
+        }
+    }
+}
+
+
+void Floor::attachNeighbours() {
+    for (auto cell : floorCells) {
+        int x = cell->getPosition().first;
+        int y = cell->getPosition().second;
+
+        if ((!(grid[std::pair<int, int> (x - 1, y - 1)]->getType() == "Wall")) &&
+            (!(grid[std::pair<int, int> (x - 1, y - 1)]->getType() == "Abyss"))) {
+                cell->attach(grid[std::pair<int, int> (x - 1, y - 1)]);
+        }
+
+        else if ((!(grid[std::pair<int, int> (x, y - 1)]->getType() == "Wall")) &&
+            (!(grid[std::pair<int, int> (x, y - 1)]->getType() == "Abyss"))) {
+                cell->attach(grid[std::pair<int, int> (x, y - 1)]);
+        }
+
+        else if ((!(grid[std::pair<int, int> (x + 1, y - 1)]->getType() == "Wall")) &&
+            (!(grid[std::pair<int, int> (x + 1, y - 1)]->getType() == "Abyss"))) {
+                cell->attach(grid[std::pair<int, int> (x + 1, y - 1)]);
+        }
+
+        else if ((!(grid[std::pair<int, int> (x - 1, y)]->getType() == "Wall")) &&
+            (!(grid[std::pair<int, int> (x - 1, y)]->getType() == "Abyss"))) {
+                cell->attach(grid[std::pair<int, int> (x - 1, y)]);
+        }
+
+        else if ((!(grid[std::pair<int, int> (x + 1, y)]->getType() == "Wall")) &&
+            (!(grid[std::pair<int, int> (x + 1, y)]->getType() == "Abyss"))) {
+                cell->attach(grid[std::pair<int, int> (x + 1, y)]);
+        }
+
+        else if ((!(grid[std::pair<int, int> (x - 1, y + 1)]->getType() == "Wall")) &&
+            (!(grid[std::pair<int, int> (x - 1, y + 1)]->getType() == "Abyss"))) {
+                cell->attach(grid[std::pair<int, int> (x - 1, y + 1)]);
+        }
+
+        else if ((!(grid[std::pair<int, int> (x, y + 1)]->getType() == "Wall")) &&
+            (!(grid[std::pair<int, int> (x, y + 1)]->getType() == "Abyss"))) {
+                cell->attach(grid[std::pair<int, int> (x, y + 1)]);
+        }
+
+        else if ((!(grid[std::pair<int, int> (x + 1, y + 1)]->getType() == "Wall")) &&
+            (!(grid[std::pair<int, int> (x + 1, y + 1)]->getType() == "Abyss"))) {
+                cell->attach(grid[std::pair<int, int> (x + 1, y + 1)]);
+        }
+    }
+}
+
+void Floor::nextTurn() {
+
+}
+
+std::map<std::pair<int, int>, std::shared_ptr<Cell>> & Floor::getGrid() { return grid; }
