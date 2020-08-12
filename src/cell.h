@@ -15,13 +15,17 @@ class Cell: public Subject, public Observer {
     std::shared_ptr<Player> player;
     std::shared_ptr<Enemy> enemy;
     std::shared_ptr<Item> item;
+    bool isOccupied = false;
+
   public:
     Cell(std::string type,std::string rep,std::pair<int, int> position);
     std::string & getType();
     std::string & getRep();
-    void setRep(std::string & rep);
+    void setRep(std::string rep);
     std::pair<int, int> getPosition();
     void setPosition(std::pair<int, int> position);
+    void setOccupied(bool isOccupied);
+    bool getOccupied();
     virtual std::shared_ptr<Player> getPlayer() override;
     virtual std::shared_ptr<Enemy> getEnemy() override;
     void setCharacter(std::shared_ptr<Player> player);

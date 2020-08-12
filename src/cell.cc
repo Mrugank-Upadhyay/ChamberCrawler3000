@@ -6,24 +6,32 @@ Cell::Cell(std::string type, std::string rep, std::pair<int, int> position)
 std::string & Cell::getType() { return type; }
 
 std::string & Cell::getRep() { return rep; }
-void Cell::setRep(std::string &rep) { this->rep = rep; }
+void Cell::setRep(std::string rep) { this->rep = rep; }
 
 std::pair<int, int> Cell::getPosition() { return position; }
 void Cell::setPosition(std::pair<int, int> position) { this->position = position; }
+
+void Cell::setOccupied(bool isOccupied) { this->isOccupied = isOccupied; }
+bool Cell::getOccupied() { return isOccupied; }
 
 std::shared_ptr<Player> Cell::getPlayer() { return player; }
 std::shared_ptr<Enemy> Cell::getEnemy() { return enemy; }
 void Cell::setCharacter(std::shared_ptr<Player> player) { 
   this->player = player;;
   this->enemy = nullptr;
+  isOccupied = true;
 }
 void Cell::setCharacter(std::shared_ptr<Enemy> enemy) {
   this->enemy = enemy;;
   this->player = nullptr;
+  isOccupied = true;
 }
 
 std::shared_ptr<Item> Cell::getItem() { return item; }
-void Cell::setItem(std::shared_ptr<Item> item) { this->item = item; }
+void Cell::setItem(std::shared_ptr<Item> item) { 
+  this->item = item; 
+  isOccupied = true;
+}
 
 std::vector<std::shared_ptr<Observer>> & Cell::getObservers() { return observers; }
 
