@@ -19,19 +19,28 @@ class Cell: public Subject, public Observer, std::enable_shared_from_this<Cell> 
 
   public:
     Cell(std::string type,std::string rep,std::pair<int, int> position);
+
     std::string & getType();
+
     std::string & getRep();
     void setRep(std::string rep);
+
     std::pair<int, int> getPosition();
     void setPosition(std::pair<int, int> position);
-    void setOccupied(bool isOccupied);
+
     bool getOccupied();
+    void setOccupied(bool isOccupied);
+
     virtual std::shared_ptr<Player> getPlayer() override;
     virtual std::shared_ptr<Enemy> getEnemy() override;
     void setCharacter(std::shared_ptr<Player> player);
     void setCharacter(std::shared_ptr<Enemy> enemy);
+
+    void moveCharacter(std::shared_ptr<Cell> dest);
+
     std::shared_ptr<Item> getItem();
     void setItem(std::shared_ptr<Item> item);
+
     std::vector<std::shared_ptr<Observer>> & getObservers();
 
     std::string info();

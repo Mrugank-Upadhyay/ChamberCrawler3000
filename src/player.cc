@@ -53,13 +53,20 @@ bool Player::isBagActive() const {
   return bagActive;
 }
 
-std::pair<int, int> Player::move(std::shared_ptr<Cell> dest) {
+std::pair<int, int> Player::move(std::pair<int,int> position) {
   auto previous = getPosition();
 
-  //std::shared_ptr<Player> nil = nullptr;
-  //cell->setCharacter(nil);
-  //dest->setCharacter(this);
-
+  auto dest = cell;
+  auto observers = cell->getObservers();
+  for(auto obs: observers) {
+    auto obsCell = std::dynamic_pointer_cast<Cell>(obs);
+    if(obsCell->getPosition() == position) {
+      dest = obsCell;
+      break;
+    }
+  }
+  cell->moveCharacter(dest);
+  
   return previous;
 }
 

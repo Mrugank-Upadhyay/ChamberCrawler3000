@@ -20,16 +20,32 @@ void Cell::setCharacter(std::shared_ptr<Player> player) {
   this->player = player;;
   this->enemy = nullptr;
   isOccupied = (player == nullptr) ? false : true;
-  if (player != nullptr) {
-    player->setCell(shared_from_this());
-  }
+  //if (player != nullptr) {
+    //player->setCell(shared_from_this());
+  //}
 }
 void Cell::setCharacter(std::shared_ptr<Enemy> enemy) {
   this->enemy = enemy;;
   this->player = nullptr;
   isOccupied = (enemy == nullptr) ? false : true;
-  if (enemy != nullptr) {
-    enemy->setCell(shared_from_this());
+  //if (enemy != nullptr) {
+    //enemy->setCell(shared_from_this());
+  //}
+}
+
+void Cell::moveCharacter(std::shared_ptr<Cell> dest) {
+  if(player != nullptr) {
+    player->setCell(dest);
+    player->setPosition(dest->getPosition());
+    dest->setCharacter(player);
+    dest->notifyObservers();
+    player = nullptr;
+  }
+  else if(enemy != nullptr) {
+    enemy->setCell(dest);
+    enemy->setPosition(dest->getPosition());
+    dest->setCharacter(enemy);
+    enemy = nullptr;
   }
 }
 
