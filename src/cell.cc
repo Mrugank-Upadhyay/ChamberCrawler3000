@@ -19,18 +19,24 @@ std::shared_ptr<Enemy> Cell::getEnemy() { return enemy; }
 void Cell::setCharacter(std::shared_ptr<Player> player) { 
   this->player = player;;
   this->enemy = nullptr;
-  isOccupied = true;
+  isOccupied = (player == nullptr) ? false : true;
+  if (player != nullptr) {
+    player->setCell(shared_from_this());
+  }
 }
 void Cell::setCharacter(std::shared_ptr<Enemy> enemy) {
   this->enemy = enemy;;
   this->player = nullptr;
-  isOccupied = true;
+  isOccupied = (enemy == nullptr) ? false : true;
+  if (enemy != nullptr) {
+    enemy->setCell(shared_from_this());
+  }
 }
 
 std::shared_ptr<Item> Cell::getItem() { return item; }
 void Cell::setItem(std::shared_ptr<Item> item) { 
   this->item = item; 
-  isOccupied = true;
+  isOccupied = (item == nullptr) ? false : true;
 }
 
 std::vector<std::shared_ptr<Observer>> & Cell::getObservers() { return observers; }

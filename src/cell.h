@@ -8,7 +8,7 @@
 #include "enemy.h"
 #include "item.h"
 
-class Cell: public Subject, public Observer {
+class Cell: public Subject, public Observer, std::enable_shared_from_this<Cell> {
     std::string type;
     std::string rep;
     std::pair<int, int> position;
