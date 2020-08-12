@@ -14,11 +14,15 @@ Floor::Floor(std::string & floorString, int height, int width, bool generate) {
     generateCells(floorString, height, width);
     attachNeighbours();
     
+    // If a text file is not supplied, we generate our own things
     if (generate) {
         generateGold();
         generateEnemies();
         generatePotions();    
     }
+    
+    // Otherwise we have to use the file's corresponding values. Add a function for that!
+    else {}
     
 
     
