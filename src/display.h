@@ -2,12 +2,17 @@
 #define _DISPLAY_
 
 #include <string>
+#include <iostream>
 #include <memory>
+#include <map>
+#include <iomanip>
 
 class Game;
 
 class Display {
-    std::shared_ptr<Game>  game;
+    std::shared_ptr<Game> game;
+    int height;
+    int width;
     void printFloor();
     void printInfo();
 
