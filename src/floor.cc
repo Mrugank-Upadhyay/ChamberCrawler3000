@@ -98,7 +98,7 @@ void Floor::spawn(std::string type, std::pair<int, int> position) {
         }
 
         // make a dragon randomly in a 1 block radius of hoard
-        enemies.push_back(std::dynamic_pointer_cast<Enemy>(std::make_shared<Dragon>(pos)));
+        enemies.push_back(std::dynamic_pointer_cast<Enemy>(std::make_shared<Dragon>(pos, goldPiles.back())));
     }
 
     else if (type == "RH") {
