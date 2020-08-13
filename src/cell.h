@@ -8,7 +8,7 @@
 #include "enemy.h"
 #include "item.h"
 
-class Cell: public Subject, public Observer, std::enable_shared_from_this<Cell> {
+class Cell: public Subject, public Observer {
     std::string type;
     std::string rep;
     std::pair<int, int> position;
@@ -31,8 +31,8 @@ class Cell: public Subject, public Observer, std::enable_shared_from_this<Cell> 
     bool getOccupied();
     void setOccupied(bool isOccupied);
 
-    virtual std::shared_ptr<Player> getPlayer() override;
-    virtual std::shared_ptr<Enemy> getEnemy() override;
+    virtual std::shared_ptr<Player> getPlayer();
+    virtual std::shared_ptr<Enemy> getEnemy();
     void setCharacter(std::shared_ptr<Player> player);
     void setCharacter(std::shared_ptr<Enemy> enemy);
 
