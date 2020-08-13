@@ -11,6 +11,10 @@ std::shared_ptr<Cell> Dragon::getGoldCell() {
   return goldCell;
 }
 
+void Dragon::setGoldCell(std::shared_ptr<Cell> cell) {
+  goldCell = cell;
+}
+
 std::pair<int, int> Dragon::move() {
   auto previous = getPosition();
 
