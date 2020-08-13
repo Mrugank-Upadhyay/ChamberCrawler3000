@@ -186,6 +186,7 @@ void Floor::generateCells(std::string & floorString, int height, int width) {
             else if (cellRep == "#") {cellType = "Passage";}
             else if (cellRep == ".") {cellType = "Floor";}
             else if (cellRep == " ") {cellType = "Abyss";}
+            else if (cellRep == "\\") {cellType = "Exit";}
             else if (cellRep == "H") {
                 cellType = "Floor";
                 spawn("Human", position);
@@ -257,7 +258,7 @@ void Floor::generateCells(std::string & floorString, int height, int width) {
             
             std::shared_ptr<Cell> cell = std::make_shared<Cell>(cellType, cellRep, position);
             grid[position] = cell;
-            if ((cellType == "Floor") || (cellType == "Door") || (cellType == "Passage")) {floorCells.push_back(cell);}
+            if ((cellType == "Floor") || (cellType == "Door") || (cellType == "Passage") || (cellType == "Exit")) {floorCells.push_back(cell);}
 
             if (isLetter(cellRep.front())) {
                 cell->setCharacter(enemies.back());
