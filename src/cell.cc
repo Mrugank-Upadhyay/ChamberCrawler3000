@@ -70,8 +70,7 @@ void Cell::setItem(std::shared_ptr<Item> item) {
 std::vector<std::shared_ptr<Observer>> & Cell::getObservers() { return observers; }
 
 void Cell::notify(Subject * whoNotified) {
-  auto other  = 
-    std::dynamic_pointer_cast<Cell>(std::make_shared<Subject>(whoNotified));
+  auto other  = dynamic_cast<Cell *>(whoNotified);
   if(enemy != nullptr && other->getPlayer() != nullptr) {
     enemy->attack(other->getPlayer());
   }
