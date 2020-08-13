@@ -16,7 +16,7 @@ int Potion::getDEF() {
     return def;
 }
 
-void Potion::apply(Player * player) {
+void Potion::apply(std::shared_ptr<Player> player) {
     player->applyItem(this);
 }
 

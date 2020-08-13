@@ -8,7 +8,7 @@ int Gold::getAmount() {
     return amount;
 }
 
-void Gold::apply(Player * player) {
+void Gold::apply(std::shared_ptr<Player> player) {
     player->applyItem(this);
 }
 
