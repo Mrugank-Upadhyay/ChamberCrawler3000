@@ -8,8 +8,12 @@ int Gold::getAmount() {
     return amount;
 }
 
-bool getCanPickUp() {
+bool Gold::getCanPickUp() {
     return canPickUp;
+}
+
+void Gold::setCanPickUp(bool canPickUp) {
+  this->canPickUp = canPickUp;
 }
 
 void Gold::apply(std::shared_ptr<Player> player) {
