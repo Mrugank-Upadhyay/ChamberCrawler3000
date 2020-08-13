@@ -5,6 +5,7 @@
 #include "player_races/troll.h"
 #include "player_races/goblin.h"
 #include "floor.h"
+#include "cell.h"
 #include "game.h"
 
 #include <string>
@@ -50,3 +51,7 @@ std::string Game::makeFloorString() {
 
 // When generating player, create queue of cells to check around exit. Once done perform not intersect floorCells with queue
 // From there you are given a vector of potential places for player to spawn.
+void getChamberCells(std::map<std::pair<int,int>,std::shared_ptr<Cell>> & chamberCells, 
+                     std::pair<int, int> position) {
+
+}
