@@ -5,6 +5,7 @@
 #include <fstream>
 #include <iostream>
 #include <map>
+#include <vector>
 #include <algorithm>
 
 class Player;
@@ -23,14 +24,7 @@ class Game {
     std::string makeFloorString();
 
     std::vector<std::shared_ptr<Cell>> bfs();
-    bool find(std::vector<std::shared_ptr<Cell>> & list, std::pair<int, int> pos);
-    bool pairCmp(std::shared_ptr<Cell> c1, std::shared_ptr<Cell> c2);
-
-
-
-    // std::map<std::pair<int, int>, std::shared_ptr<Cell>> bfs(
-    //     std::map<std::pair<int, int>,std::shared_ptr<Cell>> & visited, 
-    //     std::shared_ptr<Cell> cell);
+    static bool pairCmp(std::shared_ptr<Cell> c1, std::shared_ptr<Cell> c2);
 
   public:
     Game(std::string playerClass, std::string file, int height, int width, bool generate);

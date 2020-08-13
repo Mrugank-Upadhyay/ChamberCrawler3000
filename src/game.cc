@@ -78,31 +78,35 @@ void Game::genPlayer(std::shared_ptr<Player> player) {
   }
 }
 
-bool Game::find(std::vector<std::shared_ptr<Cell>> & list, std::pair<int, int> pos) {
-   for(auto cell : list) {
-    if (cell->getPosition() == pos) {
-      return true;
-    }
+std::vector<std::shared_ptr<Cell>> Game::bfs() {
+
+  std::map<std::pair<int, int>, std::shared_ptr<Cell>> queue;
+
+  for (auto obs : currentFloor->getExit()->getObservers()) {
+    auto cell = std::dynamic_pointer_cast<Cell>(obs);
+    queue[cell->getPosition()] = cell;
   }
 
-  return false;
-}
-
-std::vector<std::shared_ptr<Cell>> Game::bfs() {
-  std::vector<std::shared_ptr<Cell>> queue;
-
-  queue.insert(queue.end(), currentFloor->getExit()->getObservers().begin(), currentFloor->getExit()->getObservers().end());
-
   for (auto cell : queue) {
-    for (auto neighbour : cell->getObservers()) {
+    for (auto neighbour : (cell.second)->getObservers()) {
       auto neighbourCell = std::dynamic_pointer_cast<Cell>(neighbour);
-      if (!find(queue, neighbourCell->getPosition())) {
-        queue.push_back(neighbourCell);
+      if ((neighbourCell->getType() == "Door") || (neighbourCell->getType() == "Passage")) {
+        continue;
+      }
+
+      else if (queue.find(neighbourCell->getPosition()) == queue.end()) {
+        queue[neighbourCell->getPosition()] = neighbourCell;
       }
     }
   }
 
-  return queue;
+  std::vector<std::shared_ptr<Cell>> queueCell;
+
+  for (auto element : queue) {
+    queueCell.push_back(element.second);
+  }
+
+  return queueCell;
 }
 
 
