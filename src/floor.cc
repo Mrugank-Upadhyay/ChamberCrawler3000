@@ -371,7 +371,23 @@ void Floor::attachNeighbours() {
 }
 
 void Floor::nextTurn() {
+    for (auto cell : floorCells) {
+        if (cell->getPlayer() != nullptr) {
+            cell->getPlayer()->nextTurn();
+        }
 
+        else if (cell->getEnemy() != nullptr) {
+            if (cell->getEnemy()->getHP() == 0) {
+                std::shared_ptr<Enemy> deadEnemy = nullptr;
+                cell->setCharacter(deadEnemy);
+                cell->setRep(cell->getRep());
+            }
+
+            else {
+                cell->getEnemy()->nextTurn(); 
+            }
+        }
+    }
 }
 
 std::map<std::pair<int, int>, std::shared_ptr<Cell>> & Floor::getGrid() { return grid; }
