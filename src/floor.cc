@@ -1,5 +1,6 @@
 #include "cell.h"
 #include "enemy.h"
+#include "enemy_headers.h"
 #include "./items/gold.h"
 #include "./items/potion_types/RHpotion.h"
 #include "./items/potion_types/BApotion.h"
@@ -9,7 +10,7 @@
 #include "./items/potion_types/WDpotion.h"
 #include "floor.h"
 
-Floor::Floor(std::string & floorString, int height, int width, bool generate) {
+Floor::Floor(std::string floorString, int height, int width, bool generate) {
     
     generateCells(floorString, height, width);
     attachNeighbours();
@@ -19,6 +20,10 @@ Floor::Floor(std::string & floorString, int height, int width, bool generate) {
         generateGold();
         generateEnemies();
         generatePotions();    
+    }
+    
+    else {
+        attachDragons();
     }
     
 
@@ -41,7 +46,7 @@ std::pair<int, int> Floor::randomFreeCell() {
     return position;
 }
 
-void Floor::spawn(std::string type, std::pair<int, int> position) {
+void Floor::spawn(std::string type, std::pair<int, int> position, bool generate) {
     if (type == "Human") {
         enemies.push_back(std::dynamic_pointer_cast<Enemy>(std::make_shared<Human>(position)));
     }
@@ -61,7 +66,7 @@ void Floor::spawn(std::string type, std::pair<int, int> position) {
     else if (type == "Merchant") {
         enemies.push_back(std::dynamic_pointer_cast<Enemy>(std::make_shared<Merchant>(position)));
     }
-    
+
     else if (type == "Dragon") {
         enemies.push_back(std::dynamic_pointer_cast<Enemy>(std::make_shared<Dragon>(position)));
     }
@@ -86,20 +91,24 @@ void Floor::spawn(std::string type, std::pair<int, int> position) {
         goldPiles.push_back(std::make_shared<Gold>(position, 6));
         goldPiles.back()->setCanPickUp(false);
 
-        // generate random dx,dy as either -1, 0, or 1;
-        int dx = (rand() % 3) - 1;
-        int dy = (rand() % 3) - 1;
-        auto pos = std::pair<int, int>(position.first + dx, position.second + dy);
-        
-        // if they are the same, or if the new position is not a Floor tile, or if it's occupied
-        while (((dx == 0) && (dy == 0)) || (grid[pos]->getType() != "Floor") || (grid[pos]->getOccupied() == true)) {
-            int dir = rand() % 2;
-            (dir == 0) ? dx = ((rand() % 3) - 1) : dy = ((rand() % 3) - 1);
-            pos = std::pair<int, int>(position.first + dx, position.second + dy);
-        }
+        if (generate) {
+            // generate random dx,dy as either -1, 0, or 1;
+            int dx = (rand() % 3) - 1;
+            int dy = (rand() % 3) - 1;
+            auto pos = std::pair<int, int>(position.first + dx, position.second + dy);
+            
+            // if they are the same, or if the new position is not a Floor tile, or if it's occupied
+            while (((dx == 0) && (dy == 0)) || (grid[pos]->getType() != "Floor") || (grid[pos]->getOccupied() == true)) {
+                int dir = rand() % 2;
+                (dir == 0) ? dx = ((rand() % 3) - 1) : dy = ((rand() % 3) - 1);
+                pos = std::pair<int, int>(position.first + dx, position.second + dy);
+            }
 
-        // make a dragon randomly in a 1 block radius of hoard
-        enemies.push_back(std::dynamic_pointer_cast<Enemy>(std::make_shared<Dragon>(pos, goldPiles.back())));
+            // make a dragon randomly in a 1 block radius of hoard
+            std::shared_ptr<Cell> goldCell = findCell(goldPiles.back()->getPosition());
+            
+            enemies.push_back(std::dynamic_pointer_cast<Enemy>(std::make_shared<Dragon>(pos, goldCell)));
+        }
     }
 
     else if (type == "RH") {
@@ -174,7 +183,7 @@ void Floor::generatePotions() {
     }
 }
 
-void Floor::generateCells(std::string & floorString, int height, int width) {
+void Floor::generateCells(std::string floorString, int height, int width) {
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
             auto position = std::pair<int, int>(x, y);
@@ -254,7 +263,7 @@ void Floor::generateCells(std::string & floorString, int height, int width) {
             }
             else if (cellRep == "9") {
                 cellType = "Floor";
-                spawn("Dragon Hoard", position);
+                spawn("Dragon Hoard", position, false);
             }
             
             std::shared_ptr<Cell> cell = std::make_shared<Cell>(cellType, cellRep, position);
@@ -287,6 +296,32 @@ bool Floor::isNumber(char c) {
     return false;
 }
 
+std::shared_ptr<Cell> Floor::findCell(std::pair<int, int> position) {
+    for (auto cell : floorCells) {
+        if (cell->getPosition() == position) {
+            return cell;
+        }
+    }
+
+    return nullptr;
+}
+
+void Floor::attachDragons() {
+    std::vector<std::shared_ptr<Dragon>> dragons;
+    for (auto enemy : enemies) {
+        if (enemy->getRace() == "Dragon") { dragons.push_back(std::dynamic_pointer_cast<Dragon>(enemy)); }
+    }
+
+    for (auto dragon : dragons) {
+        for (auto neighbour : findCell(dragon->getPosition())->getObservers()) {
+            auto neighbourCell = std::dynamic_pointer_cast<Cell>(neighbour);
+            if ((neighbourCell->getItem() != nullptr) && (neighbourCell->getItem()->getType() == "Gold")) {
+                dragon->setGoldCell(neighbourCell);
+                break;
+            }
+        }
+    }
+}
 
 void Floor::attachNeighbours() {
     for (auto cell : floorCells) {
