@@ -35,6 +35,7 @@ class Game {
     void resetLevel();
 
     std::shared_ptr<Floor> getFloor();
+    // check potion reveal
     void regenFloor();
 
     void tick();
