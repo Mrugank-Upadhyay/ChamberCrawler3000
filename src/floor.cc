@@ -333,16 +333,6 @@ void Floor::attachNeighbours() {
     }
 }
 
-
-
-void Floor::createSpawns(std::string & floorString, int height, int width) {
-    for (int y = 0; y < height; y++) {
-        for (int x = 0; x < width; x++) {
-
-        }
-    }
-}
-
 void Floor::nextTurn() {
 
 }
