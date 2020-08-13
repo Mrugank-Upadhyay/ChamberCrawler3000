@@ -58,13 +58,17 @@ void Cell::setItem(std::shared_ptr<Item> item) {
 std::vector<std::shared_ptr<Observer>> & Cell::getObservers() { return observers; }
 
 void Cell::notify(Subject * whoNotified) {
-  if(enemy != nullptr && whoNotified->getPlayer() != nullptr) {
-    enemy->attack(whoNotified->getPlayer());
+  auto other  = 
+    std::dynamic_pointer_cast<Cell>(std::make_shared<Subject>(whoNotified));
+  if(enemy != nullptr && other->getPlayer() != nullptr) {
+    enemy->attack(other->getPlayer());
   }
 }
 
 std::string Cell::info() {
-  std::string info = "type: " + type + " rep: " + rep + " position: (" + std::to_string(position.first) + ", " + std::to_string(position.second) + ") ";
+  std::string info = "type: " + type + " rep: " + rep + 
+                     " position: (" + std::to_string(position.first) + 
+                     ", " + std::to_string(position.second) + ") ";
   (player != nullptr) ? info.append(player->info() + " ") : info;
   (enemy != nullptr) ? info.append(enemy->info() + " ") : info;
   (item != nullptr) ? info.append(item->info() + " ") : info;

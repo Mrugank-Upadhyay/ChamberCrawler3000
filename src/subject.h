@@ -19,8 +19,6 @@ class Subject {
     void attach(std::shared_ptr<Observer> observer);
     void detach(std::shared_ptr<Observer> observer);
     void notifyObservers();
-    virtual std::shared_ptr<Player> getPlayer() = 0;
-    virtual std::shared_ptr<Enemy> getEnemy() = 0;
 };
 
 #endif
