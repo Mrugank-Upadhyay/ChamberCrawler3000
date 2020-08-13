@@ -47,3 +47,6 @@ std::string & Game::makeFloorString() {
 
   return output;
 }
+
+// When generating player, create queue of cells to check around exit. Once done perform not intersect floorCells with queue
+// From there you are given a vector of potential places for player to spawn.
