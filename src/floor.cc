@@ -84,6 +84,7 @@ void Floor::spawn(std::string type, std::pair<int, int> position) {
 
     else if (type == "Dragon Hoard") {
         goldPiles.push_back(std::make_shared<Gold>(position, 6));
+        goldPiles.back()->setCanPickUp(false);
 
         // generate random dx,dy as either -1, 0, or 1;
         int dx = (rand() % 3) - 1;
@@ -339,3 +340,7 @@ void Floor::nextTurn() {
 }
 
 std::map<std::pair<int, int>, std::shared_ptr<Cell>> & Floor::getGrid() { return grid; }
+std::shared_ptr<Cell> Floor::getExit() { return exit; }
+std::vector<std::shared_ptr<Cell>> & Floor::getFloorCell() {
+    return floorCells;
+}
