@@ -49,9 +49,18 @@ std::string Game::makeFloorString() {
   return output;
 }
 
-// When generating player, create queue of cells to check around exit. Once done perform not intersect floorCells with queue
-// From there you are given a vector of potential places for player to spawn.
-void getChamberCells(std::map<std::pair<int,int>,std::shared_ptr<Cell>> & chamberCells, 
-                     std::pair<int, int> position) {
-
+std::map<std::pair<int, int>, std::shared_ptr<Cell>> Game::bfs(
+    std::map<std::pair<int, int>, std::shared_ptr<Cell>> & visited, 
+    std::shared_ptr<Cell> cell) {
+  auto observers = cell->getObservers();
+  visited[cell->getPosition()] = cell;
+  for(auto obs: observers) {
+    auto obsCell = std::dynamic_pointer_cast<Cell>(obs);
+    if(visited.count(obsCell->getPosition()) == 0) {
+      if(!obsCell->getOccupied() && obsCell->getType() == "Floor") {
+        bfs(visited, obsCell);
+      }
+    }
+  }
+  return visited;
 }

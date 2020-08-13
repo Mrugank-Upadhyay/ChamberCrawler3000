@@ -4,9 +4,11 @@
 #include <memory>
 #include <fstream>
 #include <iostream>
+#include <map>
 
 class Player;
 class Floor;
+class Cell;
 
 class Game {
     std::shared_ptr<Player> player;
@@ -18,6 +20,9 @@ class Game {
     bool generate;
 
     std::string makeFloorString();
+    std::map<std::pair<int, int>, std::shared_ptr<Cell>> bfs(
+        std::map<std::pair<int, int>,std::shared_ptr<Cell>> & visited, 
+        std::shared_ptr<Cell> cell);
 
   public:
     Game(std::string playerClass, std::string file, int height, int width, bool generate);
