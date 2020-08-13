@@ -89,49 +89,49 @@ void Player::getStruckBy(Human * enemy) {
   int damage = calculateDamage(enemy->getATK(), tmpDEF);
   setHP(getHP() - damage);
   std::cout << " " << enemy->getRep() << " deals "
-            << damage << " damage to PC (" << getHP() << " HP).";
+            << damage << " damage to PC.";
 }
 
 void Player::getStruckBy(Dwarf * enemy) {
   int damage = calculateDamage(enemy->getATK(), tmpDEF);
   setHP(getHP() - damage);
   std::cout << " " << enemy->getRep() << " deals "
-            << damage << " damage to PC (" << getHP() << " HP).";
+            << damage << " damage to PC.";
 }
 
 void Player::getStruckBy(Elf * enemy) {
   int damage = calculateDamage(enemy->getATK(), tmpDEF);
   setHP(getHP() - damage);
   std::cout << " " << enemy->getRep() << " deals "
-            << damage << " damage to PC (" << getHP() << " HP).";
+            << damage << " damage to PC.";
 }
 
 void Player::getStruckBy(Orc * enemy) {
   int damage = calculateDamage(enemy->getATK(), tmpDEF);
   setHP(getHP() - damage);
   std::cout << " " << enemy->getRep() << " deals "
-            << damage << " damage to PC (" << getHP() << " HP).";
+            << damage << " damage to PC.";
 }
 
 void Player::getStruckBy(Dragon * enemy) {
   int damage = calculateDamage(enemy->getATK(), tmpDEF);
   setHP(getHP() - damage);
   std::cout << " " << enemy->getRep() << " deals "
-            << damage << " damage to PC (" << getHP() << " HP).";
+            << damage << " damage to PC.";
 }
 
 void Player::getStruckBy(Merchant * enemy) {
   int damage = calculateDamage(enemy->getATK(), tmpDEF);
   setHP(getHP() - damage);
   std::cout << " " << enemy->getRep() << " deals "
-            << damage << " damage to PC (" << getHP() << " HP).";
+            << damage << " damage to PC.";
 }
 
 void Player::getStruckBy(Halfling * enemy) {
   int damage = calculateDamage(enemy->getATK(), tmpDEF);
   setHP(getHP() - damage);
   std::cout << " " << enemy->getRep() << " deals "
-            << damage << " damage to PC (" << getHP() << " HP).";
+            << damage << " damage to PC.";
 }
 
 void Player::nextTurn() {}
