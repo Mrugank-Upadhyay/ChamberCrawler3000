@@ -34,9 +34,24 @@ std::shared_ptr<Cell> Enemy::getCell() {
     return cell;
 }
 
-std::pair<int, int> Enemy::move(int x, int y) {
-    setPosition(std::pair<int, int>(x, y));
-    return getPosition();
+std::pair<int, int> Enemy::move() {
+  auto position = getPosition();
+
+  auto neighbours = cell->getObservers();
+  int len = neighbours.size();
+  std::vector<int> unOccupied;
+  for(int i = 0; i < len; i++) {
+    auto obsCell = std::dynamic_pointer_cast<Cell>(neighbours[i]);
+    if(!obsCell->getOccupied()) {
+      unOccupied.push_back(i);
+    }
+  }
+  int chosen = rand() % unOccupied.size();
+  auto dest =
+    std::dynamic_pointer_cast<Cell>(neighbours[unOccupied[chosen]]);
+  cell->moveCharacter(dest);
+
+  return position;
 }
 
 void Enemy::getStruckBy(Shade * shade) {
@@ -80,6 +95,10 @@ void Enemy::getStruckBy(Goblin * goblin) {
     health -= damage;
     setHP(health);
     transferGold(goblin);
+}
+
+void Enemy::nextTurn() {
+  move();
 }
 
 int Enemy::randomGold() {

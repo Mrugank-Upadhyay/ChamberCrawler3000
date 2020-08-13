@@ -36,7 +36,8 @@ class Enemy : public Character {
         int getGold();
         std::shared_ptr<Cell> getCell();
 
-        virtual std::pair<int, int> move(int x, int y);
+        virtual std::pair<int, int> move();
+
         virtual void attack(std::shared_ptr<Player> player) = 0;
 
         // How is gold going to be transferred? Will we need to differentiate if its a human, merchant or Drag?
@@ -48,7 +49,7 @@ class Enemy : public Character {
 
         // Keep purely virtual? or make simply virtual and implement a blank
         //TODO: possibly dd move in here
-        virtual void nextTurn() override = 0;
+        virtual void nextTurn() override;
 
         virtual std::string info() override;
 };
