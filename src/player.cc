@@ -15,6 +15,8 @@
 #include "items/gold.h"
 #include "items/potion.h"
 
+#include <iostream>
+
 Player::Player(std::string race, int hp, int atk, int def, 
     std::pair<int, int> position, int gold, int maxHP)
   : Character{race, "@", hp, atk, def, position}, cell{nullptr}, gold{gold},
@@ -86,36 +88,50 @@ void Player::applyItem(Gold * gold) {
 void Player::getStruckBy(Human * enemy) {
   int damage = calculateDamage(enemy->getATK(), tmpDEF);
   setHP(getHP() - damage);
+  std::cout << " " << enemy->getRep() << " deals "
+            << damage << " damage to PC (" << getHP() << " HP).";
 }
 
 void Player::getStruckBy(Dwarf * enemy) {
   int damage = calculateDamage(enemy->getATK(), tmpDEF);
   setHP(getHP() - damage);
+  std::cout << " " << enemy->getRep() << " deals "
+            << damage << " damage to PC (" << getHP() << " HP).";
 }
 
 void Player::getStruckBy(Elf * enemy) {
   int damage = calculateDamage(enemy->getATK(), tmpDEF);
   setHP(getHP() - damage);
+  std::cout << " " << enemy->getRep() << " deals "
+            << damage << " damage to PC (" << getHP() << " HP).";
 }
 
 void Player::getStruckBy(Orc * enemy) {
   int damage = calculateDamage(enemy->getATK(), tmpDEF);
   setHP(getHP() - damage);
+  std::cout << " " << enemy->getRep() << " deals "
+            << damage << " damage to PC (" << getHP() << " HP).";
 }
 
 void Player::getStruckBy(Dragon * enemy) {
   int damage = calculateDamage(enemy->getATK(), tmpDEF);
   setHP(getHP() - damage);
+  std::cout << " " << enemy->getRep() << " deals "
+            << damage << " damage to PC (" << getHP() << " HP).";
 }
 
 void Player::getStruckBy(Merchant * enemy) {
   int damage = calculateDamage(enemy->getATK(), tmpDEF);
   setHP(getHP() - damage);
+  std::cout << " " << enemy->getRep() << " deals "
+            << damage << " damage to PC (" << getHP() << " HP).";
 }
 
 void Player::getStruckBy(Halfling * enemy) {
   int damage = calculateDamage(enemy->getATK(), tmpDEF);
   setHP(getHP() - damage);
+  std::cout << " " << enemy->getRep() << " deals "
+            << damage << " damage to PC (" << getHP() << " HP).";
 }
 
 void Player::nextTurn() {}

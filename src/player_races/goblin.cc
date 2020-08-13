@@ -2,6 +2,8 @@
 #include "../enemy.h"
 #include "../enemy_races/orc.h"
 
+#include <iostream>
+
 Goblin::Goblin(std::pair<int, int> position)
   : Player{"Goblin", 110, 15, 20, position, 0, 110} {}
 
@@ -11,5 +13,8 @@ void Goblin::attack(std::shared_ptr<Enemy> enemy) {
 }
 
 void Goblin::getStruckBy(Orc *enemy) {
-  setHP(getHP() - calculateDamage(getATK(), getDEF()) * 1.5);
+  int damage = calculateDamage(enemy->getATK(), getTmpDEF());
+  setHP(getHP() - damage * 1.5);
+  std::cout << " O deals " << damage << " times 1.5 to PC ("
+            << getHP() << " HP).";
 }

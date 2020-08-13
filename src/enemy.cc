@@ -7,6 +7,8 @@
 #include "./player_races/goblin.h"
 #include "enemy.h"
 
+#include <iostream>
+
 Enemy::Enemy(std::string race, std::string rep, int health, int atk, int def, std::pair<int, int> position, bool hostile, int gold, bool giveGold)
     : Character{race, rep, health, atk, def, position}, isHostile{hostile}, gold{gold}, giveGold{giveGold} {}
 
@@ -63,6 +65,9 @@ void Enemy::getStruckBy(Shade * shade) {
     // Will this need to notify cell when health == 0?
     // if so, how?
     transferGold(shade);
+    setHostile(true);
+    std::cout << " PC deals " << damage << "damage to " << getRep()
+              << " (" << getHP() << " HP).";
 }
 
 void Enemy::getStruckBy(Drow * drow) {
@@ -71,6 +76,9 @@ void Enemy::getStruckBy(Drow * drow) {
     health -= damage;
     setHP(health);
     transferGold(drow);
+    setHostile(true);
+    std::cout << " PC deals " << damage << "damage to " << getRep()
+              << " (" << getHP() << " HP).";
 }
 
 void Enemy::getStruckBy(Vampire * vampire) {
@@ -79,6 +87,9 @@ void Enemy::getStruckBy(Vampire * vampire) {
     health -= damage;
     setHP(health);
     transferGold(vampire);
+    setHostile(true);
+    std::cout << " PC deals " << damage << "damage to " << getRep()
+              << " (" << getHP() << " HP).";
 }
 
 void Enemy::getStruckBy(Troll * troll) {
@@ -87,6 +98,9 @@ void Enemy::getStruckBy(Troll * troll) {
     health -= damage;
     setHP(health);
     transferGold(troll);
+    setHostile(true);
+    std::cout << " PC deals " << damage << "damage to " << getRep()
+              << " (" << getHP() << " HP).";
 }
 
 void Enemy::getStruckBy(Goblin * goblin) {
@@ -95,6 +109,9 @@ void Enemy::getStruckBy(Goblin * goblin) {
     health -= damage;
     setHP(health);
     transferGold(goblin);
+    setHostile(true);
+    std::cout << " PC deals " << damage << "damage to " << getRep()
+              << " (" << getHP() << " HP).";
 }
 
 void Enemy::nextTurn() {
@@ -102,8 +119,9 @@ void Enemy::nextTurn() {
   auto observers = cell->getObservers();
   for(auto obs: observers) {
     auto obsCell = std::dynamic_pointer_cast<Cell>(obs);
-    if(obsCell->getPlayer() != nullptr) {
+    if(obsCell->getPlayer() != nullptr && getHostile()) {
       attack(obsCell->getPlayer());
+      return;
     }
   }
   move();
