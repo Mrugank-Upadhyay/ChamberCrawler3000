@@ -5,7 +5,19 @@ Cell::Cell(std::string type, std::string rep, std::pair<int, int> position)
 
 std::string & Cell::getType() { return type; }
 
-std::string & Cell::getRep() { return rep; }
+std::string Cell::getRep() { 
+  std::string result_rep = rep;
+  if(player != nullptr) {
+    result_rep = player->getRep();
+  }
+  else if(enemy != nullptr) {
+    result_rep = enemy->getRep();
+  }
+  else if(item != nullptr) {
+    result_rep = item->getRep();
+  }
+  return result_rep;
+}
 void Cell::setRep(std::string rep) { this->rep = rep; }
 
 std::pair<int, int> Cell::getPosition() { return position; }
@@ -17,7 +29,7 @@ bool Cell::getOccupied() { return isOccupied; }
 std::shared_ptr<Player> Cell::getPlayer() { return player; }
 std::shared_ptr<Enemy> Cell::getEnemy() { return enemy; }
 void Cell::setCharacter(std::shared_ptr<Player> player) { 
-  this->player = player;;
+  this->player = player;
   this->enemy = nullptr;
   isOccupied = (player == nullptr) ? false : true;
   //if (player != nullptr) {
@@ -25,7 +37,7 @@ void Cell::setCharacter(std::shared_ptr<Player> player) {
   //}
 }
 void Cell::setCharacter(std::shared_ptr<Enemy> enemy) {
-  this->enemy = enemy;;
+  this->enemy = enemy;
   this->player = nullptr;
   isOccupied = (enemy == nullptr) ? false : true;
   //if (enemy != nullptr) {

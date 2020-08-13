@@ -22,7 +22,7 @@ class Cell: public Subject, public Observer {
 
     std::string & getType();
 
-    std::string & getRep();
+    std::string getRep();
     void setRep(std::string rep);
 
     std::pair<int, int> getPosition();

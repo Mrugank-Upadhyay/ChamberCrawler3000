@@ -6,6 +6,7 @@
 #include "display.h"
 
 #include "items/gold.h"
+#include "items/potion.h"
 
 Display::Display(std::string playerClass, std::string file, int height, int width, bool generate)
     : height{height}, width{width} {
@@ -41,7 +42,7 @@ std::pair<int,int> operator+(std::pair<int,int> p1, std::pair<int,int> p2) {
 
 void Display::applyCommand(std::string command) {
   std::cout << "Action ";
-  // move commands
+  // directions
   std::map<std::string,std::pair<int,int>> directions;
   directions["no"] = std::make_pair(0,-1);
   directions["so"] = std::make_pair(0,1);
@@ -52,33 +53,79 @@ void Display::applyCommand(std::string command) {
   directions["se"] = directions["so"] + directions["ea"];
   directions["sw"] = directions["so"] + directions["we"];
 
+  // move commands
   if(directions.count(command) == 1) {
     auto player = game->getPlayer();
     auto newPos = player->getPosition() + directions[command];
     auto destCell = game->getFloor()->getGrid().at(newPos);
     std::string type = destCell->getType();
     if(type == "Exit") {
-
+      game->regenFloor();
+      player->setTmpATK(player->getATK());
+      player->setTmpDEF(player->getDEF());
+      return;
     }
+    if(type != "Doorway" &&
+       type != "Passage" &&
+       type != "Floor") { 
+      std::cout << "Cannot move there!";
+      return;
+    }
+
     if(destCell->getOccupied()) {
       if(destCell->getItem() != nullptr) {
         // Should work if downcasting returns nullptr on fail
         auto gold = std::dynamic_pointer_cast<Gold>(destCell->getItem());
         if(gold != nullptr) {
-          // check if dragon is alive first.
-          if(gold->getAmount() == 6) {
-            std::cout << "Cannot move there! Dragon Hoard in the way!";
+          if(!gold->getCanPickUp()) {
+            std::cout 
+              << "Can't go there! It seems that the gold over there cannot be picked up.";
+            return;
           }
+
           player->move(newPos);
           gold->apply(player);
           destCell->setItem(nullptr);
           destCell->setRep(".");
+          std::cout << "PC picked up " << gold->getAmount() << " gold.";
         }
         else {
           std::cout << "Cannot move there! An item is in the way!";
           return;
         }
       }
+    }
+
+  }
+
+  if(command.substr(0,2) == "u " && directions.count(command.substr(2)) == 1) {
+    auto usePos = game->getPlayer()->getPosition() + directions[command.substr(2)];
+    auto useCell = game->getFloor()->getGrid().at(usePos);
+    if(useCell->getItem() != nullptr) {
+      auto potion = std::dynamic_pointer_cast<Potion>(useCell->getItem());
+
+      if(potion != nullptr) {
+        potion->apply(game->getPlayer());
+        std::cout << "You used a potion that has increased your hp:atk:def by "
+                  << potion->getHP() << ":"
+                  << potion->getATK() << ":"
+                  << potion->getDEF() << ".";
+      }
+
+      else {
+        std::cout << "You cannot use that item!";
+      }
+    }
+    else {
+      std::cout << "There is no item there to use!";
+    }
+  }
+
+  if(command.substr(0,2) == "a " && directions.count(command.substr(2)) == 1) {
+    auto enemyPos = game->getPlayer()->getPosition() + directions[command.substr(2)];
+    auto enemy = game->getFloor()->getGrid().at(enemyPos)->getEnemy();
+    if(enemy != nullptr) {
+      game->getPlayer()->attack(enemy);
     }
   }
 
