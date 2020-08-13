@@ -17,7 +17,7 @@ class Game {
     int width;
     bool generate;
 
-    std::string & makeFloorString();
+    std::string makeFloorString();
 
   public:
     Game(std::string playerClass, std::string file, int height, int width, bool generate);

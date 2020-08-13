@@ -37,7 +37,7 @@ Game::Game(std::string playerClass, std::string file, int height, int width, boo
   currentFloor->getGrid().at(position)->setCharacter(player);
 }
 
-std::string & Game::makeFloorString() {
+std::string Game::makeFloorString() {
   std::string line;
   std::string output = "";
   for (int i = 0; i < height; i++) {
