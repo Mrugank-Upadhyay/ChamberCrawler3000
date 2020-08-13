@@ -23,7 +23,10 @@ class Floor {
     void generateGold();
     void generatePotions();
     void generateCells(std::string & floorString, int height, int width);
-    std::pair<int, int> & randomFreeCell();
+    void createSpawns(std::string & floorString, int height, int width);
+    bool isLetter(char c);
+    bool isNumber(char c);
+    std::pair<int, int> randomFreeCell();
     void attachNeighbours();
 
     public:

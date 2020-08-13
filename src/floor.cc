@@ -21,14 +21,11 @@ Floor::Floor(std::string & floorString, int height, int width, bool generate) {
         generatePotions();    
     }
     
-    // Otherwise we have to use the file's corresponding values. Add a function for that!
-    else {}
-    
 
     
 }
 
-std::pair<int, int> & Floor::randomFreeCell() {
+std::pair<int, int> Floor::randomFreeCell() {
     int randomCell;
     int length = floorCells.size();
     std::pair<int, int> position;
@@ -79,6 +76,10 @@ void Floor::spawn(std::string type, std::pair<int, int> position) {
 
     else if (type == "Normal Hoard") {
         goldPiles.push_back(std::make_shared<Gold>(position, 2));
+    }
+
+    else if (type == "Merchant Hoard") {
+        goldPiles.push_back(std::make_shared<Gold>(position, 4));
     }
 
     else if (type == "Dragon Hoard") {
@@ -185,12 +186,103 @@ void Floor::generateCells(std::string & floorString, int height, int width) {
             else if (cellRep == "#") {cellType = "Passage";}
             else if (cellRep == ".") {cellType = "Floor";}
             else if (cellRep == " ") {cellType = "Abyss";}
+            else if (cellRep == "H") {
+                cellType = "Floor";
+                spawn("Human", position);
+            }
+            else if (cellRep == "W") {
+                cellType = "Floor";
+                spawn("Dwarf", position);
+            }
+            else if (cellRep == "E") {
+                cellType = "Floor";
+                spawn("Elf", position);
+            }
+            else if (cellRep == "O") {
+                cellType = "Floor";
+                spawn("Orc", position);
+            }
+            else if (cellRep == "M") {
+                cellType = "Floor";
+                spawn("Merchant", position);
+            }
+            else if (cellRep == "D") {
+                cellType = "Floor";
+                spawn("Dragon", position);
+            }
+            else if (cellRep == "L") {
+                cellType = "Floor";
+                spawn("Halfling", position);
+            }
+            else if (cellRep == "0") {
+                cellType = "Floor";
+                spawn("RH", position);
+            }
+            else if (cellRep == "1") {
+                cellType = "Floor";
+                spawn("BA", position);
+            }
+            else if (cellRep == "2") {
+                cellType = "Floor";
+                spawn("BD", position);
+            }
+            else if (cellRep == "3") {
+                cellType = "Floor";
+                spawn("PH", position);
+            }
+            else if (cellRep == "4") {
+                cellType = "Floor";
+                spawn("WA", position);
+            }
+            else if (cellRep == "5") {
+                cellType = "Floor";
+                spawn("WD", position);
+            }
+            else if (cellRep == "6") {
+                cellType = "Floor";
+                spawn("Normal Hoard", position);
+            }
+            else if (cellRep == "7") {
+                cellType = "Floor";
+                spawn("Small Hoard", position);
+            }
+            else if (cellRep == "8") {
+                cellType = "Floor";
+                spawn("Merchant Hoard", position);
+            }
+            else if (cellRep == "9") {
+                cellType = "Floor";
+                spawn("Dragon Hoard", position);
+            }
             
             std::shared_ptr<Cell> cell = std::make_shared<Cell>(cellType, cellRep, position);
             grid[position] = cell;
-            if ((cellType == "Floor") || (cellType == "+") || (cellType == "#")) {floorCells.push_back(cell);}
+            if ((cellType == "Floor") || (cellType == "Door") || (cellType == "Passage")) {floorCells.push_back(cell);}
+
+            if (isLetter(cellRep.front())) {
+                cell->setCharacter(enemies.back());
+            }
+            
+            else if (isNumber(cellRep.front())) {
+                if (std::stoi(cellRep) < 6) { cell->setItem(potions.back()); }
+                else { cell->setItem(goldPiles.back()); }
+            }
         }
     }
+}
+
+bool Floor::isLetter(char c) {
+    if (c >= 'A' && c <= 'Z') {
+        return true;
+    }
+    return false;
+}
+
+bool Floor::isNumber(char c) {
+    if (c >= '0' && c <= '9') {
+        return true;
+    }
+    return false;
 }
 
 
@@ -237,6 +329,16 @@ void Floor::attachNeighbours() {
         else if ((!(grid[std::pair<int, int> (x + 1, y + 1)]->getType() == "Wall")) &&
             (!(grid[std::pair<int, int> (x + 1, y + 1)]->getType() == "Abyss"))) {
                 cell->attach(grid[std::pair<int, int> (x + 1, y + 1)]);
+        }
+    }
+}
+
+
+
+void Floor::createSpawns(std::string & floorString, int height, int width) {
+    for (int y = 0; y < height; y++) {
+        for (int x = 0; x < width; x++) {
+
         }
     }
 }
