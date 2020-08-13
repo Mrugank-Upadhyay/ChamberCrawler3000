@@ -41,7 +41,7 @@ std::pair<int,int> operator+(std::pair<int,int> p1, std::pair<int,int> p2) {
 }
 
 void Display::applyCommand(std::string command) {
-  std::cout << "Action ";
+  std::cout << "Action";
   // directions
   std::map<std::string,std::pair<int,int>> directions;
   directions["no"] = std::make_pair(0,-1);
@@ -53,7 +53,7 @@ void Display::applyCommand(std::string command) {
   directions["se"] = directions["so"] + directions["ea"];
   directions["sw"] = directions["so"] + directions["we"];
 
-  // move commands
+  // move command
   if(directions.count(command) == 1) {
     auto player = game->getPlayer();
     auto newPos = player->getPosition() + directions[command];
@@ -79,25 +79,34 @@ void Display::applyCommand(std::string command) {
         if(gold != nullptr) {
           if(!gold->getCanPickUp()) {
             std::cout 
-              << "Can't go there! It seems that the gold over there cannot be picked up.";
+              << " Can't go there! It seems that the gold over there cannot be picked up.";
             return;
           }
-
-          player->move(newPos);
-          gold->apply(player);
-          destCell->setItem(nullptr);
-          destCell->setRep(".");
-          std::cout << "PC picked up " << gold->getAmount() << " gold.";
+          else {
+            player->move(newPos);
+            gold->apply(player);
+            destCell->setItem(nullptr);
+            destCell->setRep(".");
+            std::cout << " PC picked up " << gold->getAmount() << " gold.";
+            game->getFloor()->nextTurn();
+          }
         }
         else {
-          std::cout << "Cannot move there! An item is in the way!";
-          return;
+          std::cout << " Cannot move there! An item is in the way!";
         }
       }
+      else if(destCell->getEnemy() != nullptr) {
+        std::cout << " Cannot move there! An enemy is positioned there!";
+      }
     }
-
+    else {
+      player->move(newPos);
+      std::cout << " player moved " + command + ".";
+      game->getFloor()->nextTurn();
+    }
   }
 
+  // use command
   if(command.substr(0,2) == "u " && directions.count(command.substr(2)) == 1) {
     auto usePos = game->getPlayer()->getPosition() + directions[command.substr(2)];
     auto useCell = game->getFloor()->getGrid().at(usePos);
@@ -106,28 +115,35 @@ void Display::applyCommand(std::string command) {
 
       if(potion != nullptr) {
         potion->apply(game->getPlayer());
-        std::cout << "You used a potion that has increased your hp:atk:def by "
+        std::cout << " PC used a potion that has increased your hp:atk:def by "
                   << potion->getHP() << ":"
                   << potion->getATK() << ":"
                   << potion->getDEF() << ".";
+        game->getFloor()->nextTurn();
       }
 
       else {
-        std::cout << "You cannot use that item!";
+        std::cout << " PC cannot use that item!";
       }
     }
     else {
-      std::cout << "There is no item there to use!";
+      std::cout << " There is no item there to use!";
     }
   }
 
+  // attack command
   if(command.substr(0,2) == "a " && directions.count(command.substr(2)) == 1) {
     auto enemyPos = game->getPlayer()->getPosition() + directions[command.substr(2)];
     auto enemy = game->getFloor()->getGrid().at(enemyPos)->getEnemy();
     if(enemy != nullptr) {
       game->getPlayer()->attack(enemy);
     }
+    else {
+      std::cout << " There is no enemy there to attack!";
+    }
   }
+
+
 
   std::cout << std::endl;
 }

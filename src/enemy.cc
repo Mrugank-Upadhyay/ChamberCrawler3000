@@ -98,6 +98,14 @@ void Enemy::getStruckBy(Goblin * goblin) {
 }
 
 void Enemy::nextTurn() {
+  // if player in vicinity attack instead of moving
+  auto observers = cell->getObservers();
+  for(auto obs: observers) {
+    auto obsCell = std::dynamic_pointer_cast<Cell>(obs);
+    if(obsCell->getPlayer() != nullptr) {
+      attack(obsCell->getPlayer());
+    }
+  }
   move();
 }
 
