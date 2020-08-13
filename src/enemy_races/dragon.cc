@@ -7,14 +7,14 @@ Dragon::Dragon(std::pair<int, int> position)
 
 // Wanna have int x, and int y be the gold position, sort of as an anchor point
 // then we have the drag go around in circles by picking a random direction
-std::pair<int, int> Dragon::move(int x, int y) {
+std::pair<int, int> Dragon::move() {
   auto previous = getPosition();
+
+  
 
   return previous;
 }
 
 void Dragon::attack(std::shared_ptr<Player> player) {
-    player->getStruckBy(this);
+  player->getStruckBy(this);
 }
-
-void Dragon::nextTurn() {}
