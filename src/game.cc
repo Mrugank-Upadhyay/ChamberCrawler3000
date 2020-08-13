@@ -13,7 +13,6 @@
 Game::Game(std::string playerClass, std::string file, int height, int width, bool generate) 
   : level{1}, height{height}, width{width}, generate{generate} {
 
-  // maybe add the player afterwards when we do the dfs on a randomly generated floor cell
   auto position = std::make_pair<int, int>(0,0);
   if(playerClass == "Drow") {
     player = std::dynamic_pointer_cast<Player>(std::make_shared<Drow>(position));
@@ -78,6 +77,26 @@ void Game::genPlayer(std::shared_ptr<Player> player) {
   }
 }
 
+std::shared_ptr<Player> Game::getPlayer() {
+  return player;
+}
+
+int Game::getLevel() const {
+  return level;
+}
+
+void Game::incrementLevel() {
+  level++;
+}
+
+void Game::resetLevel() {
+  level = 1;
+}
+
+std::shared_ptr<Floor> Game::getFloor() {
+  return currentFloor;
+}
+
 std::vector<std::shared_ptr<Cell>> Game::bfs() {
 
   std::map<std::pair<int, int>, std::shared_ptr<Cell>> queue;
@@ -109,6 +128,22 @@ std::vector<std::shared_ptr<Cell>> Game::bfs() {
   return queueCell;
 }
 
+
+void Game::regenFloor() {
+  currentFloor = std::make_shared<Floor>(makeFloorString(), height, width, generate);
+  genPlayer(player);
+  player->setTmpATK(player->getATK());
+  player->setTmpDEF(player->getDEF());
+
+}
+
+bool Game::tick() {
+  if (player->getHP() == 0) {
+    return false;
+  }
+  currentFloor->nextTurn();
+  return true;
+}
 
 // std::map<std::pair<int, int>, std::shared_ptr<Cell>> Game::bfs(
 //     std::map<std::pair<int, int>, std::shared_ptr<Cell>> & visited, 

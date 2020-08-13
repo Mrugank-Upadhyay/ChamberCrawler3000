@@ -39,8 +39,7 @@ class Game {
     std::shared_ptr<Floor> getFloor();
     // check potion reveal
     void regenFloor();
-
-    void tick();
+    bool tick();
 };
 
 #endif
