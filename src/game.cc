@@ -33,8 +33,8 @@ Game::Game(std::string playerClass, std::string file, int height, int width, boo
   // make sure to check arg in main for file input, if none, use default file
   // when reset game (call back the string, make new ifstream)
   infile = std::make_shared<std::ifstream>(file);
-
   currentFloor = std::make_shared<Floor>(makeFloorString(), height, width, generate);
+  std::cout << "success" << std::endl;
   genPlayer(player);
 }
 
@@ -43,7 +43,7 @@ std::string Game::makeFloorString() {
   std::string output = "";
   for (int i = 0; i < height; i++) {
     getline(*infile, line);
-    output.append(line + "\n");
+    output.append(line);
   }
 
   return output;
@@ -56,6 +56,9 @@ bool Game::pairCmp(std::shared_ptr<Cell> c1, std::shared_ptr<Cell> c2) {
 
 void Game::genPlayer(std::shared_ptr<Player> player) {
   auto bfsChamber = bfs();
+
+  // std::cout << "success" << std::endl;
+
   std::sort(bfsChamber.begin(), bfsChamber.end(), pairCmp);
   std::sort(currentFloor->getFloorCell().begin(), currentFloor->getFloorCell().end(), pairCmp);
   std::vector<std::shared_ptr<Cell>> availableSpawn;
