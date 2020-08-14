@@ -159,5 +159,6 @@ std::string Enemy::info() {
     str += " who is not hostile";
   }
   str += " and has " + std::to_string(getGold()) + " gold";
+  str += " and has the cell: " + cell->info();
   return str;
 }
