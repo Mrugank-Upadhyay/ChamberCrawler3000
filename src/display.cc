@@ -1,4 +1,5 @@
 //#include <curses.h>
+#include <stdlib.h>
 
 #include "game.h"
 #include "cell.h"
@@ -9,25 +10,41 @@
 #include "items/potion.h"
 
 Display::Display(std::string playerClass, std::string file, int height, int width, bool generate)
-    : height{height}, width{width} {
-    game = std::make_shared<Game>(playerClass, file, height, width, generate);
+  : height{height}, width{width} {
+  game = std::make_shared<Game>(playerClass, file, height, width, generate);
+  print();
+  std::cout << "Action: Player character has spawned." << std::endl;
 }
 
 void Display::printFloor() {
-    auto grid = game->getFloor()->getGrid();
+  auto grid = game->getFloor()->getGrid();
 
-    for (int y = 0; y < height; y++) {
-        for (int x = 0; x < width; x++) {
-            std::cout << grid[std::pair<int, int>(x, y)]->getRep();
+  for (int y = 0; y < height; y++) {
+    for (int x = 0; x < width; x++) {
+      std::pair<int, int> position{x, y};
+      if(grid[position]->getItem() != nullptr) {
+        auto potion = std::dynamic_pointer_cast<Potion>(grid[position]->getItem());
+        if(potion != nullptr) {
+          if(hiddenItems.count(potion->getRep()) == 0) {
+            std::cout << "?";
+            continue;
+          }
         }
-        std::cout << std::endl;
+      }
+      std::cout << grid[position]->getRep();
     }
+    std::cout << std::endl;
+  }
 }
 
 void Display::printInfo() {
     std::string output = "Race: " + game->getPlayer()->getRace() 
                        + " Gold: " + std::to_string(game->getPlayer()->getGold());
-    std::cout << output << std::setw(width - output.length()) << "Floor " << game->getLevel() << std::endl;
+    std::cout << output << std::setw(width - output.length()) << "Floor " 
+              << game->getLevel() << std::endl;
+    std::cout << "Hp: "  << game->getPlayer()->getHP()     << std::endl;
+    std::cout << "Atk: " << game->getPlayer()->getTmpATK() << std::endl;
+    std::cout << "Def: " << game->getPlayer()->getTmpDEF() << std::endl;
 }
 
 void Display::print() {
@@ -41,7 +58,47 @@ std::pair<int,int> operator+(std::pair<int,int> p1, std::pair<int,int> p2) {
 }
 
 void Display::applyCommand(std::string command) {
-  std::cout << "Action";
+  print();
+  std::cout << "Action:";
+
+  if(game->getPlayer()->getHP() <= 0) {
+    if(command != "r" && command != "q") {
+      std::cout << " PC has been slain. Only valid commands are (r)estart or (q)uit."
+                << std::endl;
+      return;
+    }
+  }
+  if(game->hasWon()) {
+    if(command != "r" && command != "q") {
+      std::cout << " PC has won. Only valid commands are (r)estart or (q)uit."
+                << std::endl;
+      return;
+    }
+  }
+
+
+  if(command == "f") {
+    if(Enemy::getStopped()) {
+      Enemy::setStopped(false);
+      std::cout << " Enemies can move again.";
+    }
+    else {
+      Enemy::setStopped(true);
+      std::cout << " Enemies now will not move after a turn.";
+    }
+    std::cout << std::endl;
+    return;
+  }
+  else if(command == "r") {
+    // regen game
+    std::cout << std::endl;
+    return;
+  }
+  else if(command == "q") {
+    std::cout << " Exiting the Game..." << std::endl;
+    exit(0);
+  }
+
   // directions
   std::map<std::string,std::pair<int,int>> directions;
   directions["no"] = std::make_pair(0,-1);
@@ -65,16 +122,15 @@ void Display::applyCommand(std::string command) {
       player->setTmpDEF(player->getDEF());
       return;
     }
-    if(type != "Doorway" &&
+    else if(type != "Doorway" &&
        type != "Passage" &&
        type != "Floor") { 
       std::cout << "Cannot move there!";
       return;
     }
 
-    if(destCell->getOccupied()) {
+    else if(destCell->getOccupied()) {
       if(destCell->getItem() != nullptr) {
-        // Should work if downcasting returns nullptr on fail
         auto gold = std::dynamic_pointer_cast<Gold>(destCell->getItem());
         if(gold != nullptr) {
           if(!gold->getCanPickUp()) {
@@ -115,10 +171,12 @@ void Display::applyCommand(std::string command) {
 
       if(potion != nullptr) {
         potion->apply(game->getPlayer());
-        std::cout << " PC used a potion that has increased your hp:atk:def by "
-                  << potion->getHP() << ":"
-                  << potion->getATK() << ":"
-                  << potion->getDEF() << ".";
+        std::cout << " PC uses " << potion->getType() << ".";
+        hiddenItems[potion->getType()] = false;
+        //std::cout << " PC used a potion that has increased your hp:atk:def by "
+                  //<< potion->getHP() << ":"
+                  //<< potion->getATK() << ":"
+                  //<< potion->getDEF() << ".";
         game->getFloor()->nextTurn();
       }
 
@@ -137,6 +195,7 @@ void Display::applyCommand(std::string command) {
     auto enemy = game->getFloor()->getGrid().at(enemyPos)->getEnemy();
     if(enemy != nullptr) {
       game->getPlayer()->attack(enemy);
+      game->getFloor()->nextTurn();
     }
     else {
       std::cout << " There is no enemy there to attack!";
