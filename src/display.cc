@@ -51,6 +51,9 @@ void Display::print() {
     // call ncurses and do screen clear
     printFloor();
     printInfo();
+
+    //remove after
+    game->printFloor();
 }
 
 std::pair<int,int> operator+(std::pair<int,int> p1, std::pair<int,int> p2) {
