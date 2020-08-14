@@ -22,16 +22,16 @@ void Display::printFloor() {
   for (int y = 0; y < height; y++) {
     for (int x = 0; x < width; x++) {
       std::pair<int, int> position{x, y};
-      if(grid[position]->getItem() != nullptr) {
-        auto potion = std::dynamic_pointer_cast<Potion>(grid[position]->getItem());
+      if(grid.at(position)->getItem() != nullptr) {
+        auto potion = std::dynamic_pointer_cast<Potion>(grid.at(position)->getItem());
         if(potion != nullptr) {
-          if(hiddenItems.count(potion->getRep()) == 0) {
+          if(visibleItems.count(potion->getRep()) == 0) {
             std::cout << "?";
             continue;
           }
         }
       }
-      std::cout << grid[position]->getRep();
+      std::cout << grid.at(position)->getRep();
     }
     std::cout << std::endl;
   }
@@ -40,7 +40,7 @@ void Display::printFloor() {
 void Display::printInfo() {
     std::string output = "Race: " + game->getPlayer()->getRace() 
                        + " Gold: " + std::to_string(game->getPlayer()->getGold());
-    std::cout << output << std::setw(width - output.length()) << "Floor " 
+    std::cout << output << std::setw(width - 2 - output.length()) << "Floor " 
               << game->getLevel() << std::endl;
     std::cout << "Hp: "  << game->getPlayer()->getHP()     << std::endl;
     std::cout << "Atk: " << game->getPlayer()->getTmpATK() << std::endl;
@@ -61,6 +61,7 @@ void Display::applyCommand(std::string command) {
   print();
   std::cout << "Action:";
 
+  // if player slain only allow restart or quit
   if(game->getPlayer()->getHP() <= 0) {
     if(command != "r" && command != "q") {
       std::cout << " PC has been slain. Only valid commands are (r)estart or (q)uit."
@@ -68,6 +69,8 @@ void Display::applyCommand(std::string command) {
       return;
     }
   }
+
+  // if player has won only allow restart or quit
   if(game->hasWon()) {
     if(command != "r" && command != "q") {
       std::cout << " PC has won. Only valid commands are (r)estart or (q)uit."
@@ -76,7 +79,7 @@ void Display::applyCommand(std::string command) {
     }
   }
 
-
+  // toggle freeze
   if(command == "f") {
     if(Enemy::getStopped()) {
       Enemy::setStopped(false);
@@ -89,11 +92,13 @@ void Display::applyCommand(std::string command) {
     std::cout << std::endl;
     return;
   }
+  // restart
   else if(command == "r") {
     // regen game
     std::cout << std::endl;
     return;
   }
+  // quit
   else if(command == "q") {
     std::cout << " Exiting the Game..." << std::endl;
     exit(0);
@@ -111,11 +116,14 @@ void Display::applyCommand(std::string command) {
   directions["sw"] = directions["so"] + directions["we"];
 
   // move command
-  if((command.length() == 2)) {
+  if(directions.count(command) == 1) {
     auto player = game->getPlayer();
     auto newPos = player->getPosition() + directions[command];
     auto destCell = game->getFloor()->getGrid().at(newPos);
     std::string type = destCell->getType();
+
+    std::cout << " New pos(" << newPos.first << "," << newPos.second << ").";
+    std::cout << destCell->info();
 
     if(type == "Exit") {
       std::cout << " Going to the next floor..." << std::endl;
@@ -125,10 +133,10 @@ void Display::applyCommand(std::string command) {
       print();
       return;
     }
-    else if(type != "Doorway" &&
-       type != "Passage" &&
-       type != "Floor") { 
-      std::cout << "Cannot move there!" << std::endl;
+    else if((type != "Doorway") &&
+       (type != "Passage") &&
+       (type != "Floor")) { 
+      std::cout << " Cannot move there!" << std::endl;
       return;
     }
 
@@ -177,7 +185,7 @@ void Display::applyCommand(std::string command) {
       if(potion != nullptr) {
         potion->apply(game->getPlayer());
         std::cout << " PC uses " << potion->getType() << ".";
-        hiddenItems[potion->getType()] = false;
+        visibleItems[potion->getType()] = false;
         //std::cout << " PC used a potion that has increased your hp:atk:def by "
                   //<< potion->getHP() << ":"
                   //<< potion->getATK() << ":"

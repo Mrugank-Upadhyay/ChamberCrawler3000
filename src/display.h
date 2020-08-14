@@ -13,7 +13,7 @@ class Display {
     std::shared_ptr<Game> game;
     int height;
     int width;
-    std::map<std::string, bool> hiddenItems;
+    std::map<std::string, bool> visibleItems;
     void printFloor();
     void printInfo();
 
