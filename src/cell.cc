@@ -48,12 +48,14 @@ void Cell::moveCharacter(Cell * dest) {
     dest->setCharacter(player);
     dest->notifyObservers();
     player = nullptr;
+    isOccupied = false;
   }
   else if(enemy != nullptr) {
     enemy->setCell(dest);
     enemy->setPosition(dest->getPosition());
     dest->setCharacter(enemy);
     enemy = nullptr;
+    isOccupied = false;
   }
 }
 
