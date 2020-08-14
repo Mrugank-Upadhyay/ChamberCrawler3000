@@ -15,7 +15,7 @@ class Subject {
   public:
     Subject();
     virtual ~Subject();
-
+    // std::vector<std::shared_ptr<Observer>> getObservers();
     void attach(std::shared_ptr<Observer> observer);
     void detach(std::shared_ptr<Observer> observer);
     void notifyObservers();

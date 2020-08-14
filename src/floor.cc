@@ -9,6 +9,7 @@
 #include "./items/potion_types/WApotion.h"
 #include "./items/potion_types/WDpotion.h"
 #include "floor.h"
+#include <iostream>
 
 Floor::Floor(std::string floorString, int height, int width, bool generate) {
     
@@ -25,9 +26,6 @@ Floor::Floor(std::string floorString, int height, int width, bool generate) {
     else {
         attachDragons();
     }
-    
-
-    
 }
 
 std::pair<int, int> Floor::randomFreeCell() {
@@ -187,8 +185,9 @@ void Floor::generateCells(std::string floorString, int height, int width) {
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
             auto position = std::pair<int, int>(x, y);
-
-            std::string cellRep = std::to_string(floorString[(y * width) + x]);
+            int index = (y * width) + x;
+            std::string cellRep;
+            cellRep.push_back(floorString.at(index));
             std::string cellType;
 
             if (cellRep == "|" || cellRep == "-") { cellType = "Wall";}
@@ -197,6 +196,7 @@ void Floor::generateCells(std::string floorString, int height, int width) {
             else if (cellRep == ".") {cellType = "Floor";}
             else if (cellRep == " ") {cellType = "Abyss";}
             else if (cellRep == "\\") {cellType = "Exit";}
+            
             else if (cellRep == "H") {
                 cellType = "Floor";
                 spawn("Human", position);
@@ -269,14 +269,19 @@ void Floor::generateCells(std::string floorString, int height, int width) {
             std::shared_ptr<Cell> cell = std::make_shared<Cell>(cellType, cellRep, position);
             grid[position] = cell;
             if ((cellType == "Floor") || (cellType == "Door") || (cellType == "Passage") || (cellType == "Exit")) {floorCells.push_back(cell);}
-
+            if (cellType == "Exit") {
+                exit = cell;
+            }
             if (isLetter(cellRep.front())) {
                 cell->setCharacter(enemies.back());
             }
             
             else if (isNumber(cellRep.front())) {
                 if (std::stoi(cellRep) < 6) { cell->setItem(potions.back()); }
-                else { cell->setItem(goldPiles.back()); }
+                else { 
+                    auto goldItem = goldPiles.back();
+                    cell->setItem(std::dynamic_pointer_cast<Item>(goldItem)); 
+                }
             }
         }
     }

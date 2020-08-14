@@ -5,6 +5,10 @@
 Subject::Subject() {}
 Subject::~Subject() {}
 
+// std::vector<std::shared_ptr<Observer>> Subject::getObservers() {
+//   return observers;
+// }
+
 void Subject::attach(std::shared_ptr<Observer> observer) {
   observers.emplace_back(observer);
 }

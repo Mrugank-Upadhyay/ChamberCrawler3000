@@ -22,23 +22,15 @@
 #include "./items/potion_types/WDpotion.h"
 
 #include "cell.h"
+#include "display.h"
+#include "game.h"
+#include "floor.h"
+#include <memory>
 
 #include <iostream>
 using namespace std;
 
 int main() {
-    auto human = std::make_shared<Human>(std::pair<int, int>(0,0)); // Enemy
-    auto troll = std::make_shared<Troll>(std::pair<int, int>(1,4)); // Player
-    auto bapotion = std::make_shared<BAPotion>("?", std::pair<int,int>(9,8)); // Potion
-    auto goldpile = std::make_shared<Gold>(std::make_pair<int,int>(1,1),6); // Gold
-
-    auto cell = std::make_shared<Cell>("Door", "+", std::pair<int, int> (10, 3));
-
-    human->attack(troll);
-    troll->attack(human);
-    cout << human->info() << endl;
-    cout << troll->info() << endl;
-    cout << bapotion->info() << endl;
-    cout << goldpile->info() << endl;
-    cout << cell->info() << endl;
+    auto game = std::make_shared<Game>("Shade", "./src/defaultFloor.txt", 25, 79, true);
+    // std::cout << game->getPlayer()->info() << std::endl;
 }
