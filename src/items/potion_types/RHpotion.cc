@@ -1,4 +1,4 @@
 #include "RHpotion.h"
 
-RHPotion::RHPotion(std::string rep, std::pair<int, int> position)
-    : Potion{"RH", rep, position} {}
+RHPotion::RHPotion(std::pair<int, int> position)
+    : Potion{"RH", "0", position} {}

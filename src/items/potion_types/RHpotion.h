@@ -5,7 +5,7 @@
 
 class RHPotion : public Potion {
     public:
-        RHPotion(std::string rep, std::pair<int, int> position);
+        RHPotion(std::pair<int, int> position);
 };
 
 #endif

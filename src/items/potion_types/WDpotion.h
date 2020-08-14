@@ -5,7 +5,7 @@
 
 class WDPotion : public Potion {
     public:
-        WDPotion(std::string rep, std::pair<int, int> position);
+        WDPotion(std::pair<int, int> position);
 };
 
 #endif

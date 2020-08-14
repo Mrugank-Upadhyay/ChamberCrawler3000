@@ -2,5 +2,5 @@
 
 class BAPotion : public Potion {
     public:
-        BAPotion(std::string rep, std::pair<int, int> position);
+        BAPotion(std::pair<int, int> position);
 };

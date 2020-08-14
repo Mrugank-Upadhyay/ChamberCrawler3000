@@ -5,7 +5,7 @@
 
 class PHPotion : public Potion {
     public:
-        PHPotion(std::string rep, std::pair<int, int> position);
+        PHPotion(std::pair<int, int> position);
 };
 
 #endif

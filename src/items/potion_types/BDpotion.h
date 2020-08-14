@@ -5,7 +5,7 @@
 
 class BDPotion : public Potion {
     public:
-        BDPotion(std::string rep, std::pair<int, int> position);
+        BDPotion(std::pair<int, int> position);
 };
 
 #endif

@@ -345,46 +345,6 @@ void Floor::attachNeighbours() {
                 }
             }
         }
-
-        // if ((!(grid[std::pair<int, int> (x - 1, y - 1)]->getType() == "Wall")) &&
-        //     (!(grid[std::pair<int, int> (x - 1, y - 1)]->getType() == "Abyss"))) {
-        //         cell->attach(grid[std::pair<int, int> (x - 1, y - 1)]);
-        // }
-
-        // else if ((!(grid[std::pair<int, int> (x, y - 1)]->getType() == "Wall")) &&
-        //     (!(grid[std::pair<int, int> (x, y - 1)]->getType() == "Abyss"))) {
-        //         cell->attach(grid[std::pair<int, int> (x, y - 1)]);
-        // }
-
-        // else if ((!(grid[std::pair<int, int> (x + 1, y - 1)]->getType() == "Wall")) &&
-        //     (!(grid[std::pair<int, int> (x + 1, y - 1)]->getType() == "Abyss"))) {
-        //         cell->attach(grid[std::pair<int, int> (x + 1, y - 1)]);
-        // }
-
-        // else if ((!(grid[std::pair<int, int> (x - 1, y)]->getType() == "Wall")) &&
-        //     (!(grid[std::pair<int, int> (x - 1, y)]->getType() == "Abyss"))) {
-        //         cell->attach(grid[std::pair<int, int> (x - 1, y)]);
-        // }
-
-        // else if ((!(grid[std::pair<int, int> (x + 1, y)]->getType() == "Wall")) &&
-        //     (!(grid[std::pair<int, int> (x + 1, y)]->getType() == "Abyss"))) {
-        //         cell->attach(grid[std::pair<int, int> (x + 1, y)]);
-        // }
-
-        // else if ((!(grid[std::pair<int, int> (x - 1, y + 1)]->getType() == "Wall")) &&
-        //     (!(grid[std::pair<int, int> (x - 1, y + 1)]->getType() == "Abyss"))) {
-        //         cell->attach(grid[std::pair<int, int> (x - 1, y + 1)]);
-        // }
-
-        // else if ((!(grid[std::pair<int, int> (x, y + 1)]->getType() == "Wall")) &&
-        //     (!(grid[std::pair<int, int> (x, y + 1)]->getType() == "Abyss"))) {
-        //         cell->attach(grid[std::pair<int, int> (x, y + 1)]);
-        // }
-
-        // else if ((!(grid[std::pair<int, int> (x + 1, y + 1)]->getType() == "Wall")) &&
-        //     (!(grid[std::pair<int, int> (x + 1, y + 1)]->getType() == "Abyss"))) {
-        //         cell->attach(grid[std::pair<int, int> (x + 1, y + 1)]);
-        // }
     }
 }
 
