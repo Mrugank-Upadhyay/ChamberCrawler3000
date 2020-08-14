@@ -20,7 +20,7 @@ class Enemy : public Character {
     int gold;
 
     // Add pointer back to cell
-    std::shared_ptr<Cell>  cell;
+    Cell * cell;
 
     protected:
         int randomGold();
@@ -33,11 +33,11 @@ class Enemy : public Character {
         static void setStopped(bool stopped);
         void setHostile(bool hostile);
         void setGold(int value);
-        void setCell(std::shared_ptr<Cell> cell);
+        void setCell(Cell * cell);
         static bool getStopped();
         bool getHostile();
         int getGold();
-        std::shared_ptr<Cell> getCell();
+        Cell * getCell();
 
         virtual std::pair<int, int> move();
 

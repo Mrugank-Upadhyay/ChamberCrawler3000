@@ -26,7 +26,7 @@ void Enemy::setGold(int value) {
     gold = value;
 }
 
-void Enemy::setCell(std::shared_ptr<Cell> cell) {
+void Enemy::setCell(Cell * cell) {
     this->cell = cell;
 }
 
@@ -42,7 +42,7 @@ int Enemy::getGold() {
     return gold;
 }
 
-std::shared_ptr<Cell> Enemy::getCell() {
+Cell * Enemy::getCell() {
     return cell;
 }
 
@@ -53,14 +53,13 @@ std::pair<int, int> Enemy::move() {
   int len = neighbours.size();
   std::vector<int> unOccupied;
   for(int i = 0; i < len; i++) {
-    auto obsCell = std::dynamic_pointer_cast<Cell>(neighbours[i]);
+    auto obsCell = dynamic_cast<Cell *>(neighbours[i]);
     if(!obsCell->getOccupied()) {
       unOccupied.push_back(i);
     }
   }
   int chosen = rand() % unOccupied.size();
-  auto dest =
-    std::dynamic_pointer_cast<Cell>(neighbours[unOccupied[chosen]]);
+  auto dest = dynamic_cast<Cell *>(neighbours[unOccupied[chosen]]);
   cell->moveCharacter(dest);
 
   return position;
@@ -128,7 +127,7 @@ void Enemy::nextTurn() {
   // if player in vicinity attack instead of moving
   auto observers = cell->getObservers();
   for(auto obs: observers) {
-    auto obsCell = std::dynamic_pointer_cast<Cell>(obs);
+    auto obsCell = dynamic_cast<Cell *>(obs);
     if(obsCell->getPlayer() != nullptr && getHostile()) {
       attack(obsCell->getPlayer());
       return;
