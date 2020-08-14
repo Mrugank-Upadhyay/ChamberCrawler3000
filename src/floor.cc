@@ -103,7 +103,7 @@ void Floor::spawn(std::string type, std::pair<int, int> position, bool generate)
             }
 
             // make a dragon randomly in a 1 block radius of hoard
-            std::shared_ptr<Cell> goldCell = findCell(goldPiles.back()->getPosition());
+            Cell * goldCell = findCell(goldPiles.back()->getPosition()).get();
             
             enemies.push_back(std::dynamic_pointer_cast<Enemy>(std::make_shared<Dragon>(pos, goldCell)));
             grid[pos]->setCharacter(enemies.back());
@@ -150,7 +150,7 @@ void Floor::generateEnemies() {
         else { spawn("Merchant", position); }
 
         grid[position]->setCharacter(enemies.back());
-        enemies.back()->setCell(grid[position]);
+        enemies.back()->setCell(grid[position].get());
     }
 }
 
@@ -322,7 +322,7 @@ void Floor::attachDragons() {
 
     for (auto dragon : dragons) {
         for (auto neighbour : findCell(dragon->getPosition())->getObservers()) {
-            auto neighbourCell = std::dynamic_pointer_cast<Cell>(neighbour);
+            auto neighbourCell = dynamic_cast<Cell *>(neighbour);
             if ((neighbourCell->getItem() != nullptr) && (neighbourCell->getItem()->getType() == "Gold")) {
                 dragon->setGoldCell(neighbourCell);
                 break;
@@ -336,6 +336,7 @@ void Floor::attachNeighbours() {
         int x = cell->getPosition().first;
         int y = cell->getPosition().second;
 
+        //int count = 0;
         for (int dy = -1; dy <= 1; dy++) {
             for (int dx = -1; dx <= 1; dx++) {
                 if ((dx == 0) && (dy == 0)) { continue; }
@@ -343,10 +344,13 @@ void Floor::attachNeighbours() {
                 auto newpos = std::pair<int, int>(x + dx, y + dy);
                 if ((grid[newpos]->getType() != "Wall") && 
                     (grid[newpos]->getType() != "Abyss")) {
-                        cell->attach(grid[newpos]);
+                        cell->attach(grid[newpos].get());
+                        //count++;
                 }
             }
         }
+
+        //std::cout << "(" << cell->getPosition().first << "," << cell->getPosition().second << ") : count =" << count << ", length =  " << cell->getObservers().size() << std::endl;
     }
 }
 
