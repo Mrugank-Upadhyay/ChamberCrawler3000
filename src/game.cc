@@ -32,9 +32,10 @@ Game::Game(std::string playerClass, std::string file, int height, int width, boo
   
   // make sure to check arg in main for file input, if none, use default file
   // when reset game (call back the string, make new ifstream)
+
   infile = std::make_shared<std::ifstream>(file);
+
   currentFloor = std::make_shared<Floor>(makeFloorString(), height, width, generate);
-  std::cout << "success" << std::endl;
   genPlayer(player);
 }
 
