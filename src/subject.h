@@ -11,6 +11,7 @@ class Enemy;
 
 class Subject {
   protected:
+    // convert into raw pointer
     std::vector<std::shared_ptr<Observer>> observers;
   public:
     Subject();
