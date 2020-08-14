@@ -150,6 +150,7 @@ void Floor::generateEnemies() {
         else { spawn("Merchant", position); }
 
         grid[position]->setCharacter(enemies.back());
+        enemies.back()->setCell(grid[position]);
     }
 }
 
@@ -269,6 +270,10 @@ void Floor::generateCells(std::string floorString, int height, int width) {
             
             std::shared_ptr<Cell> cell = std::make_shared<Cell>(cellType, cellRep, position);
             grid[position] = cell;
+
+            // //PRINT STATEMENT
+            // std::cout << grid[position]->info() << std::endl;
+
             if ((cellType == "Floor") || (cellType == "Door") || (cellType == "Passage") || (cellType == "Exit")) {floorCells.push_back(cell);}
             if (cellType == "Exit") {
                 exit = cell;
@@ -342,6 +347,9 @@ void Floor::attachNeighbours() {
                 if ((grid[newpos]->getType() != "Wall") && 
                     (grid[newpos]->getType() != "Abyss")) {
                         cell->attach(grid[newpos]);
+
+                        // // PRINT STATEMENT
+                        // std::cout << grid[newpos]->info() << std::endl;
                 }
             }
         }
