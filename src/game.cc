@@ -59,11 +59,15 @@ void Game::genPlayer(std::shared_ptr<Player> player) {
 
   // std::cout << "success" << std::endl;
 
-  std::sort(bfsChamber.begin(), bfsChamber.end(), pairCmp);
-  std::sort(currentFloor->getFloorCell().begin(), currentFloor->getFloorCell().end(), pairCmp);
-  std::vector<std::shared_ptr<Cell>> availableSpawn;
-  auto it = std::set_difference(currentFloor->getFloorCell().begin(), currentFloor->getFloorCell().end(), bfsChamber.begin(), bfsChamber.end(), availableSpawn.begin());
-  availableSpawn.resize(it - availableSpawn.begin());
+  //
+  // bfs is now returning a map!!!!!!
+  //
+
+  // std::sort(bfsChamber.begin(), bfsChamber.end(), pairCmp);
+  // std::sort(currentFloor->getFloorCell().begin(), currentFloor->getFloorCell().end(), pairCmp);
+  // std::vector<std::shared_ptr<Cell>> availableSpawn;
+  // auto it = std::set_difference(currentFloor->getFloorCell().begin(), currentFloor->getFloorCell().end(), bfsChamber.begin(), bfsChamber.end(), availableSpawn.begin());
+  // availableSpawn.resize(it - availableSpawn.begin());
 
   int length = availableSpawn.size();
 
@@ -108,7 +112,7 @@ void Game::setWon(bool win) {
   victory = win;
 }
 
-std::vector<std::shared_ptr<Cell>> Game::bfs() {
+std::map<std::pair<int, int>, std::shared_ptr<Cell>> Game::bfs() {
 
   std::map<std::pair<int, int>, std::shared_ptr<Cell>> queue;
 
@@ -130,13 +134,7 @@ std::vector<std::shared_ptr<Cell>> Game::bfs() {
     }
   }
 
-  std::vector<std::shared_ptr<Cell>> queueCell;
-
-  for (auto element : queue) {
-    queueCell.push_back(element.second);
-  }
-
-  return queueCell;
+  return queue;
 }
 
 

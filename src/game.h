@@ -24,7 +24,7 @@ class Game {
 
     std::string makeFloorString();
 
-    std::vector<std::shared_ptr<Cell>> bfs();
+    std::map<std::pair<int, int>, std::shared_ptr<Cell>> bfs();
     static bool pairCmp(std::shared_ptr<Cell> c1, std::shared_ptr<Cell> c2);
 
   public:
