@@ -21,6 +21,9 @@ class Display {
         Display(std::string playerClass, std::string file, int height, int width, bool generate);
         void print();
         void applyCommand(std::string command);
+
+        // For testing purposes:
+        std::shared_ptr<Game> getGame();
 };
 
 #endif

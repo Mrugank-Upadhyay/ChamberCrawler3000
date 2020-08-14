@@ -111,11 +111,12 @@ void Display::applyCommand(std::string command) {
   directions["sw"] = directions["so"] + directions["we"];
 
   // move command
-  if(directions.count(command) == 1) {
+  if((command.length() == 2)) {
     auto player = game->getPlayer();
     auto newPos = player->getPosition() + directions[command];
     auto destCell = game->getFloor()->getGrid().at(newPos);
     std::string type = destCell->getType();
+
     if(type == "Exit") {
       std::cout << " Going to the next floor..." << std::endl;
       game->regenFloor();
@@ -166,7 +167,7 @@ void Display::applyCommand(std::string command) {
   }
 
   // use command
-  if(command.substr(0,2) == "u " && directions.count(command.substr(2)) == 1) {
+  if((command.length() == 3) && (command.at(0) == 'u')) {
     auto usePos = game->getPlayer()->getPosition() + directions[command.substr(2)];
     auto useCell = game->getFloor()->getGrid().at(usePos);
     if(useCell->getItem() != nullptr) {
@@ -194,7 +195,7 @@ void Display::applyCommand(std::string command) {
   }
 
   // attack command
-  if(command.substr(0,2) == "a " && directions.count(command.substr(2)) == 1) {
+  if((command.length() == 3) && (command.at(0) == 'a')) {
     auto enemyPos = game->getPlayer()->getPosition() + directions[command.substr(2)];
     auto enemy = game->getFloor()->getGrid().at(enemyPos)->getEnemy();
     if(enemy != nullptr) {
