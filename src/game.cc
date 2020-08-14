@@ -88,7 +88,7 @@ void Game::genPlayer(std::shared_ptr<Player> player) {
 
     if ((!cell->getOccupied()) && ((cell->getType() != "Door") && (cell->getType() != "Passage"))) {
       player->setPosition(cell->getPosition());
-      player->setCell(cell);
+      player->setCell(cell.get());
       cell->setCharacter(player);
       break;
     }
@@ -124,29 +124,60 @@ void Game::setWon(bool win) {
 }
 
 
+
+
+bool Game::find(std::vector<std::shared_ptr<Cell>> list, std::pair<int, int> pos) {
+  for (auto cell : list) {
+    if (cell->getPosition() == pos) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+
 std::map<std::pair<int, int>, std::shared_ptr<Cell>> Game::bfs() {
 
-  std::map<std::pair<int, int>, std::shared_ptr<Cell>> queue;
-  queue[currentFloor->getExit()->getPosition()] = currentFloor->getExit();
+  std::map<std::pair<int, int>, std::shared_ptr<Cell>> returnQueue;
+  std::vector<std::shared_ptr<Cell>> queue;
+  queue.push_back(currentFloor->getExit());
 
-  for (auto cell : queue) {
-    for (auto neighbour : (cell.second)->getObservers()) {
-      auto neighbourCell = std::dynamic_pointer_cast<Cell>(neighbour);
+  for (int i = 0; i < queue.size(); i++) {
+      auto cell = queue[i];
+    for (auto neighbour : cell->getObservers()) {
+      auto neighbourCell = dynamic_cast<Cell *>(neighbour);
+      // std::cout << "obs(" << neighbourCell->getPosition().first << "," << neighbourCell->getPosition().second <<") ";
       if (neighbourCell->getType() == "Door") {
         continue;
       }
 
-      else if (queue.find(neighbourCell->getPosition()) == queue.end()) {
-        queue[neighbourCell->getPosition()] = neighbourCell;
+      else if (!find(queue, neighbourCell->getPosition())) {
+        // possible point of failure. used Cell * neighbour's position to get sharedptr from grid for that position
+        auto gridCell = currentFloor->getGrid()[neighbourCell->getPosition()];
+        // std::cout << "grid(" << gridCell->getPosition().first << "," << gridCell->getPosition().second <<") ";
+
+        // std::cout << "queue len: " << queue.size() << std::endl;
+        queue.push_back(gridCell);
       }
     }
   }
 
-  return queue;
+  for (auto cell : queue) {
+    returnQueue[cell->getPosition()] = cell;
+  }
+
+  return returnQueue;
 }
 
 
 void Game::regenFloor() {
+
+  for (auto cell : currentFloor->getGrid()) {
+    cell.second->getObservers().clear();
+  }
+  currentFloor->getGrid().clear();
+  currentFloor->getFloorCell().clear();
   currentFloor = std::make_shared<Floor>(makeFloorString(), height, width, generate);
   genPlayer(player);
   player->setTmpATK(player->getATK());
