@@ -160,3 +160,10 @@ bool Game::tick() {
   currentFloor->nextTurn();
   return true;
 }
+
+
+void Game::printFloor() {
+  for (auto cell : currentFloor->getFloorCell()) {
+    std::cout << cell->info() << std::endl;
+  }
+}
