@@ -115,6 +115,7 @@ int main(int argc, char * argv[]) {
        while(1) {
            getline(*inFile, command);
            display.applyCommand(command);
+           display.print();
        }
    }
 
@@ -123,5 +124,6 @@ int main(int argc, char * argv[]) {
    while(1) {
        std::cin >> command;
        display.applyCommand(command);
+    //    display.print();
    }
 }
