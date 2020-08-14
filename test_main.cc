@@ -32,9 +32,19 @@ using namespace std;
 
 int main() {
     // auto game = std::make_shared<Game>("Shade", "./src/defaultFloor.txt", 25, 79, true);
-    // srand((unsigned int) time(NULL));
-    srand(100);
+    srand((unsigned int) time(NULL));
+    //srand(100);
     auto display = std::make_shared<Display>("Shade", "./src/defaultFloor.txt", 25, 79, true);
-    // display->applyCommand("no");
+    display->applyCommand("no");
+    // auto game = display->getGame();
+    // cout << endl;
+    // int count = 0;
+    // for (auto cell : game->getFloor()->getFloorCell()) {
+    //     cout << cell->getRep();
+    //     count++;
+    //     if (count % 79 == 0) {
+    //         cout << endl;
+    //     }
+    // }
     //display->print();
 }
