@@ -4,12 +4,12 @@
 #include "../enemy.h"
 
 class Dragon : public Enemy {
-      std::shared_ptr<Cell> goldCell;
+      Cell * goldCell;
     public:
-        Dragon(std::pair<int, int> position, std::shared_ptr<Cell> goldCell = nullptr);
+        Dragon(std::pair<int, int> position, Cell * goldCell = nullptr);
 
-        std::shared_ptr<Cell> getGoldCell();
-        void setGoldCell(std::shared_ptr<Cell> goldCell);
+        Cell * getGoldCell();
+        void setGoldCell(Cell * goldCell);
 
         virtual std::pair<int, int> move() override;
         virtual void attack(std::shared_ptr<Player> player) override;
