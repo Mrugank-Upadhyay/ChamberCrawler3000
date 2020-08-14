@@ -1,5 +1,6 @@
 //#include <curses.h>
 #include <stdlib.h>
+#include <sstream>
 
 #include "game.h"
 #include "cell.h"
@@ -58,13 +59,13 @@ std::pair<int,int> operator+(std::pair<int,int> p1, std::pair<int,int> p2) {
 }
 
 void Display::applyCommand(std::string command) {
-  print();
-  std::cout << "Action:";
+  std::stringstream action{""};
+  action << "Action:";
 
   // if player slain only allow restart or quit
   if(game->getPlayer()->getHP() <= 0) {
     if(command != "r" && command != "q") {
-      std::cout << " PC has been slain. Only valid commands are (r)estart or (q)uit."
+      action << " PC has been slain. Only valid commands are (r)estart or (q)uit."
                 << std::endl;
       return;
     }
@@ -73,7 +74,7 @@ void Display::applyCommand(std::string command) {
   // if player has won only allow restart or quit
   if(game->hasWon()) {
     if(command != "r" && command != "q") {
-      std::cout << " PC has won. Only valid commands are (r)estart or (q)uit."
+      action << " PC has won. Only valid commands are (r)estart or (q)uit."
                 << std::endl;
       return;
     }
@@ -83,24 +84,24 @@ void Display::applyCommand(std::string command) {
   if(command == "f") {
     if(Enemy::getStopped()) {
       Enemy::setStopped(false);
-      std::cout << " Enemies can move again.";
+      action << " Enemies can move again.";
     }
     else {
       Enemy::setStopped(true);
-      std::cout << " Enemies now will not move after a turn.";
+      action << " Enemies now will not move after a turn.";
     }
-    std::cout << std::endl;
+    action << std::endl;
     return;
   }
   // restart
   else if(command == "r") {
     // regen game
-    std::cout << std::endl;
+    action << std::endl;
     return;
   }
   // quit
   else if(command == "q") {
-    std::cout << " Exiting the Game..." << std::endl;
+    action << " Exiting the Game..." << std::endl;
     exit(0);
   }
 
@@ -122,11 +123,11 @@ void Display::applyCommand(std::string command) {
     auto destCell = game->getFloor()->getGrid().at(newPos);
     std::string type = destCell->getType();
 
-    std::cout << " New pos(" << newPos.first << "," << newPos.second << ").";
-    std::cout << destCell->info();
+    action << " New pos(" << newPos.first << "," << newPos.second << ").";
+    action << destCell->info();
 
     if(type == "Exit") {
-      std::cout << " Going to the next floor..." << std::endl;
+      action << " Going to the next floor..." << std::endl;
       game->regenFloor();
       player->setTmpATK(player->getATK());
       player->setTmpDEF(player->getDEF());
@@ -136,17 +137,17 @@ void Display::applyCommand(std::string command) {
     else if((type != "Doorway") &&
        (type != "Passage") &&
        (type != "Floor")) { 
-      std::cout << " Cannot move there!" << std::endl;
+      action << " Cannot move there!" << std::endl;
       return;
     }
 
     else if(destCell->getOccupied()) {
-      std::cout << std::boolalpha << destCell->getOccupied();
+      action << std::boolalpha << destCell->getOccupied();
       if(destCell->getItem() != nullptr) {
         auto gold = std::dynamic_pointer_cast<Gold>(destCell->getItem());
         if(gold != nullptr) {
           if(!gold->getCanPickUp()) {
-            std::cout 
+            action 
               << " Can't go there! It seems that the gold over there cannot be picked up."
               << std::endl;
             return;
@@ -156,21 +157,21 @@ void Display::applyCommand(std::string command) {
             gold->apply(player);
             destCell->setItem(nullptr);
             destCell->setRep(".");
-            std::cout << " PC picked up " << gold->getAmount() << " gold.";
+            action << " PC picked up " << gold->getAmount() << " gold.";
             game->getFloor()->nextTurn();
           }
         }
         else {
-          std::cout << " Cannot move there! An item is in the way!";
+          action << " Cannot move there! An item is in the way!";
         }
       }
       else if(destCell->getEnemy() != nullptr) {
-        std::cout << " Cannot move there! An enemy is positioned there!";
+        action << " Cannot move there! An enemy is positioned there!";
       }
     }
     else {
       player->move(newPos);
-      std::cout << " player moved " + command + ".";
+      action << " player moved " + command + ".";
       game->getFloor()->nextTurn();
     }
   }
@@ -185,21 +186,21 @@ void Display::applyCommand(std::string command) {
 
       if(potion != nullptr) {
         potion->apply(game->getPlayer());
-        std::cout << " PC uses " << potion->getType() << ".";
+        action << " PC uses " << potion->getType() << ".";
         visibleItems[potion->getType()] = false;
-        //std::cout << " PC used a potion that has increased your hp:atk:def by "
+        //action << " PC used a potion that has increased your hp:atk:def by "
                   //<< potion->getHP() << ":"
                   //<< potion->getATK() << ":"
                   //<< potion->getDEF() << ".";
         game->getFloor()->nextTurn();
       }
       else {
-        std::cout << " PC cannot use that item!";
+        action << " PC cannot use that item!";
       }
 
     }
     else {
-      std::cout << " There is no item there to use!";
+      action << " There is no item there to use!";
     }
   }
 
@@ -212,11 +213,12 @@ void Display::applyCommand(std::string command) {
       game->getFloor()->nextTurn();
     }
     else {
-      std::cout << " There is no enemy there to attack!";
+      action << " There is no enemy there to attack!";
     }
   }
 
+  action << std::endl;
 
-
-  std::cout << std::endl;
+  print();
+  std::cout << action.str();
 }
