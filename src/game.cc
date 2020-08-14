@@ -14,16 +14,16 @@ Game::Game(std::string playerClass, std::string file, int height, int width, boo
   : level{1}, height{height}, width{width}, generate{generate} {
 
   auto position = std::make_pair<int, int>(0,0);
-  if(playerClass == "Drow") {
+  if(playerClass == "d") {
     player = std::dynamic_pointer_cast<Player>(std::make_shared<Drow>(position));
   }
-  else if(playerClass == "Vampire") {
+  else if(playerClass == "v") {
     player = std::dynamic_pointer_cast<Player>(std::make_shared<Vampire>(position));
   }
-  else if(playerClass == "Troll") {
+  else if(playerClass == "t") {
     player = std::dynamic_pointer_cast<Player>(std::make_shared<Troll>(position));
   }
-  else if(playerClass == "Goblin") {
+  else if(playerClass == "g") {
     player = std::dynamic_pointer_cast<Player>(std::make_shared<Goblin>(position));
   }
   else {
