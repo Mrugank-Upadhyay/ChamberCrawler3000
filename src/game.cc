@@ -53,6 +53,16 @@ bool Game::pairCmp(std::shared_ptr<Cell> c1, std::shared_ptr<Cell> c2) {
   return c1->getPosition() < c2->getPosition();
 }
 
+template<class A,class B>
+std::map<A,B> setDiff(std::map<A,B> & set1, std::map<A,B> & set2) {
+  std::map<A,B> newMap;
+  for(auto elem: set1) {
+    if(set2.count(elem.first) == 0) {
+      newMap[elem.first] = elem.second;
+    }
+  }
+  return newMap;
+}
 
 void Game::genPlayer(std::shared_ptr<Player> player) {
   auto bfsChamber = bfs();
