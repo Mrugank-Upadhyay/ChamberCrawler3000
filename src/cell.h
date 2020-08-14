@@ -36,12 +36,12 @@ class Cell: public Subject, public Observer {
     void setCharacter(std::shared_ptr<Player> player);
     void setCharacter(std::shared_ptr<Enemy> enemy);
 
-    void moveCharacter(std::shared_ptr<Cell> dest);
+    void moveCharacter(Cell * dest);
 
     std::shared_ptr<Item> getItem();
     void setItem(std::shared_ptr<Item> item);
 
-    std::vector<std::shared_ptr<Observer>> & getObservers();
+    std::vector<Observer *> & getObservers();
 
     std::string info();
 

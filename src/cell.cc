@@ -41,7 +41,7 @@ void Cell::setCharacter(std::shared_ptr<Enemy> enemy) {
   isOccupied = (enemy == nullptr) ? false : true;
 }
 
-void Cell::moveCharacter(std::shared_ptr<Cell> dest) {
+void Cell::moveCharacter(Cell * dest) {
   if(player != nullptr) {
     player->setCell(dest);
     player->setPosition(dest->getPosition());
@@ -63,7 +63,7 @@ void Cell::setItem(std::shared_ptr<Item> item) {
   isOccupied = (item == nullptr) ? false : true;
 }
 
-std::vector<std::shared_ptr<Observer>> & Cell::getObservers() { return observers; }
+std::vector<Observer *> & Cell::getObservers() { return observers; }
 
 void Cell::notify(Subject * whoNotified) {
   auto other  = dynamic_cast<Cell *>(whoNotified);
