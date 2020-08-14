@@ -67,28 +67,12 @@ std::map<A,B> setDiff(std::map<A,B> & set1, std::map<A,B> & set2) {
 void Game::genPlayer(std::shared_ptr<Player> player) {
   auto bfsChamber = bfs();
 
-  // std::cout << "success" << std::endl;
-
-  //
-  // bfs is now returning a map!!!!!!
-  //
-
   std::map<std::pair<int, int>, std::shared_ptr<Cell>> floorMap;
   for (auto cell : currentFloor->getFloorCell()) {
     floorMap[cell->getPosition()] = cell;
   }
   
-  std::map<std::pair<int, int>, std::shared_ptr<Cell>> availableSpawn;
-  auto it = std::set_difference(floorMap.begin(), floorMap.end(), bfsChamber.begin(), bfsChamber.end(), availableSpawn.begin());
-  for (auto elem : availableSpawn) {
-    std::cout << elem.second->info() << std::endl;
-  }
-
-  // std::sort(bfsChamber.begin(), bfsChamber.end(), pairCmp);
-  // std::sort(currentFloor->getFloorCell().begin(), currentFloor->getFloorCell().end(), pairCmp);
-  // std::vector<std::shared_ptr<Cell>> availableSpawn;
-  // auto it = std::set_difference(currentFloor->getFloorCell().begin(), currentFloor->getFloorCell().end(), bfsChamber.begin(), bfsChamber.end(), availableSpawn.begin());
-  // availableSpawn.resize(it - availableSpawn.begin());
+  std::map<std::pair<int, int>, std::shared_ptr<Cell>> availableSpawn = setDiff(floorMap, bfsChamber);
 
   int length = availableSpawn.size();
 
@@ -96,13 +80,12 @@ void Game::genPlayer(std::shared_ptr<Player> player) {
     int random = rand() % length;
     auto it = availableSpawn.begin();
     std::shared_ptr<Cell> cell;
-    for (int i = 0; i < length; i++) {
+    for (int i = 0; i < random; i++) {
       it++;
     }
-
     cell = it->second;
 
-    if (!cell->getOccupied()) {
+    if ((!cell->getOccupied()) && ((cell->getType() != "Door") && (cell->getType() != "Passage"))) {
       player->setPosition(cell->getPosition());
       player->setCell(cell);
       cell->setCharacter(player);
@@ -139,19 +122,16 @@ void Game::setWon(bool win) {
   victory = win;
 }
 
+
 std::map<std::pair<int, int>, std::shared_ptr<Cell>> Game::bfs() {
 
   std::map<std::pair<int, int>, std::shared_ptr<Cell>> queue;
-
-  for (auto obs : currentFloor->getExit()->getObservers()) {
-    auto cell = std::dynamic_pointer_cast<Cell>(obs);
-    queue[cell->getPosition()] = cell;
-  }
+  queue[currentFloor->getExit()->getPosition()] = currentFloor->getExit();
 
   for (auto cell : queue) {
     for (auto neighbour : (cell.second)->getObservers()) {
       auto neighbourCell = std::dynamic_pointer_cast<Cell>(neighbour);
-      if ((neighbourCell->getType() == "Door") || (neighbourCell->getType() == "Passage")) {
+      if (neighbourCell->getType() == "Door") {
         continue;
       }
 
