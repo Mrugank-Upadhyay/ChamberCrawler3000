@@ -32,7 +32,8 @@ using namespace std;
 
 int main() {
     // auto game = std::make_shared<Game>("Shade", "./src/defaultFloor.txt", 25, 79, true);
-    srand((unsigned int) time(NULL));
+    // srand((unsigned int) time(NULL));
+    srand(100);
     auto display = std::make_shared<Display>("Shade", "./src/defaultFloor.txt", 25, 79, true);
     // display->applyCommand("no");
     //display->print();
