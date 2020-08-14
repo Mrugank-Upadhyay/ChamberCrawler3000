@@ -63,6 +63,17 @@ void Game::genPlayer(std::shared_ptr<Player> player) {
   // bfs is now returning a map!!!!!!
   //
 
+  std::map<std::pair<int, int>, std::shared_ptr<Cell>> floorMap;
+  for (auto cell : currentFloor->getFloorCell()) {
+    floorMap[cell->getPosition()] = cell;
+  }
+  
+  std::map<std::pair<int, int>, std::shared_ptr<Cell>> availableSpawn;
+  auto it = std::set_difference(floorMap.begin(), floorMap.end(), bfsChamber.begin(), bfsChamber.end(), availableSpawn.begin());
+  for (auto elem : availableSpawn) {
+    std::cout << elem.second->info() << std::endl;
+  }
+
   // std::sort(bfsChamber.begin(), bfsChamber.end(), pairCmp);
   // std::sort(currentFloor->getFloorCell().begin(), currentFloor->getFloorCell().end(), pairCmp);
   // std::vector<std::shared_ptr<Cell>> availableSpawn;
@@ -73,7 +84,13 @@ void Game::genPlayer(std::shared_ptr<Player> player) {
 
   while (1) {
     int random = rand() % length;
-    auto cell = availableSpawn[random];
+    auto it = availableSpawn.begin();
+    std::shared_ptr<Cell> cell;
+    for (int i = 0; i < length; i++) {
+      it++;
+    }
+
+    cell = it->second;
 
     if (!cell->getOccupied()) {
       player->setPosition(cell->getPosition());
