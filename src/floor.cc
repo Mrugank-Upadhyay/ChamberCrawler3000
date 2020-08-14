@@ -192,7 +192,7 @@ void Floor::generateCells(std::string floorString, int height, int width) {
             cellRep.push_back(floorString.at(index));
             std::string cellType;
 
-            if (cellRep == "|" || cellRep == "-") { cellType = "Wall";}
+            if ((cellRep == "|") || (cellRep == "-")) { cellType = "Wall";}
             else if (cellRep == "+") {cellType = "Door";}
             else if (cellRep == "#") {cellType = "Passage";}
             else if (cellRep == ".") {cellType = "Floor";}
