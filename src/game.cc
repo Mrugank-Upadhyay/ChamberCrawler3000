@@ -100,6 +100,14 @@ std::shared_ptr<Floor> Game::getFloor() {
   return currentFloor;
 }
 
+bool Game::hasWon() {
+  return victory;
+}
+
+void Game::setWon(bool win) {
+  victory = win;
+}
+
 std::vector<std::shared_ptr<Cell>> Game::bfs() {
 
   std::map<std::pair<int, int>, std::shared_ptr<Cell>> queue;
@@ -147,19 +155,3 @@ bool Game::tick() {
   currentFloor->nextTurn();
   return true;
 }
-
-// std::map<std::pair<int, int>, std::shared_ptr<Cell>> Game::bfs(
-//     std::map<std::pair<int, int>, std::shared_ptr<Cell>> & visited, 
-//     std::shared_ptr<Cell> cell) {
-//   auto observers = cell->getObservers();
-//   visited[cell->getPosition()] = cell;
-//   for(auto obs: observers) {
-//     auto obsCell = std::dynamic_pointer_cast<Cell>(obs);
-//     if(visited.count(obsCell->getPosition()) == 0) {
-//       if(!obsCell->getOccupied() && obsCell->getType() == "Floor") {
-//         bfs(visited, obsCell);
-//       }
-//     }
-//   }
-//   return visited;
-// }

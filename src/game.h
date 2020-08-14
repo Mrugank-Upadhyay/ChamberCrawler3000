@@ -20,6 +20,7 @@ class Game {
     int height;
     int width;
     bool generate;
+    bool victory = false;
 
     std::string makeFloorString();
 
@@ -35,6 +36,8 @@ class Game {
     int getLevel() const;
     void incrementLevel();
     void resetLevel();
+    bool hasWon();
+    void setWon(bool win);
 
     std::shared_ptr<Floor> getFloor();
     // check potion reveal
