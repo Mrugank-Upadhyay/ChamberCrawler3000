@@ -5,15 +5,15 @@
 Subject::Subject() {}
 Subject::~Subject() {}
 
-// std::vector<std::shared_ptr<Observer>> Subject::getObservers() {
+// std::vector<Observer *> Subject::getObservers() {
 //   return observers;
 // }
 
-void Subject::attach(std::shared_ptr<Observer> observer) {
+void Subject::attach(Observer * observer) {
   observers.emplace_back(observer);
 }
 
-void Subject::detach(std::shared_ptr<Observer> observer) {
+void Subject::detach(Observer * observer) {
   for(auto it = observers.begin(); it != observers.end(); ++it) {
     if(*it == observer) {
       observers.erase(it);

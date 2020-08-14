@@ -12,13 +12,13 @@ class Enemy;
 class Subject {
   protected:
     // convert into raw pointer
-    std::vector<std::shared_ptr<Observer>> observers;
+    std::vector<Observer *> observers;
   public:
     Subject();
     virtual ~Subject();
-    // std::vector<std::shared_ptr<Observer>> getObservers();
-    void attach(std::shared_ptr<Observer> observer);
-    void detach(std::shared_ptr<Observer> observer);
+    // std::vector<Observer *> getObservers();
+    void attach(Observer * observer);
+    void detach(Observer * observer);
     void notifyObservers();
 };
 
