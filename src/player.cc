@@ -22,8 +22,8 @@ Player::Player(std::string race, int hp, int atk, int def,
   : Character{race, "@", hp, atk, def, position}, cell{nullptr}, gold{gold},
     maxHP{maxHP}, tmpATK{atk}, tmpDEF{def}, bagActive{false} {}
 
-std::shared_ptr<Cell> Player::getCell() const { return cell; }
-void Player::setCell(std::shared_ptr<Cell> cell) { this->cell = cell; }
+Cell * Player::getCell() const { return cell; }
+void Player::setCell(Cell * cell) { this->cell = cell; }
 
 int Player::getGold() const { return gold; }
 void Player::addGold(int gold) { this->gold += gold; }
@@ -61,7 +61,7 @@ std::pair<int, int> Player::move(std::pair<int,int> position) {
   auto dest = cell;
   auto observers = cell->getObservers();
   for(auto obs: observers) {
-    auto obsCell = std::dynamic_pointer_cast<Cell>(obs);
+    auto obsCell = dynamic_cast<Cell *>(obs);
     if(obsCell->getPosition() == position) {
       dest = obsCell;
       break;
