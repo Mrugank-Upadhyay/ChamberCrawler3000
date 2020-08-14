@@ -141,6 +141,7 @@ void Display::applyCommand(std::string command) {
     }
 
     else if(destCell->getOccupied()) {
+      std::cout << std::boolalpha << destCell->getOccupied();
       if(destCell->getItem() != nullptr) {
         auto gold = std::dynamic_pointer_cast<Gold>(destCell->getItem());
         if(gold != nullptr) {

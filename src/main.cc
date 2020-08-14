@@ -63,8 +63,8 @@ int main(int argc, char * argv[]) {
         SET SEED (if no seed, set srand((unsigned int)time(NULL)));
     */
 
-   if (seed = -1) {
-        srand((unsigned int)time(NULL));
+   if (seed == -1) {
+        srand(1);
    }
 
    else {
