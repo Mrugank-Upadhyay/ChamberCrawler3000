@@ -9,8 +9,14 @@
 
 #include <iostream>
 
+bool Enemy::isStopped = false;
+
 Enemy::Enemy(std::string race, std::string rep, int health, int atk, int def, std::pair<int, int> position, bool hostile, int gold, bool giveGold)
     : Character{race, rep, health, atk, def, position}, isHostile{hostile}, gold{gold}, giveGold{giveGold} {}
+
+void Enemy::setStopped(bool stopped) {
+    isStopped = stopped;
+}
 
 void Enemy::setHostile(bool hostile) {
     isHostile = hostile;
@@ -22,6 +28,10 @@ void Enemy::setGold(int value) {
 
 void Enemy::setCell(std::shared_ptr<Cell> cell) {
     this->cell = cell;
+}
+
+bool Enemy::getStopped() { 
+    return isStopped;
 }
 
 bool Enemy::getHostile() {
@@ -124,7 +134,9 @@ void Enemy::nextTurn() {
       return;
     }
   }
-  move();
+  if(!isStopped) {
+    move();
+  }
 }
 
 int Enemy::randomGold() {
