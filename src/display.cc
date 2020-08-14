@@ -117,15 +117,17 @@ void Display::applyCommand(std::string command) {
     auto destCell = game->getFloor()->getGrid().at(newPos);
     std::string type = destCell->getType();
     if(type == "Exit") {
+      std::cout << " Going to the next floor..." << std::endl;
       game->regenFloor();
       player->setTmpATK(player->getATK());
       player->setTmpDEF(player->getDEF());
+      print();
       return;
     }
     else if(type != "Doorway" &&
        type != "Passage" &&
        type != "Floor") { 
-      std::cout << "Cannot move there!";
+      std::cout << "Cannot move there!" << std::endl;
       return;
     }
 
@@ -135,7 +137,8 @@ void Display::applyCommand(std::string command) {
         if(gold != nullptr) {
           if(!gold->getCanPickUp()) {
             std::cout 
-              << " Can't go there! It seems that the gold over there cannot be picked up.";
+              << " Can't go there! It seems that the gold over there cannot be picked up."
+              << std::endl;
             return;
           }
           else {
@@ -167,6 +170,7 @@ void Display::applyCommand(std::string command) {
     auto usePos = game->getPlayer()->getPosition() + directions[command.substr(2)];
     auto useCell = game->getFloor()->getGrid().at(usePos);
     if(useCell->getItem() != nullptr) {
+      // See if the item is a potion or not.
       auto potion = std::dynamic_pointer_cast<Potion>(useCell->getItem());
 
       if(potion != nullptr) {
@@ -179,10 +183,10 @@ void Display::applyCommand(std::string command) {
                   //<< potion->getDEF() << ".";
         game->getFloor()->nextTurn();
       }
-
       else {
         std::cout << " PC cannot use that item!";
       }
+
     }
     else {
       std::cout << " There is no item there to use!";
