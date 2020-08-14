@@ -96,7 +96,7 @@ void Floor::spawn(std::string type, std::pair<int, int> position, bool generate)
             auto pos = std::pair<int, int>(position.first + dx, position.second + dy);
             
             // if they are the same, or if the new position is not a Floor tile, or if it's occupied
-            while (((dx == 0) && (dy == 0)) || (grid[pos]->getType() != "Floor") || (grid[pos]->getOccupied() == true)) {
+            while (((dx == 0) && (dy == 0)) || (grid.at(pos)->getType() != "Floor") || (grid.at(pos)->getOccupied() == true)) {
                 int dir = rand() % 2;
                 (dir == 0) ? dx = ((rand() % 3) - 1) : dy = ((rand() % 3) - 1);
                 pos = std::pair<int, int>(position.first + dx, position.second + dy);
@@ -106,7 +106,7 @@ void Floor::spawn(std::string type, std::pair<int, int> position, bool generate)
             Cell * goldCell = findCell(goldPiles.back()->getPosition()).get();
             
             enemies.push_back(std::dynamic_pointer_cast<Enemy>(std::make_shared<Dragon>(pos, goldCell)));
-            grid[pos]->setCharacter(enemies.back());
+            grid.at(pos)->setCharacter(enemies.back());
         }
     }
 
@@ -149,8 +149,8 @@ void Floor::generateEnemies() {
         else if (randomEnemies < 16) { spawn("Orc", position); }
         else { spawn("Merchant", position); }
 
-        grid[position]->setCharacter(enemies.back());
-        enemies.back()->setCell(grid[position].get());
+        grid.at(position)->setCharacter(enemies.back());
+        enemies.back()->setCell(grid.at(position).get());
     }
 }
 
@@ -163,7 +163,7 @@ void Floor::generateGold() {
         else if (randomGold < 6) { spawn("Dragon Hoard", position); }
         else { spawn("Small Hoard", position); }
 
-        grid[position]->setItem(goldPiles.back());
+        grid.at(position)->setItem(goldPiles.back());
     }
 }
 
@@ -179,7 +179,7 @@ void Floor::generatePotions() {
         else if (randomPotion == 5) { spawn("WA", position); }
         else { spawn("WD", position); }
 
-        grid[position]->setItem(potions.back());
+        grid.at(position)->setItem(potions.back());
     }
 }
 
@@ -342,9 +342,9 @@ void Floor::attachNeighbours() {
                 if ((dx == 0) && (dy == 0)) { continue; }
 
                 auto newpos = std::pair<int, int>(x + dx, y + dy);
-                if ((grid[newpos]->getType() != "Wall") && 
-                    (grid[newpos]->getType() != "Abyss")) {
-                        cell->attach(grid[newpos].get());
+                if ((grid.at(newpos)->getType() != "Wall") && 
+                    (grid.at(newpos)->getType() != "Abyss")) {
+                        cell->attach(grid.at(newpos).get());
                         //count++;
                 }
             }
