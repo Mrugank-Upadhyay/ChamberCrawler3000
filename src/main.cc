@@ -30,29 +30,32 @@
 
 int main(int argc, char * argv[]) {
 
-    std::string floorFile = "defaultFloor.txt";
+    std::string floorFile = "./src/defaultFloor.txt";
     std::string testFile = "";
 
     std::shared_ptr<std::ifstream> inFile;
 
     // IS SEED AN INT?
-    int seed;
+    int seed = -1;
     std::string args;
-    for (int i = 0; i < argc; i++) {
+    for (int i = 1; i < argc; i++) {
+        
+        std::cout << "args" << std::endl;
+
         args = argv[i];
         
         // For now, assume its always cc3kfloor.txt, check piazza for reply to question
         if (args == "cc3kfloor.txt") {
             floorFile = args;
         }
-        
-        // replace with Seed (figure that out)
-        else if (args == "XXXXXXX") {
-
-        }
 
         else if (args.find("test") != std::string::npos) {
             testFile = args;
+        }
+
+        // replace with Seed (figure that out)
+        else {
+            seed = std::stoi(args);
         }
     }
 
@@ -60,9 +63,31 @@ int main(int argc, char * argv[]) {
         SET SEED (if no seed, set srand((unsigned int)time(NULL)));
     */
 
-    int floorHeight = 25;
-    int floorWidth = 79;
-    std::string playerClass;
+   if (seed = -1) {
+        srand((unsigned int)time(NULL));
+   }
+
+   else {
+       srand((unsigned int)seed);
+   }
+
+     int floorHeight = 25;
+     int floorWidth = 79;
+     std::string playerClass;
+
+    // Valid place to put while loop to reset everything?
+    /*
+
+        while {
+
+            Stuff Below
+        }
+
+        if display.applycommand("r"),
+        then its reset bool gets set,
+        then we break out of the below loop 
+
+    */
 
     if (testFile != "") {
         inFile = std::make_shared<std::ifstream>(testFile);
@@ -73,7 +98,7 @@ int main(int argc, char * argv[]) {
         std::cin >> playerClass;
     }
 
-    bool generate = (floorFile == "defaultFloor.txt") ? true : false;
+    bool generate = (floorFile == "./src/defaultFloor.txt") ? true : false;
     Display display{playerClass, floorFile, floorHeight, floorWidth, generate};
 
 
@@ -84,10 +109,17 @@ int main(int argc, char * argv[]) {
 
 
     */
+   std::string command;
+
+   if (testFile != "") {
+       while(1) {
+           getline(*inFile, command);
+           display.applyCommand(command);
+       }
+   }
 
 
    // Figure out now, how to add NCURSES and also reset the game.
-   std::string command;
    while(1) {
        std::cin >> command;
        display.applyCommand(command);
