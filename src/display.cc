@@ -175,6 +175,18 @@ void Display::applyCommand(std::string command) {
     }
   }
 
+  else if (command.substr(0, 2) == "a " && directions.count(command.substr(2)) == 1) {
+    auto enemyPos = game->getPlayer()->getPosition() + directions[command.substr(2)];
+    auto enemy = game->getFloor()->getGrid().at(enemyPos)->getEnemy();
+    if(enemy != nullptr) {
+      game->getPlayer()->attack(enemy);
+      //game->getFloor()->nextTurn();
+    }
+    else {
+      std::cout << " There is no enemy there to attack!";
+    }
+  }
+
   game->getFloor()->nextTurn();
 
   print();

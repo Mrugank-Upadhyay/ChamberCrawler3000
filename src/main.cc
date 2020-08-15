@@ -64,8 +64,8 @@ int main(int argc, char * argv[]) {
     */
 
    if (seed == -1) {
-        srand((unsigned int)time(NULL));
-        //srand(5);
+        //srand((unsigned int)time(NULL));
+        srand(5);
    }
 
    else {
@@ -96,7 +96,7 @@ int main(int argc, char * argv[]) {
     }
 
     else {
-        std::cin >> playerClass;
+        getline(std::cin, playerClass);
     }
 
     bool generate = (floorFile == "./src/defaultFloor.txt") ? true : false;
