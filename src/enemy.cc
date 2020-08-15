@@ -53,13 +53,13 @@ std::pair<int, int> Enemy::move() {
   int len = neighbours.size();
   std::vector<int> unOccupied;
   for(int i = 0; i < len; i++) {
-    auto obsCell = dynamic_cast<Cell *>(neighbours[i]);
+    auto obsCell = dynamic_cast<Cell *>(neighbours.at(i));
     if(!obsCell->getOccupied()) {
       unOccupied.push_back(i);
     }
   }
   int chosen = rand() % unOccupied.size();
-  auto dest = dynamic_cast<Cell *>(neighbours[unOccupied[chosen]]);
+  auto dest = dynamic_cast<Cell *>(neighbours.at(unOccupied.at(chosen)));
   cell->moveCharacter(dest);
 
   return position;
