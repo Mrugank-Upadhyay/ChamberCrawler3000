@@ -18,7 +18,7 @@ class Enemy : public Character {
     bool isHostile;
     bool giveGold;
     int gold;
-    
+
     // Add pointer back to cell
     Cell * cell = nullptr;
 

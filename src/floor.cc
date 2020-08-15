@@ -382,18 +382,27 @@ void Floor::nextTurn() {
             cell.second->getPlayer()->nextTurn();
         }
 
-        else if (cell.second->getEnemy() != nullptr) {
-            // std::cout << "ENEMY NEXT TURN ABOUT TO CALL" << std::endl;
-            // std::cout << "ENEMY ATK: " << cell.second->getEnemy()->getATK();
-            // if (cell.second->getEnemy()->getHP() == 0) {
-            //     std::shared_ptr<Enemy> deadEnemy = nullptr;
-            //     cell.second->setCharacter(deadEnemy);
-            //     cell.second->setRep(cell.second->getRep());
-            // }
 
-            // else {
-                cell.second->getEnemy()->nextTurn(); 
-            // }
+        // REMOVE DEAD ENEMIES
+        else if (cell.second->getEnemy() != nullptr) {
+            std::cout << "Enemy: " << cell.second->getRep();
+            std::cout << ": ( " << cell.second->getEnemy()->getPosition().first << "," << cell.second->getEnemy()->getPosition().second << ")" << std::endl;
+            
+
+            auto observers = (cell.second)->getObservers();
+            for(auto obs: observers) {
+                auto obsCell = dynamic_cast<Cell *>(obs);
+                if(obsCell->getPlayer() != nullptr && cell.second->getEnemy()->getHostile()) {
+                cell.second->getEnemy()->attack(obsCell->getPlayer());
+                return;
+                }
+            }
+            if(!cell.second->getEnemy()->getStopped()) {
+                cell.second->getEnemy()->move();
+            }
+
+
+                std::cout << "RUNS" << std::endl;
         }
     }
 }

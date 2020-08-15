@@ -12,9 +12,9 @@ class Cell: public Subject, public Observer {
     std::string type;
     std::string rep;
     std::pair<int, int> position;
-    std::shared_ptr<Player> player;
-    std::shared_ptr<Enemy> enemy;
-    std::shared_ptr<Item> item;
+    std::shared_ptr<Player> player = nullptr;
+    std::shared_ptr<Enemy> enemy = nullptr;
+    std::shared_ptr<Item> item = nullptr;
     bool isOccupied = false;
 
   public:

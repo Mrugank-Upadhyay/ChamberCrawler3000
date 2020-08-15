@@ -83,7 +83,6 @@ void Display::applyCommand(std::string command) {
   directions["se"] = directions["so"] + directions["ea"];
   directions["sw"] = directions["so"] + directions["we"];
 
-  std::cout << command << std::endl;
 
   // if player slain only allow restart or quit
   if(game->getPlayer()->getHP() <= 0) {
@@ -153,10 +152,7 @@ void Display::applyCommand(std::string command) {
         std::cout << "CAN'T MOVE THERE! POTION IN THE WAY" << std::endl;
       }
 
-      std::cout << "BEFORE ENEMY" << std::endl;
-
       if (dest->getEnemy() != nullptr) {
-        std::cout << "AFTER ENEMY" << std::endl;
         std::cout << "CAN'T MOVE THERE! ENEMY IS THERE!" << std::endl;
       }
     }
@@ -178,7 +174,9 @@ void Display::applyCommand(std::string command) {
       }
     }
   }
+
   game->getFloor()->nextTurn();
+
   print();
 
   // std::stringstream action{""};
