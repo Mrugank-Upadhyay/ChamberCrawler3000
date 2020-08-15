@@ -11,7 +11,9 @@
 #include <string>
 
 Game::Game(std::string playerClass, std::string file, int height, int width, bool generate) 
-  : level{1}, height{height}, width{width}, generate{generate} {
+
+    // Change back to 1
+  : level{5}, height{height}, width{width}, generate{generate} {
 
   auto position = std::make_pair<int, int>(0,0);
   if(playerClass == "d") {
@@ -185,6 +187,8 @@ void Game::regenFloor() {
 
 }
 
+
+// WE DONT USE THIS ANYMORE
 bool Game::tick() {
   if (player->getHP() == 0) {
     return false;

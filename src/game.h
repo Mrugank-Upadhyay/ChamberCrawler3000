@@ -15,7 +15,9 @@ class Cell;
 class Game {
     std::shared_ptr<Player> player;
     std::shared_ptr<Floor> currentFloor;
-    int level = 1;
+
+    // Change back to lvl 1
+    int level = 5;
     std::shared_ptr<std::ifstream> infile;
     int height;
     int width;

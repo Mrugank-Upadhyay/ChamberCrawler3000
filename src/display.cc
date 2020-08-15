@@ -66,9 +66,8 @@ void Display::movePlayer(std::pair<int, int> newpos) {
       player->setCell(dest.get());
       player->setPosition(newpos);
       player->getCell()->setCharacter(player);
-      std::cout << "works till here" << std::endl;
-      game->getFloor()->nextTurn();
-      std::cout << "works after turn" << std::endl;
+      // std::cout << "works till here" << std::endl;
+      // std::cout << "works after turn" << std::endl;
 }
 
 void Display::applyCommand(std::string command) {
@@ -86,9 +85,18 @@ void Display::applyCommand(std::string command) {
 
   std::cout << command << std::endl;
 
+  // if player slain only allow restart or quit
+  if(game->getPlayer()->getHP() <= 0) {
+    if(command != "r" && command != "q") {
+      std::cout  << " PC has been slain. Only valid commands are (r)estart or (q)uit."
+                << std::endl;
+      return;
+    }
+  }
+
   if (command == "r") {
     // regen game
-    game->regenFloor();
+    // game->regenFloor();
     // action << std::endl;
   }
   // quit
@@ -103,16 +111,21 @@ void Display::applyCommand(std::string command) {
     auto dest = game->getFloor()->getGrid().at(newpos);
     std::string type = dest->getType();
 
-    
-
     if (type == "Exit") {
       // action << " Going to the next floor..." << std::endl;
+      game->incrementLevel();
+      // if player has won only allow restart or quit
+      std::cout << "LEVEL: " << game->getLevel();
+      if (game->getLevel() == 6) {
+        std::cout << "PC WON!!!!" << std::endl;
+        return;
+      }
       game->regenFloor();
       player->setTmpATK(player->getATK());
       player->setTmpDEF(player->getDEF());
-      print();
       return;
     }
+
     else if((type != "Door") &&
        (type != "Passage") &&
        (type != "Floor")) { 
@@ -120,13 +133,13 @@ void Display::applyCommand(std::string command) {
       std::cout << "CAN'T MOVE THERE" << std::endl;
     }
     else if (!dest->getOccupied()) {
-      std::cout << "I'm FREE!" << std::endl;
+      // std::cout << "I'm FREE!" << std::endl;
       movePlayer(newpos);
     }
 
     else {
 
-      std::cout << "INSIDE ELSE" << std::endl;
+      // std::cout << "INSIDE ELSE" << std::endl;
       if ((dest->getItem() != nullptr) && (dest->getItem()->getType() == "Gold")) {
         auto destGold = std::dynamic_pointer_cast<Gold>(dest->getItem());
         if (destGold->getCanPickUp()) {

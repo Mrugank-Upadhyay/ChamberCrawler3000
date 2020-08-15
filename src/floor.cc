@@ -22,19 +22,10 @@ Floor::Floor(std::string floorString, int height, int width, bool generate) {
         generateEnemies();
         generatePotions();    
     }
-
-    // for (auto cell : floorCells) {
-    //     if (cell->getEnemy() != nullptr) {
-    //         std::cout << "Enemy: " << cell->getRep() << " : (" << cell->getPosition().first << "," << cell->getPosition().second 
-    //         << ") and occupied: " << std::boolalpha << cell->getOccupied() << std::endl;
-    //     }
-    // }
-
-    std::cout << "\n Now From Game \n";
     
-    // else {
-    //     attachDragons();
-    // }
+    else {
+        attachDragons();
+    }
 }
 
 std::pair<int, int> Floor::randomFreeCell() {
@@ -191,12 +182,16 @@ void Floor::generatePotions() {
         int randomPotion = rand() % 6;
         auto position = randomFreeCell();
 
-        if (randomPotion == 1) { spawnPotion("RH", position); }
-        else if (randomPotion == 2) { spawnPotion("BA", position); }
-        else if (randomPotion == 3) { spawnPotion("BD", position); }
-        else if (randomPotion == 4) { spawnPotion("PH", position); }
-        else if (randomPotion == 5) { spawnPotion("WA", position); }
-        else { spawnPotion("WD", position); }
+
+        // REMOVE AFTER
+        spawnPotion("PH", position);
+
+        // if (randomPotion == 1) { spawnPotion("RH", position); }
+        // else if (randomPotion == 2) { spawnPotion("BA", position); }
+        // else if (randomPotion == 3) { spawnPotion("BD", position); }
+        // else if (randomPotion == 4) { spawnPotion("PH", position); }
+        // else if (randomPotion == 5) { spawnPotion("WA", position); }
+        // else { spawnPotion("WD", position); }
 
         grid.at(position)->setItem(potions.back());
     }
@@ -381,15 +376,15 @@ void Floor::attachNeighbours() {
 
 void Floor::nextTurn() {
 
-    std::cout << "NEXT TURN CALLED" << std::endl;
+    // std::cout << "NEXT TURN CALLED" << std::endl;
     for (auto cell : grid) {
         if (cell.second->getPlayer() != nullptr) {
             cell.second->getPlayer()->nextTurn();
         }
 
         else if (cell.second->getEnemy() != nullptr) {
-            std::cout << "ENEMY NEXT TURN ABOUT TO CALL" << std::endl;
-            std::cout << "ENEMY ATK: " << cell.second->getEnemy()->getATK();
+            // std::cout << "ENEMY NEXT TURN ABOUT TO CALL" << std::endl;
+            // std::cout << "ENEMY ATK: " << cell.second->getEnemy()->getATK();
             // if (cell.second->getEnemy()->getHP() == 0) {
             //     std::shared_ptr<Enemy> deadEnemy = nullptr;
             //     cell.second->setCharacter(deadEnemy);
