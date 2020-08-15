@@ -11,7 +11,7 @@ class Potion : public Item {
     int def;
 
     public:
-        Potion(std::string type, std::string rep, std::pair<int, int> position);
+        Potion(std::string type, std::string rep, std::pair<int, int> position, int hp, int atk, int def);
         int getHP();
         int getATK();
         int getDEF();

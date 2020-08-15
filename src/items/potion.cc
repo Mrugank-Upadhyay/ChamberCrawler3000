@@ -1,8 +1,8 @@
 #include "../player.h"
 #include "potion.h"
 
-Potion::Potion(std::string type, std::string rep, std::pair<int, int> position)
-    : Item{type, rep, position} {}
+Potion::Potion(std::string type, std::string rep, std::pair<int, int> position, int hp, int atk, int def)
+    : Item{type, rep, position}, hp{hp}, atk{atk}, def{def} {}
 
 int Potion::getHP() {
     return hp;
