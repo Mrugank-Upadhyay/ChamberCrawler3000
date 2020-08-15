@@ -52,15 +52,18 @@ std::pair<int, int> Enemy::move() {
   auto neighbours = cell->getObservers();
   int len = neighbours.size();
   std::vector<int> unOccupied;
+  Cell * destCell = cell;
   for(int i = 0; i < len; i++) {
     auto obsCell = dynamic_cast<Cell *>(neighbours.at(i));
     if(!obsCell->getOccupied()) {
       unOccupied.push_back(i);
     }
   }
-  int chosen = rand() % unOccupied.size();
-  auto dest = dynamic_cast<Cell *>(neighbours.at(unOccupied.at(chosen)));
-  cell->moveCharacter(dest);
+  if(unOccupied.size() > 0) {
+    unsigned chosen = rand() % unOccupied.size();
+    destCell = dynamic_cast<Cell *>(neighbours.at(unOccupied.at(chosen)));
+  }
+  cell->moveCharacter(destCell);
 
   return position;
 }
@@ -134,7 +137,7 @@ void Enemy::nextTurn() {
     }
   }
   if(!isStopped) {
-    move();
+    this->move();
   }
 }
 

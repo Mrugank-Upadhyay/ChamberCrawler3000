@@ -91,13 +91,11 @@ void Display::applyCommand(std::string command) {
       action << " Enemies now will not move after a turn.";
     }
     action << std::endl;
-    return;
   }
   // restart
   else if(command == "r") {
     // regen game
     action << std::endl;
-    return;
   }
   // quit
   else if(command == "q") {
@@ -134,7 +132,7 @@ void Display::applyCommand(std::string command) {
       print();
       return;
     }
-    else if((type != "Doorway") &&
+    else if((type != "Door") &&
        (type != "Passage") &&
        (type != "Floor")) { 
       action << " Cannot move there!" << std::endl;
@@ -177,7 +175,7 @@ void Display::applyCommand(std::string command) {
   }
 
   // use command
-  if((command.length() == 3) && (command.at(0) == 'u')) {
+  else if(command.substr(0,2) == "u " && directions.count(command.substr(2)) == 1) {
     auto usePos = game->getPlayer()->getPosition() + directions[command.substr(2)];
     auto useCell = game->getFloor()->getGrid().at(usePos);
     if(useCell->getItem() != nullptr) {
@@ -205,7 +203,7 @@ void Display::applyCommand(std::string command) {
   }
 
   // attack command
-  if((command.length() == 3) && (command.at(0) == 'a')) {
+  else if(command.substr(0,2) == "a " && directions.count(command.substr(2)) == 1) {
     auto enemyPos = game->getPlayer()->getPosition() + directions[command.substr(2)];
     auto enemy = game->getFloor()->getGrid().at(enemyPos)->getEnemy();
     if(enemy != nullptr) {
