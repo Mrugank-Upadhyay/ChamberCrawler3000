@@ -74,6 +74,8 @@ void Enemy::getStruckBy(Shade * shade) {
     health -= damage;
     setHP(health);
 
+    std::cout << "enemy getstruckby works!" << std::endl;
+
     // Will this need to notify cell when health == 0?
     // if so, how?
     transferGold(shade);
@@ -128,6 +130,8 @@ void Enemy::getStruckBy(Goblin * goblin) {
 
 void Enemy::nextTurn() {
   // if player in vicinity attack instead of moving
+
+  std::cout << "ENEMY NEXT TURN CALLED!" << std::endl;
   auto observers = cell->getObservers();
   for(auto obs: observers) {
     auto obsCell = dynamic_cast<Cell *>(obs);

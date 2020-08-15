@@ -22,10 +22,19 @@ Floor::Floor(std::string floorString, int height, int width, bool generate) {
         generateEnemies();
         generatePotions();    
     }
+
+    // for (auto cell : floorCells) {
+    //     if (cell->getEnemy() != nullptr) {
+    //         std::cout << "Enemy: " << cell->getRep() << " : (" << cell->getPosition().first << "," << cell->getPosition().second 
+    //         << ") and occupied: " << std::boolalpha << cell->getOccupied() << std::endl;
+    //     }
+    // }
+
+    std::cout << "\n Now From Game \n";
     
-    else {
-        attachDragons();
-    }
+    // else {
+    //     attachDragons();
+    // }
 }
 
 std::pair<int, int> Floor::randomFreeCell() {
@@ -44,36 +53,42 @@ std::pair<int, int> Floor::randomFreeCell() {
     return position;
 }
 
-void Floor::spawn(std::string type, std::pair<int, int> position, bool generate) {
+std::shared_ptr<Enemy> Floor::spawnEnemy(std::string type, std::pair<int, int> position) {
+    std::shared_ptr<Enemy> enemy;
     if (type == "Human") {
-        enemies.push_back(std::dynamic_pointer_cast<Enemy>(std::make_shared<Human>(position)));
+        enemy = std::dynamic_pointer_cast<Enemy>(std::make_shared<Human>(position));
     }
     
     else if (type == "Dwarf") {
-        enemies.push_back(std::dynamic_pointer_cast<Enemy>(std::make_shared<Dwarf>(position)));
+       enemy = std::dynamic_pointer_cast<Enemy>(std::make_shared<Dwarf>(position));
     }
 
     else if (type == "Elf") {
-        enemies.push_back(std::dynamic_pointer_cast<Enemy>(std::make_shared<Elf>(position)));
+        enemy = std::dynamic_pointer_cast<Enemy>(std::make_shared<Elf>(position));
     }
 
     else if (type == "Orc") {
-        enemies.push_back(std::dynamic_pointer_cast<Enemy>(std::make_shared<Orc>(position)));
+        enemy = std::dynamic_pointer_cast<Enemy>(std::make_shared<Orc>(position));
     }
 
     else if (type == "Merchant") {
-        enemies.push_back(std::dynamic_pointer_cast<Enemy>(std::make_shared<Merchant>(position)));
+        enemy = std::dynamic_pointer_cast<Enemy>(std::make_shared<Merchant>(position));
     }
 
     else if (type == "Dragon") {
-        enemies.push_back(std::dynamic_pointer_cast<Enemy>(std::make_shared<Dragon>(position)));
+        enemy = std::dynamic_pointer_cast<Enemy>(std::make_shared<Dragon>(position));
     }
 
     else if (type == "Halfling") {
-        enemies.push_back(std::dynamic_pointer_cast<Enemy>(std::make_shared<Halfling>(position)));
+        enemy = std::dynamic_pointer_cast<Enemy>(std::make_shared<Halfling>(position));
     }
 
-    else if (type == "Small Hoard") {
+    return enemy;
+}
+
+
+void Floor::spawnGold(std::string type, std::pair<int, int> position, bool generate) {
+    if (type == "Small Hoard") {
         goldPiles.push_back(std::make_shared<Gold>(position, 1));
     }
 
@@ -105,12 +120,14 @@ void Floor::spawn(std::string type, std::pair<int, int> position, bool generate)
             // make a dragon randomly in a 1 block radius of hoard
             Cell * goldCell = findCell(goldPiles.back()->getPosition()).get();
             
-            enemies.push_back(std::dynamic_pointer_cast<Enemy>(std::make_shared<Dragon>(pos, goldCell)));
-            grid.at(pos)->setCharacter(enemies.back());
+            // enemies.push_back(std::dynamic_pointer_cast<Enemy>(std::make_shared<Dragon>(pos, goldCell)));
+            // grid.at(pos)->setCharacter(enemies.back());
         }
     }
+}
 
-    else if (type == "RH") {
+void Floor::spawnPotion(std::string type, std::pair<int, int> position) {
+    if (type == "RH") {
         potions.push_back(std::dynamic_pointer_cast<Potion>(std::make_shared<RHPotion>(position)));
     }
 
@@ -133,7 +150,6 @@ void Floor::spawn(std::string type, std::pair<int, int> position, bool generate)
     else if (type == "WD") {
         potions.push_back(std::dynamic_pointer_cast<Potion>(std::make_shared<WDPotion>(position)));
     }
-
 }
 
 void Floor::generateEnemies() {
@@ -141,16 +157,18 @@ void Floor::generateEnemies() {
     for (int i = 0; i < 20; i++) {
         int randomEnemies = rand() % 18;
         auto position = randomFreeCell();
+        std::shared_ptr<Enemy> enemy;
 
-        if (randomEnemies < 4) { spawn("Human", position); }
-        else if (randomEnemies < 7) { spawn("Dwarf", position); }
-        else if (randomEnemies < 12) { spawn("Halfling", position); }
-        else if (randomEnemies < 14) { spawn("Elf", position); }
-        else if (randomEnemies < 16) { spawn("Orc", position); }
-        else { spawn("Merchant", position); }
+        if (randomEnemies < 4) { enemy = spawnEnemy("Human", position); }
+        else if (randomEnemies < 7) { enemy = spawnEnemy("Dwarf", position); }
+        else if (randomEnemies < 12) { enemy = spawnEnemy("Halfling", position); }
+        else if (randomEnemies < 14) { enemy = spawnEnemy("Elf", position); }
+        else if (randomEnemies < 16) { enemy = spawnEnemy("Orc", position); }
+        else { enemy = spawnEnemy("Merchant", position); }
 
-        grid.at(position)->setCharacter(enemies.back());
-        enemies.back()->setCell(grid.at(position).get());
+        grid.at(position)->setCharacter(enemy);
+        enemy->setCell((grid.at(position).get()));
+        enemies.push_back(enemy);
     }
 }
 
@@ -159,25 +177,26 @@ void Floor::generateGold() {
         int randomGold = rand() % 8;
         auto position = randomFreeCell();
 
-        if (randomGold < 5) { spawn("Normal Hoard", position); }
-        else if (randomGold < 6) { spawn("Dragon Hoard", position); }
-        else { spawn("Small Hoard", position); }
+        if (randomGold < 5) { spawnGold("Normal Hoard", position); }
+        else if (randomGold < 6) { spawnGold("Dragon Hoard", position); }
+        else { spawnGold("Small Hoard", position); }
 
         grid.at(position)->setItem(goldPiles.back());
     }
 }
 
 void Floor::generatePotions() {
-    for (int i = 0; i < 10; i++) {
+    // Change back down to 10!!!
+    for (int i = 0; i < 50; i++) {
         int randomPotion = rand() % 6;
         auto position = randomFreeCell();
 
-        if (randomPotion == 1) { spawn("RH", position); }
-        else if (randomPotion == 2) { spawn("BA", position); }
-        else if (randomPotion == 3) { spawn("BD", position); }
-        else if (randomPotion == 4) { spawn("PH", position); }
-        else if (randomPotion == 5) { spawn("WA", position); }
-        else { spawn("WD", position); }
+        if (randomPotion == 1) { spawnPotion("RH", position); }
+        else if (randomPotion == 2) { spawnPotion("BA", position); }
+        else if (randomPotion == 3) { spawnPotion("BD", position); }
+        else if (randomPotion == 4) { spawnPotion("PH", position); }
+        else if (randomPotion == 5) { spawnPotion("WA", position); }
+        else { spawnPotion("WD", position); }
 
         grid.at(position)->setItem(potions.back());
     }
@@ -191,6 +210,7 @@ void Floor::generateCells(std::string floorString, int height, int width) {
             std::string cellRep;
             cellRep.push_back(floorString.at(index));
             std::string cellType;
+            std::shared_ptr<Enemy> enemy = nullptr;
 
             if ((cellRep == "|") || (cellRep == "-")) { cellType = "Wall";}
             else if (cellRep == "+") {cellType = "Door";}
@@ -201,75 +221,80 @@ void Floor::generateCells(std::string floorString, int height, int width) {
             
             else if (cellRep == "H") {
                 cellType = "Floor";
-                spawn("Human", position);
+                enemy = spawnEnemy("Human", position);
             }
             else if (cellRep == "W") {
                 cellType = "Floor";
-                spawn("Dwarf", position);
+                enemy = spawnEnemy("Dwarf", position);
             }
             else if (cellRep == "E") {
                 cellType = "Floor";
-                spawn("Elf", position);
+                enemy = spawnEnemy("Elf", position);
             }
             else if (cellRep == "O") {
                 cellType = "Floor";
-                spawn("Orc", position);
+                enemy = spawnEnemy("Orc", position);
             }
             else if (cellRep == "M") {
                 cellType = "Floor";
-                spawn("Merchant", position);
+                enemy = spawnEnemy("Merchant", position);
             }
             else if (cellRep == "D") {
                 cellType = "Floor";
-                spawn("Dragon", position);
+                enemy = spawnEnemy("Dragon", position);
             }
             else if (cellRep == "L") {
                 cellType = "Floor";
-                spawn("Halfling", position);
+                enemy = spawnEnemy("Halfling", position);
             }
             else if (cellRep == "0") {
                 cellType = "Floor";
-                spawn("RH", position);
+                spawnPotion("RH", position);
             }
             else if (cellRep == "1") {
                 cellType = "Floor";
-                spawn("BA", position);
+                spawnPotion("BA", position);
             }
             else if (cellRep == "2") {
                 cellType = "Floor";
-                spawn("BD", position);
+                spawnPotion("BD", position);
             }
             else if (cellRep == "3") {
                 cellType = "Floor";
-                spawn("PH", position);
+                spawnPotion("PH", position);
             }
             else if (cellRep == "4") {
                 cellType = "Floor";
-                spawn("WA", position);
+                spawnPotion("WA", position);
             }
             else if (cellRep == "5") {
                 cellType = "Floor";
-                spawn("WD", position);
+                spawnPotion("WD", position);
             }
             else if (cellRep == "6") {
                 cellType = "Floor";
-                spawn("Normal Hoard", position);
+                spawnGold("Normal Hoard", position);
             }
             else if (cellRep == "7") {
                 cellType = "Floor";
-                spawn("Small Hoard", position);
+                spawnGold("Small Hoard", position);
             }
             else if (cellRep == "8") {
                 cellType = "Floor";
-                spawn("Merchant Hoard", position);
+                spawnGold("Merchant Hoard", position);
             }
             else if (cellRep == "9") {
                 cellType = "Floor";
-                spawn("Dragon Hoard", position, false);
+                spawnGold("Dragon Hoard", position, false);
             }
             
             std::shared_ptr<Cell> cell = std::make_shared<Cell>(cellType, cellRep, position);
             grid[position] = cell;
+
+            if (enemy != nullptr) {
+                enemy->setCell(cell.get());
+                enemies.push_back(enemy);
+            }
 
             if ((cellType == "Floor") || (cellType == "Door") || (cellType == "Passage") || (cellType == "Exit")) {floorCells.push_back(cell);}
             if (cellType == "Exit") {
@@ -336,7 +361,7 @@ void Floor::attachNeighbours() {
         int x = cell->getPosition().first;
         int y = cell->getPosition().second;
 
-        //int count = 0;
+        int count = 0;
         for (int dy = -1; dy <= 1; dy++) {
             for (int dx = -1; dx <= 1; dx++) {
                 if ((dx == 0) && (dy == 0)) { continue; }
@@ -345,7 +370,7 @@ void Floor::attachNeighbours() {
                 if ((grid.at(newpos)->getType() != "Wall") && 
                     (grid.at(newpos)->getType() != "Abyss")) {
                         cell->attach(grid.at(newpos).get());
-                        //count++;
+                        count++;
                 }
             }
         }
@@ -355,21 +380,25 @@ void Floor::attachNeighbours() {
 }
 
 void Floor::nextTurn() {
-    for (auto cell : floorCells) {
-        if (cell->getPlayer() != nullptr) {
-            cell->getPlayer()->nextTurn();
+
+    std::cout << "NEXT TURN CALLED" << std::endl;
+    for (auto cell : grid) {
+        if (cell.second->getPlayer() != nullptr) {
+            cell.second->getPlayer()->nextTurn();
         }
 
-        else if (cell->getEnemy() != nullptr) {
-            if (cell->getEnemy()->getHP() == 0) {
-                std::shared_ptr<Enemy> deadEnemy = nullptr;
-                cell->setCharacter(deadEnemy);
-                cell->setRep(cell->getRep());
-            }
+        else if (cell.second->getEnemy() != nullptr) {
+            std::cout << "ENEMY NEXT TURN ABOUT TO CALL" << std::endl;
+            std::cout << "ENEMY ATK: " << cell.second->getEnemy()->getATK();
+            // if (cell.second->getEnemy()->getHP() == 0) {
+            //     std::shared_ptr<Enemy> deadEnemy = nullptr;
+            //     cell.second->setCharacter(deadEnemy);
+            //     cell.second->setRep(cell.second->getRep());
+            // }
 
-            else {
-                cell->getEnemy()->nextTurn(); 
-            }
+            // else {
+                cell.second->getEnemy()->nextTurn(); 
+            // }
         }
     }
 }

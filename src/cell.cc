@@ -1,4 +1,5 @@
 #include "cell.h"
+#include <iostream>
 
 Cell::Cell(std::string type, std::string rep, std::pair<int, int> position)
   : type{type}, rep{rep}, position{position}, player{nullptr}, enemy{nullptr}, item{nullptr} {}
@@ -27,7 +28,9 @@ void Cell::setOccupied(bool isOccupied) { this->isOccupied = isOccupied; }
 bool Cell::getOccupied() { return isOccupied; }
 
 std::shared_ptr<Player> Cell::getPlayer() { return player; }
-std::shared_ptr<Enemy> Cell::getEnemy() { return enemy; }
+std::shared_ptr<Enemy> Cell::getEnemy() { 
+  // std::cout << "RETURNING ENEMY";
+  return enemy; }
 
 void Cell::setCharacter(std::shared_ptr<Player> player) { 
   this->player = player;

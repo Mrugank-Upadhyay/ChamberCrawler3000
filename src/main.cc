@@ -64,7 +64,8 @@ int main(int argc, char * argv[]) {
     */
 
    if (seed == -1) {
-        srand(1);
+        srand((unsigned int)time(NULL));
+        //srand(5);
    }
 
    else {
@@ -122,7 +123,7 @@ int main(int argc, char * argv[]) {
 
    // Figure out now, how to add NCURSES and also reset the game.
    while(1) {
-       std::cin >> command;
+       getline(std::cin, command);
        display.applyCommand(command);
     //    display.print();
    }

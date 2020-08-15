@@ -74,7 +74,13 @@ std::pair<int, int> Player::move(std::pair<int,int> position) {
 
 void Player::applyItem(Potion * potion) {
   int nextHP = getHP() + potion->getHP();
-  setHP(nextHP < maxHP ? nextHP : maxHP);
+
+  if (getRace() != "Vampire") {
+    setHP(nextHP < maxHP ? nextHP : maxHP);
+  }
+  else {
+    setHP(nextHP);
+  }
   int nextATK = getTmpATK() + potion->getATK();
   setTmpATK(nextATK > 0 ? nextATK : 0);
   int nextDEF = getTmpDEF() + potion->getDEF();

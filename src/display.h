@@ -16,6 +16,7 @@ class Display {
     std::map<std::string, bool> visibleItems;
     void printFloor();
     void printInfo();
+    void movePlayer(std::pair<int, int> newpos);
 
     public:
         Display(std::string playerClass, std::string file, int height, int width, bool generate);

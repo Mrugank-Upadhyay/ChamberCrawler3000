@@ -18,9 +18,9 @@ class Enemy : public Character {
     bool isHostile;
     bool giveGold;
     int gold;
-
+    
     // Add pointer back to cell
-    Cell * cell;
+    Cell * cell = nullptr;
 
     protected:
         int randomGold();
@@ -52,7 +52,7 @@ class Enemy : public Character {
 
         // Keep purely virtual? or make simply virtual and implement a blank
         //TODO: possibly dd move in here
-        virtual void nextTurn() override;
+        void nextTurn() override;
 
         virtual std::string info() override;
 };
