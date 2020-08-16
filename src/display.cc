@@ -1,4 +1,3 @@
-//#include <curses.h>
 #include <stdlib.h>
 #include <sstream>
 
@@ -50,7 +49,7 @@ void Display::printInfo() {
 }
 
 void Display::print() {
-    system("clear");
+    // system("clear");
     printFloor();
     printInfo();
 }

@@ -16,8 +16,7 @@ class Game {
     std::shared_ptr<Player> player;
     std::shared_ptr<Floor> currentFloor;
 
-    // Change back to lvl 1
-    int level = 5;
+    int level = 1;
     std::shared_ptr<std::ifstream> infile;
     int height;
     int width;
@@ -43,7 +42,6 @@ class Game {
     void setWon(bool win);
 
     std::shared_ptr<Floor> getFloor();
-    // check potion reveal
     void regenFloor();
 };
 

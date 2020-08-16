@@ -3,7 +3,7 @@
 #include "../cell.h"
 #include <iostream>
 
-// If attacked, make all future Dragons hostile!
+
 Dragon::Dragon(std::pair<int, int> position, Cell * goldCell)
   : Enemy{"Dragon", "D", 150, 20, 20, position, false, 6, false}, goldCell{goldCell} 
 {}

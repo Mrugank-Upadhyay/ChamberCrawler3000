@@ -20,14 +20,11 @@ std::string Halfling::getStruckBy(Shade * shade) {
 
     int damage = 0;
 
-    // Add in action messaged (like on page 8 of pdf)
     if (hit == 1) {
         damage = calculateDamage(shade->getATK(), getDEF());
         int health = getHP();
         health -= damage;
         setHP(health);
-        // Will this need to notify cell when health == 0?
-        // if so, how?
         transferGold(shade);
     }
 
@@ -38,14 +35,11 @@ std::string Halfling::getStruckBy(Drow * drow) {
     int hit = rand() % 2;
     int damage = 0;
 
-    // Add in action messaged (like on page 8 of pdf)
     if (hit == 1) {
         damage = calculateDamage(drow->getATK(), getDEF());
         int health = getHP();
         health -= damage;
         setHP(health);
-        // Will this need to notify cell when health == 0?
-        // if so, how?
         transferGold(drow);
     }
 
@@ -56,14 +50,12 @@ std::string Halfling::getStruckBy(Vampire * vampire) {
     int hit = rand() % 2;
     int damage = 0;
 
-    // Add in action messaged (like on page 8 of pdf)
     if (hit == 1) {
         damage = calculateDamage(vampire->getATK(), getDEF());
         int health = getHP();
         health -= damage;
         setHP(health);
-        // Will this need to notify cell when health == 0?
-        // if so, how?
+
         transferGold(vampire);
     }
 
@@ -74,14 +66,12 @@ std::string Halfling::getStruckBy(Troll * troll) {
     int hit = rand() % 2;
     int damage = 0;
 
-    // Add in action messaged (like on page 8 of pdf)
+
     if (hit == 1) {
         damage = calculateDamage(troll->getATK(), getDEF());
         int health = getHP();
         health -= damage;
         setHP(health);
-        // Will this need to notify cell when health == 0?
-        // if so, how?
         transferGold(troll);
     }
 
@@ -91,14 +81,12 @@ std::string Halfling::getStruckBy(Troll * troll) {
 std::string Halfling::getStruckBy(Goblin * goblin) {
     int hit = rand() % 2;
     int damage = 0;
-    // Add in action messaged (like on page 8 of pdf)
+    
     if (hit == 1) {
         damage = calculateDamage(goblin->getATK(), getDEF());
         int health = getHP();
         health -= damage;
         setHP(health);
-        // Will this need to notify cell when health == 0?
-        // if so, how?
         transferGold(goblin);
     }
 

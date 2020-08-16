@@ -20,24 +20,6 @@ void Potion::apply(std::shared_ptr<Player> player) {
     player->applyItem(this);
 }
 
-//std::string Potion::printInfo() {
-    //std::string message;
-
-    //if (hp != 0) {
-        //message = std::to_string(hp);
-    //}
-
-    //else if (atk != 0) {
-        //message = std::to_string(atk);
-    //}
-
-    //else if (def != 0) {
-        //message = std::to_string(def);
-    //} 
-
-    //return message;
-//}
-
 std::string Potion::info() {
   return getType() + " " +
          "shown as " +

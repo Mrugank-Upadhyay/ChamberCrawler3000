@@ -15,13 +15,10 @@ class Character {
     std::pair<int, int> position;
 
     protected:
-        // add implementation
         int calculateDamage(int atk, int def);
 
     public:
         Character(std::string race, std::string rep, int hp, int atk, int def, std::pair<int, int> position);
-
-        // Do we need to set Race or Rep?
         void setHP(int value);
         void setATK(int value);
         void setDEF(int value);

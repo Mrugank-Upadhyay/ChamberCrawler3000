@@ -29,9 +29,6 @@ Game::Game(std::string playerClass, std::string file, int height, int width, boo
   else {
     player = std::dynamic_pointer_cast<Player>(std::make_shared<Shade>(position));
   }
-  
-  // make sure to check arg in main for file input, if none, use default file
-  // when reset game (call back the string, make new ifstream)
 
   infile = std::make_shared<std::ifstream>(file);
   std::string floorPlan = makeFloorString();
@@ -167,17 +164,12 @@ std::map<std::pair<int, int>, std::shared_ptr<Cell>> Game::bfs() {
       auto cell = queue[i];
     for (auto neighbour : cell->getObservers()) {
       auto neighbourCell = dynamic_cast<Cell *>(neighbour);
-      // std::cout << "obs(" << neighbourCell->getPosition().first << "," << neighbourCell->getPosition().second <<") ";
       if (neighbourCell->getType() == "Door") {
         continue;
       }
 
       else if (!find(queue, neighbourCell->getPosition())) {
-        // possible point of failure. used Cell * neighbour's position to get sharedptr from grid for that position
         auto gridCell = currentFloor->getGrid()[neighbourCell->getPosition()];
-        // std::cout << "grid(" << gridCell->getPosition().first << "," << gridCell->getPosition().second <<") ";
-
-        // std::cout << "queue len: " << queue.size() << std::endl;
         queue.push_back(gridCell);
       }
     }

@@ -376,8 +376,6 @@ void Floor::attachNeighbours() {
                 }
             }
         }
-
-        //std::cout << "(" << cell->getPosition().first << "," << cell->getPosition().second << ") : count =" << count << ", length =  " << cell->getObservers().size() << std::endl;
     }
 }
 
@@ -393,18 +391,11 @@ void Floor::removeEnemy(std::shared_ptr<Enemy> enemy) {
 }
 
 std::string Floor::nextTurn() {
-
-    // Fix double attack 
-    // fix attack and then move
     std::string message = "";
-    // std::cout << "NEXT TURN CALLED" << std::endl;
     for (auto cell : grid) {
         if (cell.second->getPlayer() != nullptr) {
             cell.second->getPlayer()->nextTurn();
         }
-
-        // REMOVE DEAD ENEMIES
-        // make sure print is correct so the moment they hit 0 or less, they get cleared.
         else if (cell.second->getEnemy() != nullptr) {
             auto observers = (cell.second)->getObservers();
 
@@ -423,9 +414,6 @@ std::string Floor::nextTurn() {
                             unOccupied.push_back(i);
                         }
                     }
-                    
-                    // REMOVE COUT
-                    std::cout << std::to_string(unOccupied.size()) << std::endl;;
 
                     if(unOccupied.size() > 1) {
                         int chosen = rand() % unOccupied.size();
