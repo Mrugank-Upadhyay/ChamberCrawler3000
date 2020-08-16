@@ -31,6 +31,7 @@ class Floor {
     void attachNeighbours();
     void attachDragons();
     std::shared_ptr<Cell> findCell(std::pair<int, int> position);
+    void removeEnemy(std::shared_ptr<Enemy> enemy);
 
     public:
         Floor(std::string floorString, int height, int width, bool generate);

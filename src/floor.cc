@@ -371,6 +371,17 @@ void Floor::attachNeighbours() {
     }
 }
 
+
+void Floor::removeEnemy(std::shared_ptr<Enemy> enemy) {
+    int length = enemies.size();
+    for (int i = 0; i < length; i++) {
+        if (enemies.at(i)->getPosition() == enemy->getPosition()) {
+            enemies.erase(enemies.begin() + i);
+            break;
+        }
+    }
+}
+
 std::string Floor::nextTurn() {
 
     // Fix double attack 
@@ -395,18 +406,24 @@ std::string Floor::nextTurn() {
                 if (race == "Human") {
                     int len = observers.size();
                     std::vector<int> unOccupied;
+                    
                     for(int i = 0; i < len; i++) {
                         auto obsCell = dynamic_cast<Cell *>(observers.at(i));
-                        if(!obsCell->getOccupied()) {
+                        if((!obsCell->getOccupied()) && (obsCell->getType() != "Door")) {
                             unOccupied.push_back(i);
                         }
                     }
+                    
+                    // REMOVE COUT
+                    std::cout << std::to_string(unOccupied.size()) << std::endl;;
+
                     if(unOccupied.size() > 0) {
                         int chosen = rand() % unOccupied.size();
                         auto position = dynamic_cast<Cell *>(observers.at(unOccupied.at(chosen)))->getPosition();
                         auto goldItem = std::make_shared<Gold>(position, 2);
                         cell.second->setItem(goldItem);
                         unOccupied.erase(unOccupied.begin() + chosen);
+                        
                         chosen = rand() % unOccupied.size();
                         position = dynamic_cast<Cell *>(observers.at(unOccupied.at(chosen)))->getPosition();
                         goldItem = std::make_shared<Gold>(position, 2);
@@ -426,6 +443,8 @@ std::string Floor::nextTurn() {
                 else if (race == "Merchant") {
                     cell.second->setItem(std::make_shared<Gold>(cell.second->getPosition(), 4));
                 }
+
+                removeEnemy(enemy);
             }
 
             else {
