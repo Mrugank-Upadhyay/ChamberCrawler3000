@@ -198,8 +198,9 @@ void Game::regenFloor() {
   }
   currentFloor->getGrid().clear();
   currentFloor->getFloorCell().clear();
-  currentFloor = std::make_shared<Floor>(makeFloorString(), height, width, generate);
-  genPlayer(player);
+  std::string floorPlan = makeFloorString();
+  currentFloor = std::make_shared<Floor>(floorPlan, height, width, generate);
+  genPlayer(player, floorPlan);
   player->setTmpATK(player->getATK());
   player->setTmpDEF(player->getDEF());
 }
