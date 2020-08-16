@@ -39,18 +39,23 @@ int main(int argc, char * argv[]) {
     int seed = -1;
     std::string args;
     for (int i = 1; i < argc; i++) {
-        if (argv[i] == "-f") {
+        args = argv[i];
+        if (args == "-f") {
             args = argv[i + 1];
             floorFile = args;
             i += 2;
+
+            std::cout << "FILE INPUT" << std::endl;
+            std::cout << floorFile << std::endl;
+            std::cout << args << std::endl;
         }
 
-        else if (argv[i] == "-s") {
+        else if (args == "-s") {
             args = argv[i + 1];
             seed = std::stoi(args);
             i += 2;
         }
-        else if (argv[i] == "-t"){
+        else if (args == "-t"){
             args = argv[i + 1];
             testFile = args;
             i += 2;
@@ -72,20 +77,6 @@ int main(int argc, char * argv[]) {
      int floorHeight = 25;
      int floorWidth = 79;
      std::string playerClass;
-
-    // Valid place to put while loop to reset everything?
-    /*
-
-        while {
-
-            Stuff Below
-        }
-
-        if display.applycommand("r"),
-        then its reset bool gets set,
-        then we break out of the below loop 
-
-    */
 
     if (testFile != "") {
         inFile = std::make_shared<std::ifstream>(testFile);

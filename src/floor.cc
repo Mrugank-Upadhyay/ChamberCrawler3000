@@ -210,6 +210,13 @@ void Floor::generateCells(std::string floorString, int height, int width) {
             else if (cellRep == ".") {cellType = "Floor";}
             else if (cellRep == " ") {cellType = "Abyss";}
             else if (cellRep == "\\") {cellType = "Exit";}
+            else if (cellRep == "@") {
+                cellType = "Floor";
+                std::shared_ptr<Cell> cell = std::make_shared<Cell>(cellType, ".", position);
+                grid[position] = cell;
+                floorCells.push_back(cell);
+                continue;
+            }
             
             else if (cellRep == "H") {
                 cellType = "Floor";

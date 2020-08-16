@@ -34,7 +34,7 @@ class Game {
     Game(std::string playerClass, std::string file, int height, int width, bool generate);
 
     std::shared_ptr<Player> getPlayer();
-    void genPlayer(std::shared_ptr<Player> player);
+    void genPlayer(std::shared_ptr<Player> player, std::string floorPlan);
 
     int getLevel() const;
     void incrementLevel();

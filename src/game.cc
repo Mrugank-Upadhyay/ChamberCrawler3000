@@ -34,9 +34,9 @@ Game::Game(std::string playerClass, std::string file, int height, int width, boo
   // when reset game (call back the string, make new ifstream)
 
   infile = std::make_shared<std::ifstream>(file);
-
-  currentFloor = std::make_shared<Floor>(makeFloorString(), height, width, generate);
-  genPlayer(player);
+  std::string floorPlan = makeFloorString();
+  currentFloor = std::make_shared<Floor>(floorPlan, height, width, generate);
+  genPlayer(player, floorPlan);
 }
 
 std::string Game::makeFloorString() {
@@ -65,7 +65,27 @@ std::map<A,B> setDiff(std::map<A,B> & set1, std::map<A,B> & set2) {
   return newMap;
 }
 
-void Game::genPlayer(std::shared_ptr<Player> player) {
+void Game::genPlayer(std::shared_ptr<Player> player, std::string floorPlan) {
+
+  if (!generate) {
+    int length = floorPlan.length();
+    for (int i = 0; i < length; i++) {
+      if (floorPlan.at(i) == '@') {
+        int x = i % width;
+        int y = i / width;
+        auto cell = currentFloor->getGrid().at(std::pair<int, int> (x, y));
+        player->setPosition(cell->getPosition());
+        player->setCell(cell.get());
+        cell->setCharacter(player);
+        break;
+      }
+    }
+
+    return;
+  }
+
+
+
   auto bfsChamber = bfs();
 
   std::map<std::pair<int, int>, std::shared_ptr<Cell>> floorMap;
