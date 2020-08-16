@@ -424,17 +424,20 @@ std::string Floor::nextTurn() {
                     // REMOVE COUT
                     std::cout << std::to_string(unOccupied.size()) << std::endl;;
 
-                    if(unOccupied.size() > 0) {
+                    if(unOccupied.size() > 1) {
                         int chosen = rand() % unOccupied.size();
-                        auto position = dynamic_cast<Cell *>(observers.at(unOccupied.at(chosen)))->getPosition();
+                        auto chosenCell = dynamic_cast<Cell *>(observers.at(unOccupied.at(chosen)));
+                        auto position = chosenCell->getPosition();
                         auto goldItem = std::make_shared<Gold>(position, 2);
-                        cell.second->setItem(goldItem);
+                        chosenCell->setItem(goldItem);
+
                         unOccupied.erase(unOccupied.begin() + chosen);
                         
                         chosen = rand() % unOccupied.size();
-                        position = dynamic_cast<Cell *>(observers.at(unOccupied.at(chosen)))->getPosition();
+                        chosenCell = dynamic_cast<Cell *>(observers.at(unOccupied.at(chosen)));
+                        position = chosenCell->getPosition();
                         goldItem = std::make_shared<Gold>(position, 2);
-                        cell.second->setItem(goldItem);
+                        chosenCell->setItem(goldItem);
                     }
                     else {
                         auto goldItem = std::make_shared<Gold>(cell.second->getPosition(), 4);
