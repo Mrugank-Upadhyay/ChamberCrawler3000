@@ -62,10 +62,6 @@ int main(int argc, char * argv[]) {
         }
     }
 
-    /*
-        SET SEED (if no seed, set srand((unsigned int)time(NULL)));
-    */
-
    if (seed == -1) {
         srand((unsigned int)time(NULL));
    }
@@ -74,33 +70,35 @@ int main(int argc, char * argv[]) {
        srand((unsigned int)seed);
    }
 
-     int floorHeight = 25;
-     int floorWidth = 79;
-     std::string playerClass;
+   while(1) {
+        int floorHeight = 25;
+        int floorWidth = 79;
+        std::string playerClass;
 
-    if (testFile != "") {
-        inFile = std::make_shared<std::ifstream>(testFile);
-        getline(*inFile, playerClass);
-    }
+        if (testFile != "") {
+            inFile = std::make_shared<std::ifstream>(testFile);
+            getline(*inFile, playerClass);
+        }
 
-    else {
-        getline(std::cin, playerClass);
-    }
+        else {
+            getline(std::cin, playerClass);
+        }
 
-    bool generate = (floorFile == "./src/defaultFloor.txt") ? true : false;
-    std::unique_ptr<Display> display = std::make_unique<Display>(playerClass, floorFile, floorHeight, floorWidth, generate);
+        bool generate = (floorFile == "./src/defaultFloor.txt") ? true : false;
+        std::unique_ptr<Display> display = std::make_unique<Display>(playerClass, floorFile, floorHeight, floorWidth, generate);
 
-   std::string command;
+        std::string command;
 
-   if (testFile != "") {
-       while(1) {
-           getline(*inFile, command);
-           display->applyCommand(command);
-       }
-   }
+        if (testFile != "") {
+            while(1) {
+                getline(*inFile, command);
+                if (std::cin.fail()) {
+                    break;
+                }
+                display->applyCommand(command);
+            }
+        }
 
-    while (1) {
-        display = std::make_unique<Display>(playerClass, floorFile, floorHeight, floorWidth, generate);
         while(1) {
             getline(std::cin, command);
             display->applyCommand(command);

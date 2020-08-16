@@ -304,7 +304,10 @@ void Floor::generateCells(std::string floorString, int height, int width) {
             }
             
             else if (isNumber(cellRep.front())) {
-                if (std::stoi(cellRep) < 6) { cell->setItem(potions.back()); }
+                if (std::stoi(cellRep) < 6) { 
+                    auto potionItem = potions.back();
+                    cell->setItem(std::dynamic_pointer_cast<Item>(potionItem)); 
+                }
                 else { 
                     auto goldItem = goldPiles.back();
                     cell->setItem(std::dynamic_pointer_cast<Item>(goldItem)); 

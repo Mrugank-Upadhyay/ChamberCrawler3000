@@ -109,7 +109,7 @@ void Display::applyCommand(std::string command) {
 
   if (command == "r") {
     // add cout
-    std::cout << "Restarting...\n";
+    std::cout << "Restarting...\nClick Enter\n";
     restart = true;
     return;
   }
