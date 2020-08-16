@@ -29,7 +29,6 @@ bool Cell::getOccupied() { return isOccupied; }
 
 std::shared_ptr<Player> Cell::getPlayer() { return player; }
 std::shared_ptr<Enemy> Cell::getEnemy() { 
-  // std::cout << "RETURNING ENEMY";
   return enemy; }
 
 void Cell::setCharacter(std::shared_ptr<Player> player) { 
@@ -42,6 +41,12 @@ void Cell::setCharacter(std::shared_ptr<Enemy> enemy) {
   this->enemy = enemy;
   this->player = nullptr;
   isOccupied = (enemy == nullptr) ? false : true;
+}
+
+void Cell::setNullCharacter() {
+  player = nullptr;
+  enemy = nullptr;
+  isOccupied = false;
 }
 
 void Cell::moveCharacter(Cell * dest) {

@@ -5,8 +5,9 @@
 Merchant::Merchant(std::pair<int, int> position)
     : Enemy{"Merchant", "M", 30, 70, 5, position, false, 4, false} {}
 
-void Merchant::attack(std::shared_ptr<Player> player) {
-    player->getStruckBy(this);
+std::string  Merchant::attack(std::shared_ptr<Player> player) {
+    return player->getStruckBy(this);
 }
 
 void Merchant::nextTurn() {}
+

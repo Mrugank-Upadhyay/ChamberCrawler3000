@@ -7,8 +7,8 @@ Dwarf::Dwarf(std::pair<int, int> position)
         setGold(randomGold());
 }
 
-void Dwarf::attack(std::shared_ptr<Player> player) {
-    player->getStruckBy(this);
+std::string Dwarf::attack(std::shared_ptr<Player> player) {
+    return player->getStruckBy(this);
 }
 
 void Dwarf::nextTurn() {}

@@ -34,7 +34,7 @@ class Floor {
 
     public:
         Floor(std::string floorString, int height, int width, bool generate);
-        void nextTurn(); 
+        std::string nextTurn(); 
         std::map<std::pair<int, int>, std::shared_ptr<Cell>> & getGrid();
         std::vector<std::shared_ptr<Cell>> & getFloorCell();
         std::shared_ptr<Cell> getExit();

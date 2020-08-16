@@ -4,8 +4,8 @@
 Troll::Troll(std::pair<int, int> position)
   : Player("Troll", 120, 25, 15, position, 0, 120) {}
 
-void Troll::attack(std::shared_ptr<Enemy> enemy) {
-  enemy->getStruckBy(this);
+std::string Troll::attack(std::shared_ptr<Enemy> enemy) {
+  return enemy->getStruckBy(this);
 }
 
 void Troll::nextTurn() {

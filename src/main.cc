@@ -28,6 +28,7 @@
 #include <memory>
 #include <iostream>
 
+
 int main(int argc, char * argv[]) {
 
     std::string floorFile = "./src/defaultFloor.txt";
@@ -35,27 +36,24 @@ int main(int argc, char * argv[]) {
 
     std::shared_ptr<std::ifstream> inFile;
 
-    // IS SEED AN INT?
     int seed = -1;
     std::string args;
     for (int i = 1; i < argc; i++) {
-        
-        std::cout << "args" << std::endl;
-
-        args = argv[i];
-        
-        // For now, assume its always cc3kfloor.txt, check piazza for reply to question
-        if (args == "cc3kfloor.txt") {
+        if (argv[i] == "-f") {
+            args = argv[i + 1];
             floorFile = args;
+            i += 2;
         }
 
-        else if (args.find("test") != std::string::npos) {
-            testFile = args;
-        }
-
-        // replace with Seed (figure that out)
-        else {
+        else if (argv[i] == "-s") {
+            args = argv[i + 1];
             seed = std::stoi(args);
+            i += 2;
+        }
+        else if (argv[i] == "-t"){
+            args = argv[i + 1];
+            testFile = args;
+            i += 2;
         }
     }
 
@@ -64,8 +62,7 @@ int main(int argc, char * argv[]) {
     */
 
    if (seed == -1) {
-        //srand((unsigned int)time(NULL));
-        srand(5);
+        srand((unsigned int)time(NULL));
    }
 
    else {
@@ -100,31 +97,26 @@ int main(int argc, char * argv[]) {
     }
 
     bool generate = (floorFile == "./src/defaultFloor.txt") ? true : false;
-    Display display{playerClass, floorFile, floorHeight, floorWidth, generate};
+    std::unique_ptr<Display> display = std::make_unique<Display>(playerClass, floorFile, floorHeight, floorWidth, generate);
 
-
-    /*
-
-
-        Basically, if testfile was added, use commands from testfile to get caught up
-
-
-    */
    std::string command;
 
    if (testFile != "") {
        while(1) {
            getline(*inFile, command);
-           display.applyCommand(command);
-           display.print();
+           display->applyCommand(command);
        }
    }
 
-
-   // Figure out now, how to add NCURSES and also reset the game.
-   while(1) {
-       getline(std::cin, command);
-       display.applyCommand(command);
-    //    display.print();
-   }
+    while (1) {
+        display = std::make_unique<Display>(playerClass, floorFile, floorHeight, floorWidth, generate);
+        while(1) {
+            getline(std::cin, command);
+            display->applyCommand(command);
+            if (display->hasRestarted()) {
+                break;
+            }
+        }
+    }
+   
 }

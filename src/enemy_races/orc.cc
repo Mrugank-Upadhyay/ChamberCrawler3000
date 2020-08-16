@@ -6,8 +6,8 @@ Orc::Orc(std::pair<int, int> position)
         setGold(randomGold());
 }
 
-void Orc::attack(std::shared_ptr<Player> player) {
-    player->getStruckBy(this);
+std::string Orc::attack(std::shared_ptr<Player> player) {
+    return player->getStruckBy(this);
 }
 
 void Orc::nextTurn() {}

@@ -11,8 +11,8 @@ class Dragon : public Enemy {
         Cell * getGoldCell();
         void setGoldCell(Cell * goldCell);
 
-        virtual std::pair<int, int> move() override;
-        virtual void attack(std::shared_ptr<Player> player) override;
+        virtual void move() override;
+        virtual std::string attack(std::shared_ptr<Player> player) override;
 };
 
 #endif

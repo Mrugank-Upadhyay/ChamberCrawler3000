@@ -13,6 +13,7 @@ class Display {
     std::shared_ptr<Game> game;
     int height;
     int width;
+    bool restart = false;
     std::map<std::string, bool> visibleItems;
     void printFloor();
     void printInfo();
@@ -22,9 +23,7 @@ class Display {
         Display(std::string playerClass, std::string file, int height, int width, bool generate);
         void print();
         void applyCommand(std::string command);
-
-        // For testing purposes:
-        std::shared_ptr<Game> getGame();
+        bool hasRestarted();
 };
 
 #endif

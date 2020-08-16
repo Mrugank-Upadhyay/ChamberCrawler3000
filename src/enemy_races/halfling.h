@@ -3,11 +3,11 @@
 class Halfling : public Enemy {
     public:
         Halfling(std::pair<int, int> position);
-        virtual void attack(std::shared_ptr<Player> player) override;
-        virtual void getStruckBy(Shade * shade) override;
-        virtual void getStruckBy(Drow * drow) override;
-        virtual void getStruckBy(Vampire * vampire) override;
-        virtual void getStruckBy(Troll * troll) override;
-        virtual void getStruckBy(Goblin * goblin) override;
+        virtual std::string attack(std::shared_ptr<Player> player) override;
+        virtual std::string getStruckBy(Shade * shade) override;
+        virtual std::string getStruckBy(Drow * drow) override;
+        virtual std::string getStruckBy(Vampire * vampire) override;
+        virtual std::string getStruckBy(Troll * troll) override;
+        virtual std::string getStruckBy(Goblin * goblin) override;
         virtual void nextTurn() override;
 };

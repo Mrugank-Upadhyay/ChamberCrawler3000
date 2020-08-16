@@ -63,19 +63,17 @@ class Player: public Character {
     virtual void applyItem(Potion * potion);
     virtual void applyItem(Gold * gold);
 
-    virtual void attack(std::shared_ptr<Enemy> enemy) = 0;
+    virtual std::string attack(std::shared_ptr<Enemy> enemy) = 0;
 
-    virtual void getStruckBy(Human * enemy);
-    virtual void getStruckBy(Dwarf * enemy);
-    virtual void getStruckBy(Elf * enemy);
-    virtual void getStruckBy(Orc * enemy);
-    virtual void getStruckBy(Dragon * enemy);
-    virtual void getStruckBy(Merchant * enemy);
-    virtual void getStruckBy(Halfling * enemy);
+    virtual std::string getStruckBy(Human * enemy);
+    virtual std::string getStruckBy(Dwarf * enemy);
+    virtual std::string getStruckBy(Elf * enemy);
+    virtual std::string getStruckBy(Orc * enemy);
+    virtual std::string getStruckBy(Dragon * enemy);
+    virtual std::string getStruckBy(Merchant * enemy);
+    virtual std::string getStruckBy(Halfling * enemy);
 
     virtual void nextTurn() override;
-
-    virtual std::string info() override;
 };
 
 #endif

@@ -14,8 +14,8 @@ void Drow::applyItem(Potion * potion) {
   setTmpDEF(nextDEF > 0 ? nextDEF : 0);
 }
 
-void Drow::attack(std::shared_ptr<Enemy> enemy) {
-  enemy->getStruckBy(this);
+std::string  Drow::attack(std::shared_ptr<Enemy> enemy) {
+  return enemy->getStruckBy(this);
 }
 
 void Drow::nextTurn() {}

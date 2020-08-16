@@ -1,6 +1,7 @@
 #include "dragon.h"
 #include "../player.h"
 #include "../cell.h"
+#include <iostream>
 
 // If attacked, make all future Dragons hostile!
 Dragon::Dragon(std::pair<int, int> position, Cell * goldCell)
@@ -15,10 +16,9 @@ void Dragon::setGoldCell(Cell * cell) {
   goldCell = cell;
 }
 
-std::pair<int, int> Dragon::move() {
-  auto previous = getPosition();
-
+void Dragon::move() {
   auto goldNeighours = goldCell->getObservers();
+
   auto neighbours = getCell()->getObservers();
   std::vector<Cell *> intersect;
   for(auto obs1: goldNeighours) {
@@ -38,10 +38,8 @@ std::pair<int, int> Dragon::move() {
     auto dest = intersect[rand() % len];
     getCell()->moveCharacter(dest);
   }
-
-  return previous;
 }
 
-void Dragon::attack(std::shared_ptr<Player> player) {
-  player->getStruckBy(this);
+std::string Dragon::attack(std::shared_ptr<Player> player) {
+  return player->getStruckBy(this);
 }

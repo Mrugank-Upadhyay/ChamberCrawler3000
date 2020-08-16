@@ -7,14 +7,15 @@
 Goblin::Goblin(std::pair<int, int> position)
   : Player{"Goblin", 110, 15, 20, position, 0, 110} {}
 
-void Goblin::attack(std::shared_ptr<Enemy> enemy) {
-  enemy->getStruckBy(this);
+std::string Goblin::attack(std::shared_ptr<Enemy> enemy) {
+  std::string message = enemy->getStruckBy(this);
   if(enemy->getHP() <= 0) addGold(5);
+  return message;
 }
 
-void Goblin::getStruckBy(Orc *enemy) {
-  int damage = calculateDamage(enemy->getATK(), getTmpDEF());
-  setHP(getHP() - damage * 1.5);
-  std::cout << " O deals " << damage << " times 1.5 to PC ("
-            << getHP() << " HP).";
+std::string Goblin::getStruckBy(Orc *enemy) {
+  int damage = calculateDamage(enemy->getATK(), getTmpDEF()) * 1.5;
+  setHP(getHP() - damage);
+
+  return enemy->getRep() + " deals " + std::to_string(damage) + " to PC (" + std::to_string(getHP()) + " HP). ";
 }

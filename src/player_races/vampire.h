@@ -6,7 +6,7 @@
 class Vampire : public Player {
     public:
         Vampire(std::pair<int, int> position);
-        virtual void attack(std::shared_ptr<Enemy> enemy) override;
+        virtual std::string attack(std::shared_ptr<Enemy> enemy) override;
         virtual void nextTurn() override;
 };
 

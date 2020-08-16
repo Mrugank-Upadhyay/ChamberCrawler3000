@@ -11,16 +11,18 @@ Halfling::Halfling(std::pair<int, int> position)
 }
 
 
-void Halfling::attack(std::shared_ptr<Player> player) {
-    player->getStruckBy(this);
+std::string Halfling::attack(std::shared_ptr<Player> player) {
+    return player->getStruckBy(this);
 }
 
-void Halfling::getStruckBy(Shade * shade) {
+std::string Halfling::getStruckBy(Shade * shade) {
     int hit = rand() % 2;
+
+    int damage = 0;
 
     // Add in action messaged (like on page 8 of pdf)
     if (hit == 1) {
-        int damage = calculateDamage(shade->getATK(), getDEF());
+        damage = calculateDamage(shade->getATK(), getDEF());
         int health = getHP();
         health -= damage;
         setHP(health);
@@ -28,14 +30,17 @@ void Halfling::getStruckBy(Shade * shade) {
         // if so, how?
         transferGold(shade);
     }
+
+    return "PC Deals " + std::to_string(damage) + " to " + getRep() + " (" + std::to_string(getHP()) + " HP). ";
 }
 
-void Halfling::getStruckBy(Drow * drow) {
+std::string Halfling::getStruckBy(Drow * drow) {
     int hit = rand() % 2;
+    int damage = 0;
 
     // Add in action messaged (like on page 8 of pdf)
     if (hit == 1) {
-        int damage = calculateDamage(drow->getATK(), getDEF());
+        damage = calculateDamage(drow->getATK(), getDEF());
         int health = getHP();
         health -= damage;
         setHP(health);
@@ -43,14 +48,17 @@ void Halfling::getStruckBy(Drow * drow) {
         // if so, how?
         transferGold(drow);
     }
+
+    return "PC Deals " + std::to_string(damage) + " to " + getRep() + " (" + std::to_string(getHP()) + " HP). ";
 }
 
-void Halfling::getStruckBy(Vampire * vampire) {
+std::string Halfling::getStruckBy(Vampire * vampire) {
     int hit = rand() % 2;
+    int damage = 0;
 
     // Add in action messaged (like on page 8 of pdf)
     if (hit == 1) {
-        int damage = calculateDamage(vampire->getATK(), getDEF());
+        damage = calculateDamage(vampire->getATK(), getDEF());
         int health = getHP();
         health -= damage;
         setHP(health);
@@ -58,14 +66,17 @@ void Halfling::getStruckBy(Vampire * vampire) {
         // if so, how?
         transferGold(vampire);
     }
+
+    return "PC Deals " + std::to_string(damage) + " to " + getRep() + " (" + std::to_string(getHP()) + " HP). ";
 }
 
-void Halfling::getStruckBy(Troll * troll) {
+std::string Halfling::getStruckBy(Troll * troll) {
     int hit = rand() % 2;
+    int damage = 0;
 
     // Add in action messaged (like on page 8 of pdf)
     if (hit == 1) {
-        int damage = calculateDamage(troll->getATK(), getDEF());
+        damage = calculateDamage(troll->getATK(), getDEF());
         int health = getHP();
         health -= damage;
         setHP(health);
@@ -73,14 +84,16 @@ void Halfling::getStruckBy(Troll * troll) {
         // if so, how?
         transferGold(troll);
     }
+
+    return "PC Deals " + std::to_string(damage) + " to " + getRep() + " (" + std::to_string(getHP()) + " HP). ";
 }
 
-void Halfling::getStruckBy(Goblin * goblin) {
+std::string Halfling::getStruckBy(Goblin * goblin) {
     int hit = rand() % 2;
-
+    int damage = 0;
     // Add in action messaged (like on page 8 of pdf)
     if (hit == 1) {
-        int damage = calculateDamage(goblin->getATK(), getDEF());
+        damage = calculateDamage(goblin->getATK(), getDEF());
         int health = getHP();
         health -= damage;
         setHP(health);
@@ -88,6 +101,8 @@ void Halfling::getStruckBy(Goblin * goblin) {
         // if so, how?
         transferGold(goblin);
     }
+
+    return "PC Deals " + std::to_string(damage) + " to " + getRep() + " (" + std::to_string(getHP()) + " HP). ";
 }
 
 void Halfling::nextTurn() {}

@@ -46,8 +46,20 @@ Cell * Enemy::getCell() {
     return cell;
 }
 
-std::pair<int, int> Enemy::move() {
-  auto position = getPosition();
+
+bool Enemy::distanceLessThanTwo(std::pair<int, int> position) {
+    int x = getPosition().first;
+    int y = getPosition().second;
+    int dx = position.first;
+    int dy = position.second;
+    if ((abs(x - dx) <= 1) && (abs(y - dy) <= 1)) {
+        return true;
+    }
+
+    return false;
+}
+
+void Enemy::move() {
 
   auto neighbours = cell->getObservers();
   int len = neighbours.size();
@@ -55,95 +67,74 @@ std::pair<int, int> Enemy::move() {
   Cell * destCell = cell;
   for(int i = 0; i < len; i++) {
     auto obsCell = dynamic_cast<Cell *>(neighbours.at(i));
-    if(!obsCell->getOccupied()) {
+    if((!obsCell->getOccupied()) && (obsCell->getType() != "Exit") &&
+        (distanceLessThanTwo(obsCell->getPosition()))) {
       unOccupied.push_back(i);
     }
   }
   if(unOccupied.size() > 0) {
-    unsigned chosen = rand() % unOccupied.size();
+    int chosen = rand() % unOccupied.size();
     destCell = dynamic_cast<Cell *>(neighbours.at(unOccupied.at(chosen)));
   }
   cell->moveCharacter(destCell);
-
-  return position;
 }
 
-void Enemy::getStruckBy(Shade * shade) {
+std::string Enemy::getStruckBy(Shade * shade) {
     int damage = calculateDamage(shade->getTmpATK(), getDEF());
     int health = getHP();
     health -= damage;
     setHP(health);
-
-    std::cout << "enemy getstruckby works!" << std::endl;
-
-    // Will this need to notify cell when health == 0?
-    // if so, how?
     transferGold(shade);
     setHostile(true);
-    std::cout << " PC deals " << damage << "damage to " << getRep()
-              << " (" << getHP() << " HP).";
+    std::string message = "PC deals " + std::to_string(damage) + " damage to " + getRep() + " (" + std::to_string(getHP()) + " HP). ";
+    return message;
 }
 
-void Enemy::getStruckBy(Drow * drow) {
+std::string Enemy::getStruckBy(Drow * drow) {
     int damage = calculateDamage(drow->getTmpATK(), getDEF());
     int health = getHP();
     health -= damage;
     setHP(health);
     transferGold(drow);
     setHostile(true);
-    std::cout << " PC deals " << damage << "damage to " << getRep()
-              << " (" << getHP() << " HP).";
+    std::string message = "PC deals " + std::to_string(damage) + " damage to " + getRep() + " (" + std::to_string(getHP()) + " HP). ";
+    return message;
 }
 
-void Enemy::getStruckBy(Vampire * vampire) {
+std::string Enemy::getStruckBy(Vampire * vampire) {
     int damage = calculateDamage(vampire->getTmpATK(), getDEF());
     int health = getHP();
     health -= damage;
     setHP(health);
     transferGold(vampire);
     setHostile(true);
-    std::cout << " PC deals " << damage << "damage to " << getRep()
-              << " (" << getHP() << " HP).";
+    std::string message = "PC deals " + std::to_string(damage) + " damage to " + getRep() + " (" + std::to_string(getHP()) + " HP). ";
+    return message;
 }
 
-void Enemy::getStruckBy(Troll * troll) {
+std::string Enemy::getStruckBy(Troll * troll) {
     int damage = calculateDamage(troll->getTmpATK(), getDEF());
     int health = getHP();
     health -= damage;
     setHP(health);
     transferGold(troll);
     setHostile(true);
-    std::cout << " PC deals " << damage << "damage to " << getRep()
-              << " (" << getHP() << " HP).";
+    std::string message = "PC deals " + std::to_string(damage) + " damage to " + getRep() + " (" + std::to_string(getHP()) + " HP). ";
+    return message;
 }
 
-void Enemy::getStruckBy(Goblin * goblin) {
+std::string Enemy::getStruckBy(Goblin * goblin) {
     int damage = calculateDamage(goblin->getTmpATK(), getDEF());
     int health = getHP();
     health -= damage;
     setHP(health);
     transferGold(goblin);
     setHostile(true);
-    std::cout << " PC deals " << damage << "damage to " << getRep()
-              << " (" << getHP() << " HP).";
+    std::string message = "PC deals " + std::to_string(damage) + " damage to " + getRep() + " (" + std::to_string(getHP()) + " HP). ";
+    return message;
 }
 
-void Enemy::nextTurn() {
-  // if player in vicinity attack instead of moving
-
-  std::cout << "ENEMY NEXT TURN CALLED!" << std::endl;
-  auto observers = cell->getObservers();
-  for(auto obs: observers) {
-    auto obsCell = dynamic_cast<Cell *>(obs);
-    if(obsCell->getPlayer() != nullptr && getHostile()) {
-      attack(obsCell->getPlayer());
-      return;
-    }
-  }
-  if(!isStopped) {
-    this->move();
-  }
-}
+void Enemy::nextTurn() {}
 
 int Enemy::randomGold() {
     return (rand() % 2);
@@ -154,19 +145,4 @@ void Enemy::transferGold(Player * player) {
         player->addGold(gold);
         gold = 0;
     }
-}
-
-std::string Enemy::info() {
-  std::string str = Character::info();
-  if(getHostile()) {
-    str += " who is hostile";
-  }
-  else {
-    str += " who is not hostile";
-  }
-  str += " and has " + std::to_string(getGold()) + " gold";
-  
-  //Remove after
-  str += " and has the cell: " + cell->info();
-  return str;
 }

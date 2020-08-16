@@ -109,10 +109,12 @@ void Floor::spawnGold(std::string type, std::pair<int, int> position, bool gener
             }
 
             // make a dragon randomly in a 1 block radius of hoard
-            Cell * goldCell = findCell(goldPiles.back()->getPosition()).get();
-            
-            // enemies.push_back(std::dynamic_pointer_cast<Enemy>(std::make_shared<Dragon>(pos, goldCell)));
-            // grid.at(pos)->setCharacter(enemies.back());
+            std::shared_ptr<Enemy> enemy;
+            enemy = std::dynamic_pointer_cast<Enemy>(std::make_shared<Dragon>(pos, findCell(position).get()));
+            enemies.push_back(enemy);
+            grid.at(pos)->setCharacter(enemy);
+            enemy->setCell(grid.at(pos).get());
+
         }
     }
 }
@@ -177,21 +179,16 @@ void Floor::generateGold() {
 }
 
 void Floor::generatePotions() {
-    // Change back down to 10!!!
-    for (int i = 0; i < 50; i++) {
+    for (int i = 0; i < 10; i++) {
         int randomPotion = rand() % 6;
         auto position = randomFreeCell();
 
-
-        // REMOVE AFTER
-        spawnPotion("PH", position);
-
-        // if (randomPotion == 1) { spawnPotion("RH", position); }
-        // else if (randomPotion == 2) { spawnPotion("BA", position); }
-        // else if (randomPotion == 3) { spawnPotion("BD", position); }
-        // else if (randomPotion == 4) { spawnPotion("PH", position); }
-        // else if (randomPotion == 5) { spawnPotion("WA", position); }
-        // else { spawnPotion("WD", position); }
+        if (randomPotion == 1) { spawnPotion("RH", position); }
+        else if (randomPotion == 2) { spawnPotion("BA", position); }
+        else if (randomPotion == 3) { spawnPotion("BD", position); }
+        else if (randomPotion == 4) { spawnPotion("PH", position); }
+        else if (randomPotion == 5) { spawnPotion("WA", position); }
+        else { spawnPotion("WD", position); }
 
         grid.at(position)->setItem(potions.back());
     }
@@ -374,37 +371,83 @@ void Floor::attachNeighbours() {
     }
 }
 
-void Floor::nextTurn() {
+std::string Floor::nextTurn() {
 
+    // Fix double attack 
+    // fix attack and then move
+    std::string message = "";
     // std::cout << "NEXT TURN CALLED" << std::endl;
     for (auto cell : grid) {
         if (cell.second->getPlayer() != nullptr) {
             cell.second->getPlayer()->nextTurn();
         }
 
-
         // REMOVE DEAD ENEMIES
+        // make sure print is correct so the moment they hit 0 or less, they get cleared.
         else if (cell.second->getEnemy() != nullptr) {
-            std::cout << "Enemy: " << cell.second->getRep();
-            std::cout << ": ( " << cell.second->getEnemy()->getPosition().first << "," << cell.second->getEnemy()->getPosition().second << ")" << std::endl;
-            
-
             auto observers = (cell.second)->getObservers();
-            for(auto obs: observers) {
-                auto obsCell = dynamic_cast<Cell *>(obs);
-                if(obsCell->getPlayer() != nullptr && cell.second->getEnemy()->getHostile()) {
-                cell.second->getEnemy()->attack(obsCell->getPlayer());
-                return;
+
+            if (cell.second->getEnemy()->getHP() <= 0) {
+                auto enemy = cell.second->getEnemy();
+                std::string race = enemy->getRace();
+                cell.second->setNullCharacter();
+                
+                if (race == "Human") {
+                    int len = observers.size();
+                    std::vector<int> unOccupied;
+                    for(int i = 0; i < len; i++) {
+                        auto obsCell = dynamic_cast<Cell *>(observers.at(i));
+                        if(!obsCell->getOccupied()) {
+                            unOccupied.push_back(i);
+                        }
+                    }
+                    if(unOccupied.size() > 0) {
+                        int chosen = rand() % unOccupied.size();
+                        auto position = dynamic_cast<Cell *>(observers.at(unOccupied.at(chosen)))->getPosition();
+                        auto goldItem = std::make_shared<Gold>(position, 2);
+                        cell.second->setItem(goldItem);
+                        unOccupied.erase(unOccupied.begin() + chosen);
+                        chosen = rand() % unOccupied.size();
+                        position = dynamic_cast<Cell *>(observers.at(unOccupied.at(chosen)))->getPosition();
+                        goldItem = std::make_shared<Gold>(position, 2);
+                        cell.second->setItem(goldItem);
+                    }
+                    else {
+                        auto goldItem = std::make_shared<Gold>(cell.second->getPosition(), 4);
+                        cell.second->setItem(goldItem);
+                    }
+                }
+
+                else if (race == "Dragon") {
+                    auto dragon = std::dynamic_pointer_cast<Dragon>(enemy);
+                    std::dynamic_pointer_cast<Gold>(dragon->getGoldCell()->getItem())->setCanPickUp(true);
+                }
+
+                else if (race == "Merchant") {
+                    cell.second->setItem(std::make_shared<Gold>(cell.second->getPosition(), 4));
                 }
             }
-            if(!cell.second->getEnemy()->getStopped()) {
-                cell.second->getEnemy()->move();
+
+            else {
+                bool attacked = false;
+
+                for (auto obs: observers) {
+                    auto obsCell = dynamic_cast<Cell *>(obs);
+                    if (obsCell->getPlayer() != nullptr && cell.second->getEnemy()->getHostile()) {
+                        message += cell.second->getEnemy()->attack(obsCell->getPlayer());
+                        attacked = true;
+                        break;     
+                    }
+                }
+
+                if ((!cell.second->getEnemy()->getStopped()) && (attacked == false)) {
+                    cell.second->getEnemy()->move();
+                }
             }
-
-
-                std::cout << "RUNS" << std::endl;
         }
     }
+
+    return message;
 }
 
 std::map<std::pair<int, int>, std::shared_ptr<Cell>> & Floor::getGrid() { return grid; }

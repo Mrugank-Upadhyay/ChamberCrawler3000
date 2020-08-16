@@ -18,9 +18,9 @@ class Enemy : public Character {
     bool isHostile;
     bool giveGold;
     int gold;
-
-    // Add pointer back to cell
     Cell * cell = nullptr;
+
+    bool distanceLessThanTwo(std::pair<int, int> position);
 
     protected:
         int randomGold();
@@ -39,22 +39,16 @@ class Enemy : public Character {
         int getGold();
         Cell * getCell();
 
-        virtual std::pair<int, int> move();
+        virtual void move();
 
-        virtual void attack(std::shared_ptr<Player> player) = 0;
-
-        // How is gold going to be transferred? Will we need to differentiate if its a human, merchant or Drag?
-        virtual void getStruckBy(Shade * shade);
-        virtual void getStruckBy(Drow * drow);
-        virtual void getStruckBy(Vampire * vampire);
-        virtual void getStruckBy(Troll * troll);
-        virtual void getStruckBy(Goblin * goblin);
-
-        // Keep purely virtual? or make simply virtual and implement a blank
-        //TODO: possibly dd move in here
+        virtual std::string attack(std::shared_ptr<Player> player) = 0;
+        virtual std::string getStruckBy(Shade * shade);
+        virtual std::string getStruckBy(Drow * drow);
+        virtual std::string getStruckBy(Vampire * vampire);
+        virtual std::string getStruckBy(Troll * troll);
+        virtual std::string getStruckBy(Goblin * goblin);
+        
         void nextTurn() override;
-
-        virtual std::string info() override;
 };
 
 #endif

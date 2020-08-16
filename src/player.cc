@@ -14,7 +14,7 @@
 #include "item.h"
 #include "items/gold.h"
 #include "items/potion.h"
-
+#include <string>
 #include <iostream>
 
 Player::Player(std::string race, int hp, int atk, int def, 
@@ -91,70 +91,53 @@ void Player::applyItem(Gold * gold) {
   addGold(gold->getAmount());
 }
 
-void Player::getStruckBy(Human * enemy) {
+std::string Player::getStruckBy(Human * enemy) {
   int damage = calculateDamage(enemy->getATK(), tmpDEF);
   setHP(getHP() - damage);
-  std::cout << " " << enemy->getRep() << " deals "
-            << damage << " damage to PC.";
+  std::string message = enemy->getRep() + " deals " + std::to_string(damage) + " damage to PC.";
+  return message;
 }
 
-void Player::getStruckBy(Dwarf * enemy) {
+std::string Player::getStruckBy(Dwarf * enemy) {
   int damage = calculateDamage(enemy->getATK(), tmpDEF);
   setHP(getHP() - damage);
-  std::cout << " " << enemy->getRep() << " deals "
-            << damage << " damage to PC.";
+  std::string message = enemy->getRep() + " deals " + std::to_string(damage) + " damage to PC.";
+  return message;
 }
 
-void Player::getStruckBy(Elf * enemy) {
+std::string Player::getStruckBy(Elf * enemy) {
   int damage = calculateDamage(enemy->getATK(), tmpDEF);
   setHP(getHP() - damage);
-  std::cout << " " << enemy->getRep() << " deals "
-            << damage << " damage to PC.";
+  std::string message = enemy->getRep() + " deals " + std::to_string(damage) + " damage to PC.";
+  return message;
 }
 
-void Player::getStruckBy(Orc * enemy) {
+std::string Player::getStruckBy(Orc * enemy) {
   int damage = calculateDamage(enemy->getATK(), tmpDEF);
   setHP(getHP() - damage);
-  std::cout << " " << enemy->getRep() << " deals "
-            << damage << " damage to PC.";
+  std::string message = enemy->getRep() + " deals " + std::to_string(damage) + " damage to PC.";
+  return message;
 }
 
-void Player::getStruckBy(Dragon * enemy) {
+std::string Player::getStruckBy(Dragon * enemy) {
   int damage = calculateDamage(enemy->getATK(), tmpDEF);
   setHP(getHP() - damage);
-  std::cout << " " << enemy->getRep() << " deals "
-            << damage << " damage to PC.";
+  std::string message = enemy->getRep() + " deals " + std::to_string(damage) + " damage to PC.";
+  return message;
 }
 
-void Player::getStruckBy(Merchant * enemy) {
+std::string Player::getStruckBy(Merchant * enemy) {
   int damage = calculateDamage(enemy->getATK(), tmpDEF);
   setHP(getHP() - damage);
-  std::cout << " " << enemy->getRep() << " deals "
-            << damage << " damage to PC.";
+  std::string message = enemy->getRep() + " deals " + std::to_string(damage) + " damage to PC.";
+  return message;
 }
 
-void Player::getStruckBy(Halfling * enemy) {
+std::string Player::getStruckBy(Halfling * enemy) {
   int damage = calculateDamage(enemy->getATK(), tmpDEF);
   setHP(getHP() - damage);
-  std::cout << " " << enemy->getRep() << " deals "
-            << damage << " damage to PC.";
+  std::string message = enemy->getRep() + " deals " + std::to_string(damage) + " damage to PC.";
+  return message;
 }
 
 void Player::nextTurn() {}
-
-std::string Player::info() {
-  auto str = Character::info() + " " +
-         "and has " +
-         std::to_string(getGold()) + " gold " +
-         "with current maxHP:tmpATK:tmpDEF of " +
-         std::to_string(getMaxHP()) + ":" +
-         std::to_string(getTmpATK()) + ":" +
-         std::to_string(getTmpDEF()) + " ";
-
-  str += "plus a bag with:";
-  for(auto item_ptr: getBag()) {
-    str += " " + item_ptr->info() + ",";
-  }
-  if(getBag().size() == 0) str += " nothing";
-  return str;
-}

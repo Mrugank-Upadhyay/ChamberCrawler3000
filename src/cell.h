@@ -35,6 +35,7 @@ class Cell: public Subject, public Observer {
     virtual std::shared_ptr<Enemy> getEnemy();
     void setCharacter(std::shared_ptr<Player> player);
     void setCharacter(std::shared_ptr<Enemy> enemy);
+    void setNullCharacter();
 
     void moveCharacter(Cell * dest);
 
