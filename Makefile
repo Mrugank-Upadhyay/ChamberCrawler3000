@@ -6,7 +6,7 @@ BIN_DIR=./bin
 SOURCES=$(shell find . -wholename "$(SRC_DIR)/*.cc")   # list of all .cc files in the current directory
 OBJECTS=$(SOURCES:$(SRC_DIR)/%.cc=$(BUILD_DIR)/%.o)  # .o files depend upon .cc files with same names
 DEPENDS=${OBJECTS:.o=.d}   # .d file is list of dependencies for corresponding .cc file
-EXEC_NAME=cc3k
+EXEC=cc3k
 #EXEC=$(BIN_DIR)/$(EXEC_NAME)
 
 # First target in the makefile is the default target.
