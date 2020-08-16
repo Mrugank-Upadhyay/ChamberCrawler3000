@@ -14,6 +14,7 @@ class Goblin;
 class Cell;
 
 class Enemy : public Character {
+    bool hasMoved;
     static bool isStopped;
     bool isHostile;
     bool giveGold;
@@ -30,6 +31,7 @@ class Enemy : public Character {
     public:
         Enemy(std::string race, std::string rep, int health, int atk, int def, std::pair<int, int> position, bool hostile, int gold, bool giveGold);
 
+        void resetMoved();
         static void setStopped(bool stopped);
         void setHostile(bool hostile);
         void setGold(int value);

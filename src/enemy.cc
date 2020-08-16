@@ -12,7 +12,10 @@
 bool Enemy::isStopped = false;
 
 Enemy::Enemy(std::string race, std::string rep, int health, int atk, int def, std::pair<int, int> position, bool hostile, int gold, bool giveGold)
-    : Character{race, rep, health, atk, def, position}, isHostile{hostile}, gold{gold}, giveGold{giveGold} {}
+    : Character{race, rep, health, atk, def, position}, isHostile{hostile}, gold{gold}, giveGold{giveGold}, hasMoved{false}
+{}
+
+void Enemy::resetMoved() { hasMoved = false; }
 
 void Enemy::setStopped(bool stopped) {
     isStopped = stopped;
@@ -60,6 +63,7 @@ bool Enemy::distanceLessThanTwo(std::pair<int, int> position) {
 }
 
 void Enemy::move() {
+  if(hasMoved) return;
 
   auto neighbours = cell->getObservers();
   int len = neighbours.size();
@@ -77,6 +81,7 @@ void Enemy::move() {
     destCell = dynamic_cast<Cell *>(neighbours.at(unOccupied.at(chosen)));
   }
   cell->moveCharacter(destCell);
+  hasMoved = true;
 }
 
 std::string Enemy::getStruckBy(Shade * shade) {

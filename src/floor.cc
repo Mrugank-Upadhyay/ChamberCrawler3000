@@ -446,6 +446,9 @@ std::string Floor::nextTurn() {
             }
         }
     }
+    for(auto enemy: enemies) {
+      enemy->resetMoved();
+    }
 
     return message;
 }
