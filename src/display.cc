@@ -50,13 +50,7 @@ void Display::printInfo() {
 }
 
 void Display::print() {
-    // call ncurses and do screen clear
-
-
-    // SYSTEM CLEAR, MAY NEED TO DELETE IF NCURSES WORKS, OR THIS DOESNT ON STUDENT ENVIRONMENT
-    // system("clear");
-
-    
+    system("clear");
     printFloor();
     printInfo();
 }
